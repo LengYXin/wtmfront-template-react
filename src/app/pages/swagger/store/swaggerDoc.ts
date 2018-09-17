@@ -82,19 +82,23 @@ export default class ObservableStore {
      */
     async init() {
         const data = await Http.post("/server/init", wtmfront).map(this.map).toPromise();
-        runInAction(() => {
-            this.project = data;
-            this.startFrame = true;
-        })
+        if (data) {
+            runInAction(() => {
+                this.project = data;
+                this.startFrame = true;
+            })
+        }
     }
     /**
      * 获取现有模块
      */
     async getContainers() {
         const data = await Http.get("/server/containers").map(this.map).toPromise();
-        runInAction(() => {
-            this.containers = data;
-        })
+        if (data) {
+            runInAction(() => {
+                this.containers = data;
+            })
+        }
     }
     /**
      * 创建模块
@@ -119,20 +123,29 @@ export default class ObservableStore {
      */
     async  delete(param) {
         const data = await Http.post("/server/delete", param).map(this.map).toPromise();
-        notification['success']({
-            message: '删除成功',
-            description: '',
-        });
+        if (data) {
+            notification['success']({
+                message: '删除成功',
+                description: '',
+            });
+        } else {
+            notification['success']({
+                message: '删除失败',
+                description: '',
+            });
+        }
     }
     /**
      * 获取model
      */
     async getModel() {
         const data = await Http.get("/swaggerDoc").map(docs => this.formatDocs(docs)).toPromise();
-        runInAction(() => {
-            this.swaggerLoading = false;
-            this.docData = data;
-        })
+        if (data) {
+            runInAction(() => {
+                this.swaggerLoading = false;
+                this.docData = data;
+            })
+        }
         return data
     }
     /**
