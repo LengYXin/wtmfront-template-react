@@ -27,7 +27,7 @@ export default class ObservableStore {
         //     top: 60
         // })
         if (!PRODUCTION) {
-            this.init();
+            // this.init();
         }
     }
     /**当前进度 */
@@ -83,9 +83,11 @@ export default class ObservableStore {
     async init() {
         const data = await Http.post("/server/init", wtmfront).map(this.map).toPromise();
         runInAction(() => {
-            this.project = data;
+            if (data) {
+                this.project = data;
+            }
             this.startFrame = true;
-           // console.log(this.project)
+            // console.log(this.project)
         })
     }
     /**
@@ -94,7 +96,9 @@ export default class ObservableStore {
     async getContainers() {
         const data = await Http.get("/server/containers").map(this.map).toPromise();
         runInAction(() => {
-            this.containers = data;
+            if (data) {
+                this.containers = data;
+            }
         })
     }
     /**
@@ -102,7 +106,7 @@ export default class ObservableStore {
      * @param param 
      */
     async create(param?) {
-        console.log(this.createParam,param)
+        console.log(this.createParam, param)
         console.log(param)
         const data = await Http.post("/server/create", { ...this.createParam, ...param }).map(this.map).toPromise();
         if (data) {
@@ -122,21 +126,29 @@ export default class ObservableStore {
      */
     async  delete(param) {
         const data = await Http.post("/server/delete", param).map(this.map).toPromise();
-        notification['success']({
-            message: '删除成功',
-            description: '',
-        });
+        if (data) {
+            notification['success']({
+                message: '删除成功',
+                description: '',
+            });
+        } else {
+            notification['error']({
+                message: '删除失败',
+                description: '',
+            });
+        }
+
     }
     /**
      * 获取model
      */
-   
+
     async getModel() {
         const data = await Http.get("/swaggerDoc")
-        .map(docs => this.formatDocs(docs)).toPromise();
+            .map(docs => this.formatDocs(docs)).toPromise();
         runInAction(() => {
             this.swaggerLoading = false;
-            this.docData = data; 
+            this.docData = data;
         })
         return data
     }
@@ -164,9 +176,9 @@ export default class ObservableStore {
         try {
             // 分组所有 api 地址
             lodash.forEach(paths, (value, key) => {
-                if(/rabbitmq/.test(key))return
+                if (/rabbitmq/.test(key)) return
                 // const detail = lodash.find(value, (o) => o.tags && o.tags.length);
-                 let path: any = {};
+                let path: any = {};
                 // 标准接口
                 let standard: { name?: string, type?: string } = {};
                 //console.log(key)
@@ -183,7 +195,7 @@ export default class ObservableStore {
                         // console.log(key, o.name);
                         return lodash.includes(key, o.name)
                     })
-                  //  if(!standard)return;
+                    //  if(!standard)return;
                 }
                 // 请求类型 统一小写
                 const typeKey = lodash.toLower(standard.type);
@@ -226,7 +238,7 @@ export default class ObservableStore {
                     }
                 }
             });
-             
+
             format.tags = format.tags.filter(x => !lodash.isNil(x.paths))
         } catch (error) {
             notification['error']({
@@ -234,7 +246,7 @@ export default class ObservableStore {
                 description: error,
             });
         }
-// console.log(format)
+        // console.log(format)
         return format;
     }
     /**

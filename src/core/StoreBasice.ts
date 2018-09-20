@@ -31,7 +31,7 @@ export default class Store {
   Common = Common
   url = wtmfront.standard
   /** Ajax   */
-  Http = new HttpBasics(this.StoreConfig.address)
+  Http = new HttpBasics(APIADDRESS + this.StoreConfig.address)
   /** 数据 ID 索引 */
   IdKey = 'id'
   /** table 列配置 */

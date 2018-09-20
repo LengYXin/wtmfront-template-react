@@ -14,6 +14,11 @@ import { Link } from 'react-router-dom';
 import DragBtn from 'components/dragBtn';
 @observer
 export class Entrance extends React.Component<any, any> {
+    componentDidMount() {
+        if (!PRODUCTION) {
+            Store.swaggerDoc.init();
+        }
+    }
     render() {
         if (window.location.pathname != "/swaggerAnalysis" && Store.swaggerDoc.startFrame) {
             return (

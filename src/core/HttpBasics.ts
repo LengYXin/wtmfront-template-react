@@ -11,7 +11,12 @@ import NProgress from 'nprogress';
 import lodash from 'lodash';
 export class HttpBasics {
     constructor(address?, public newResponseMap?) {
-        if (address) {
+        if (typeof address == "string") {
+            // if (/^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/.test(address)) {
+            //     this.address = address;
+            // } else {
+            //     this.address += address;
+            // }
             this.address = address;
         }
         // this.create({ type: "get", name: "test/{c}/{a}/{b}" }, { a: 1, b: 2, c: 3 }).toPromise();
@@ -64,7 +69,7 @@ export class HttpBasics {
     get(url: string, body?: { [key: string]: any } | string, headers?: Object) {
         headers = { ...this.headers, ...headers };
         body = this.formatBody(body);
-        url = `${this.address}${url}${body}`;
+        url = this.compatibleUrl(this.address, url, body as any);
         return Rx.Observable.ajax.get(
             url,
             headers
@@ -79,7 +84,7 @@ export class HttpBasics {
     post(url: string, body?: any, headers?: Object) {
         headers = { ...this.headers, ...headers };
         body = this.formatBody(body, "body", headers);
-        url = `${this.address}${url}`;
+        url = this.compatibleUrl(this.address, url);
         return Rx.Observable.ajax.post(
             url,
             body,
@@ -95,7 +100,7 @@ export class HttpBasics {
     put(url: string, body?: any, headers?: Object) {
         headers = { ...this.headers, ...headers };
         body = this.formatBody(body, "body", headers);
-        url = `${this.address}${url}`;
+        url = this.compatibleUrl(this.address, url);
         return Rx.Observable.ajax.put(
             url,
             body,
@@ -111,8 +116,7 @@ export class HttpBasics {
     delete(url: string, body?: { [key: string]: any } | string, headers?: Object) {
         headers = { ...this.headers, ...headers };
         body = this.formatBody(body);
-        url = `${this.address}${url}${body}`;
-        console.log(url, headers)
+        url = this.compatibleUrl(this.address, url, body as any);
         return Rx.Observable.ajax.delete(
             url,
             headers
@@ -124,7 +128,7 @@ export class HttpBasics {
      */
     jsonp(url, body?: { [key: string]: any } | string, callbackKey = 'callback') {
         body = this.formatBody(body);
-        url = `${this.address}${url}${body}&${callbackKey}=`;
+        url = this.compatibleUrl(this.address, url, `${body}&${callbackKey}=`);
         return new Rx.Observable(observer => {
             this.jsonpCounter++;
             const key = '_jsonp_callback_' + this.jsonpCounter;
@@ -143,6 +147,35 @@ export class HttpBasics {
         })
     };
     /**
+     * url 兼容处理 
+     * @param address 前缀
+     * @param url url
+     * @param endStr 结尾，参数等
+     */
+    compatibleUrl(address: string, url: string, endStr?: string) {
+        endStr = endStr || ''
+        console.log(address, url, endStr);
+        if (/^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/.test(url)) {
+            return `${url}${endStr}`;
+        } else {
+            // address  / 结尾  url / 开头
+            const isAddressWith = lodash.endsWith(address, "/")
+            const isUrlWith = lodash.startsWith(url, "/")
+            if (isAddressWith) {
+                if (isUrlWith) {
+                    url = lodash.trimStart(url, "/")
+                }
+            } else {
+                if (isUrlWith) {
+                    
+                } else {
+                    url = "/" + url;
+                }
+            }
+        }
+        return `${address}${url}${endStr}`
+    }
+    /**
      * 格式化 参数
      * @param body  参数 
      * @param type  参数传递类型
@@ -152,7 +185,7 @@ export class HttpBasics {
         body?: { [key: string]: any } | any[] | string,
         type: "url" | "body" = "url",
         headers?: Object
-    ) {
+    ): any {
         // 加载进度条
         NProgress.start();
         // if (typeof body === 'undefined') {
@@ -216,16 +249,23 @@ export class HttpBasics {
             return this.newResponseMap(x);
         }
         if (x.status == 200) {
+            // 判断是否统一数据格式，是走状态判断，否直接返回 response
             if (x.response && x.response.status) {
-                if (x.response.status == 200) {
-                    return x.response.data;
+                switch (x.response.status) {
+                    case 200:
+                        return x.response.data;
+                        break;
+                    case 204:
+                        return false;
+                        break;
+                    default:
+                        notification['error']({
+                            message: x.response.message,
+                            description: `Url: ${x.request.url} \n method: ${x.request.method}`,
+                        });
+                        return false
+                        break;
                 }
-                notification['error']({
-                    message: x.response.message,
-                    description: `Url: ${x.request.url} \n method: ${x.request.method}`,
-                });
-                return false
-                // throw x.response.message;
             }
             return x.response
         }
