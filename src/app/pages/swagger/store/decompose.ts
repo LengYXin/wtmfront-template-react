@@ -27,11 +27,13 @@ export default class ObservableStore {
         search: [],     //搜索条件
         // edit: {},    //编辑字段
         install: [],    //添加字段
-        update: [] ,    //修改字段
-        buttonShow: {
-            add:true,
-            import:true,
-            delete:true
+        update: [],    //修改字段
+        pageButtons: {
+            install: true,
+            update: true,
+            delete: true,
+            import: true,
+            export: true
         }   //功能按钮
     }
     /** 选择的 tag */
@@ -40,8 +42,8 @@ export default class ObservableStore {
         paths: []
     };
     /** 功能改变 */
-    @action.bound changeButton(attr,flag:boolean){
-       this.Model.buttonShow[attr]=flag
+    @action.bound changeButton(attr, flag: boolean) {
+        this.Model.pageButtons[attr] = flag
         console.log(this.Model)
     }
     /** swaggerDoc */
@@ -193,7 +195,7 @@ export default class ObservableStore {
      * 交换模型位置
      */
     @action.bound
-    onExchangeModel(type: "columns" | "search" | "install" | "update"|"btn", dragIndex: number, hoverIndex: number) {
+    onExchangeModel(type: "columns" | "search" | "install" | "update" | "btn", dragIndex: number, hoverIndex: number) {
         let dataSource = toJS(this.Model[type]);
         const drag = dataSource[dragIndex];
         // const hover = dataSource[hoverIndex];

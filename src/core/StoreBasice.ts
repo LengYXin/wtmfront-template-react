@@ -12,6 +12,7 @@ import { HttpBasics } from './HttpBasics'
 import { message } from 'antd'
 import wtmfront from 'wtmfront.json'
 import Common from './Common'
+import moment from 'moment';
 export default class Store {
   constructor(public StoreConfig) { }
   // 也没 默认 json 配置
@@ -22,11 +23,6 @@ export default class Store {
   //   search: [], //搜索条件
   //   install: [], //添加字段
   //   update: [], //修改字段
-  //   buttonShow: {
-  //     add: true,
-  //     import: true,
-  //     delete: true
-  //   }   //功能按钮
   // }
   Common = Common
   url = wtmfront.standard
@@ -37,10 +33,12 @@ export default class Store {
   /** table 列配置 */
   columns = []
   /** 按钮功能 */
-  buttonShow = {
-    add: true,
+  pageButtons: IPageButton = {
+    install: true,
+    update: true,
+    delete: true,
     import: true,
-    delete: true
+    export: true
   }
   /** 搜索数据 */
   searchParams: any = {
@@ -52,7 +50,7 @@ export default class Store {
     count: 0,
     list: [],
     pageNo: 1,
-    pageSize: 5
+    pageSize: 10
   }
 
   /** table 已选择 keys */
@@ -258,6 +256,7 @@ export default class Store {
         if (status === 'done') {
           const response = info.file.response
           if (response.status == 200) {
+            this.onGet();
             message.success(`${info.file.name} file uploaded successfully.`)
           } else {
             message.error(`${info.file.name} ${response.message}`)
@@ -273,12 +272,20 @@ export default class Store {
    * @param params 筛选参数
    */
   async onExport(params = this.searchParams) {
-    console.log('onExport')
-    const result = await this.Http.create(this.url.template, params, {
-      'Content-Type': null
-    }).toPromise()
-    //console.log(result)
-    return result
+    await this.Http.download({
+      url: APIADDRESS + this.StoreConfig.address + this.url.export.name,
+      body: params
+    })
+  }
+  /**
+  * 模板
+  * @param params 筛选参数
+  */
+  async onTemplate() {
+    //   url: APIADDRESS + this.StoreConfig.address + this.url.template.name,
+    await this.Http.download({
+      url: APIADDRESS + this.StoreConfig.address + this.url.template.name,
+    })
   }
   /**
    * 获取公共属性
@@ -291,6 +298,6 @@ export default class Store {
   /**改变Button显示隐藏*/
   @action
   buttonChange(show) {
-    this.buttonShow = show
+    this.pageButtons = show
   }
 }

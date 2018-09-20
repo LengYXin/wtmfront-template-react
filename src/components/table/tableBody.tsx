@@ -95,11 +95,14 @@ class ActionComponent extends React.Component<{ Store: Store, data: any }, any> 
   render() {
     return (
       <>
-        <a onClick={this.Store.onModalShow.bind(this.Store, this.props.data)} >Edit</a>
+        {this.Store.pageButtons.update ? <a onClick={this.Store.onModalShow.bind(this.Store, this.props.data)} >修改</a> : null}
         <Divider type="vertical" />
-        <Popconfirm title="Sure to delete?" onConfirm={this.onDelete.bind(this)} >
-          <a >Delete</a>
-        </Popconfirm>
+        {this.Store.pageButtons.delete ?
+          <Popconfirm title="Sure to delete?" onConfirm={this.onDelete.bind(this)} >
+            <a >删除</a>
+          </Popconfirm> : null}
+
+
       </>
     );
   }

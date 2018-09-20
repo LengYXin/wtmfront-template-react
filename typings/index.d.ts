@@ -1,6 +1,18 @@
 /**
  * Swagger 解析格式
  */
+interface IPageButton {
+    /** 添加按钮 */
+    install: boolean,
+    /** 添加修改 */
+    update: boolean,
+    /** 删除按钮 */
+    delete: boolean,
+    /** 导入按钮 */
+    import: boolean,
+    /** 导出按钮 */
+    export: boolean
+}
 interface ISwaggerModel {
     idKey: string,    //唯一标识
     address: string,    //地址控制器
@@ -9,11 +21,7 @@ interface ISwaggerModel {
     // edit: {},    //编辑字段
     install: any[],    //添加字段
     update: any[],      //修改字段
-    buttonShow: {     //按钮 
-        add: boolean,
-        import: boolean,
-        delete: boolean
-    }
+    pageButtons?: IPageButton
 }
 /**
  * 公共属性

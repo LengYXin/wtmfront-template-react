@@ -18,7 +18,7 @@ export default class TableHeaderComponent extends React.Component<{ Store: Store
   Store = this.props.Store;
   WrappedFormComponent = Form.create()(FormComponent);
 
-  renderItem({ form, initialValue }: renderItemParams) {
+  renderItem({ form, initialValue }: renderItemParams): JSX.Element | JSX.Element[] {
     const { getFieldDecorator } = form;
     const formItemLayout = {
       labelCol: {
@@ -126,9 +126,9 @@ class FormComponent extends React.Component<Props, any> {
         </Row>
         <Row type="flex" gutter={16} justify="end">
           <Col span={6} className="table-header-btn">
-            <Button icon="retweet" onClick={this.onReset.bind(this)} loading={this.Store.pageConfig.loading}>Reset</Button>
+            <Button icon="retweet" onClick={this.onReset.bind(this)} loading={this.Store.pageConfig.loading}>重置</Button>
             <Divider type="vertical" />
-            <Button icon="search" htmlType="submit" loading={this.Store.pageConfig.loading}>Search</Button>
+            <Button icon="search" htmlType="submit" loading={this.Store.pageConfig.loading}>搜索</Button>
           </Col>
         </Row>
       </Form>

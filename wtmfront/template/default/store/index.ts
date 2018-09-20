@@ -13,5 +13,6 @@ export class Store extends storeBasice {
     IdKey ='{{{ idKey }}}';
     /** table 列配置  title dataIndex 必备字段 其他为api 返回默认字段*/
     columns = {{{JSONColumns columns }}}
+    pageButtons = {{{JSONStringify pageButtons }}}
 }
 export default new Store();

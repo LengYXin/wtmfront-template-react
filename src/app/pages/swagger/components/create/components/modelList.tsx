@@ -66,7 +66,7 @@ any
   render() {
     if (this.props.type === 'btn') {
       console.log(decompose)
-      const buttonShow = decompose.Model.buttonShow
+      const buttonShow = decompose.Model.pageButtons
       const data = Object.keys(buttonShow)
       return (
         <>

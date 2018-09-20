@@ -5,14 +5,13 @@
  * @modify date 2018-09-12 18:53:26
  * @desc [description]
 */
-import { Button, Upload, Divider, Drawer, Form, Popconfirm, Row, Select, Spin, Modal, message, Tabs, Icon, Alert } from 'antd';
+import { Alert, Button, Divider, Drawer, Form, Icon, Modal, Popconfirm, Row, Select, Spin, Tabs, Upload } from 'antd';
 import { FormComponentProps, WrappedFormUtils } from 'antd/lib/form/Form';
 import Store from 'core/StoreBasice';
 import lodash from 'lodash';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import * as React from 'react';
-import store from 'store/index';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
@@ -37,24 +36,37 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
       this.Store.onGet();
     }
   }
+  renderButtons(): JSX.Element | JSX.Element[] {
+    const button = [];
+    const { pageButtons, selectedRowKeys } = this.Store;
+    const deletelength = selectedRowKeys.length;
+    if (pageButtons.install) {
+      button.push(<Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})}>添加</Button>)
+    }
+    if (pageButtons.import) {
+      button.push(<Button icon="cloud-download" onClick={() => { this.Store.onVisible(true, "port") }}>  导入 / 导出 </Button>)
+    }
+    if (pageButtons.delete) {
+      button.push(
+        <Popconfirm placement="right" title={`Sure to delete ? length : (${deletelength}) `} onConfirm={this.onDelete.bind(this)} okText="Yes" cancelText="No">
+          <Button icon="delete" disabled={deletelength < 1}>
+            批量删除
+           </Button>
+        </Popconfirm>
+      )
+    }
+    return button.map((x, i) => {
+      return <React.Fragment key={i}>
+        {x}
+        <Divider type="vertical" />
+      </React.Fragment>
+    })
+  }
   render() {
     const deletelength = this.Store.selectedRowKeys.length;
     return (
       <Row>
-        {this.Store.buttonShow.add ? <Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})}>
-          Add
-        </Button> : null}
-        <Divider type="vertical" />
-        {this.Store.buttonShow.import ? <Button icon="cloud-download" onClick={() => { this.Store.onVisible(true, "port") }}>
-          Import&Export
-        </Button> : null}
-
-        <Divider type="vertical" />
-        <Popconfirm placement="right" title={`Sure to delete ? length : (${deletelength}) `} onConfirm={this.onDelete.bind(this)} okText="Yes" cancelText="No">
-          {this.Store.buttonShow.delete ? <Button icon="delete" disabled={deletelength < 1}>
-            Delete
-        </Button> : null}
-        </Popconfirm>
+        {this.renderButtons()}
         <EditComponent {...this.props} renderItem={this.renderItem.bind(this)} />
         <PortComponent {...this.props} />
       </Row>
@@ -216,6 +228,8 @@ class PortComponent extends React.Component<{ Store: Store }, any> {
         <Tabs defaultActiveKey="Import">
           <TabPane tab={<span><Icon type="cloud-upload" />Import</span>} key="Import">
             <div className="app-table-port-tab-pane">
+              <Button icon="download" block size="large" onClick={() => { this.Store.onTemplate() }}>模板</Button>
+              <Divider />
               <Dragger {...props}>
                 <p className="ant-upload-drag-icon">
                   <Icon type="inbox" />

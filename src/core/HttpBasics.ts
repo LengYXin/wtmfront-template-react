@@ -9,6 +9,7 @@ import Rx from "rxjs";
 import { message, notification } from "antd";
 import NProgress from 'nprogress';
 import lodash from 'lodash';
+import moment from 'moment';
 export class HttpBasics {
     constructor(address?, public newResponseMap?) {
         if (typeof address == "string") {
@@ -37,6 +38,10 @@ export class HttpBasics {
      * 请求超时设置
      */
     timeout = 10000;
+    /**
+     * ajax
+     */
+    ajax = Rx.Observable.ajax;
     /**
      * 创建请求
      * @param request 
@@ -122,6 +127,59 @@ export class HttpBasics {
             headers
         ).timeout(this.timeout).catch(err => Rx.Observable.of(err)).map(this.responseMap);
     }
+    /**
+     * 下载文件
+     * @param AjaxRequest 
+     * @param fileType 
+     * @param fileName 
+     */
+    async download(AjaxRequest: Rx.AjaxRequest, fileType = '.xls', fileName = moment().format("YYYY_MM_DD_hh_mm_ss")) {
+        NProgress.start();
+        AjaxRequest = {
+            // url: url,
+            method: "post",
+            responseType: "blob",
+            headers: this.headers,
+            ...AjaxRequest
+        }
+        if (AjaxRequest.body) {
+            AjaxRequest.body = this.formatBody(AjaxRequest.body, "body", AjaxRequest.headers);
+        }
+        const result = await Rx.Observable.ajax(AjaxRequest).catch(err => Rx.Observable.of(err)).toPromise();
+        NProgress.done();
+        try {
+            if (result.status == 200) {
+                const blob = result.response;
+                const a = document.createElement('a');
+                const downUrl = window.URL.createObjectURL(blob);
+                a.href = downUrl;
+                switch (blob.type) {
+                    case 'application/vnd.ms-excel':
+                        a.download = fileName + '.xls';
+                        break;
+                    default:
+                        a.download = fileName + fileType;
+                        break;
+                }
+                a.click();
+                window.URL.revokeObjectURL(downUrl);
+                message.success(`文件下载成功`)
+            } else {
+                notification['error']({
+                    key: this.notificationKey,
+                    message: '文件下载失败',
+                    description: result.message,
+                });
+            }
+
+        } catch (error) {
+            notification['error']({
+                key: this.notificationKey,
+                message: '文件下载失败',
+                description: error.message,
+            });
+        }
+    }
     jsonpCounter = 0;
     /**
      * jsonP
@@ -154,7 +212,6 @@ export class HttpBasics {
      */
     compatibleUrl(address: string, url: string, endStr?: string) {
         endStr = endStr || ''
-        console.log(address, url, endStr);
         if (/^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/.test(url)) {
             return `${url}${endStr}`;
         } else {
@@ -167,7 +224,7 @@ export class HttpBasics {
                 }
             } else {
                 if (isUrlWith) {
-                    
+
                 } else {
                     url = "/" + url;
                 }

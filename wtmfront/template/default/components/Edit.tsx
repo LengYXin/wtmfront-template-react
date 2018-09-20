@@ -5,7 +5,7 @@
  * @modify date 2018-09-10 06:35:54
  * @desc [description]
 */
-import { Form } from 'antd';
+import { Form, Button, Popconfirm, Divider } from 'antd';
 import DataEntry from 'components/table/dataEntry';
 import TableEdit, { renderItemParams } from 'components/table/tableEdit';
 import * as React from 'react';
@@ -30,4 +30,8 @@ export default class EditComponent extends TableEdit {
             {{{EditFormItem install}}}
         </>
     }
+      // 重写示例
+    // renderButtons() {
+    //     return <Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})}>添加</Button>
+    // }
 }
