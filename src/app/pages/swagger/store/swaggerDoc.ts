@@ -10,6 +10,7 @@ import { action, observable, runInAction } from "mobx";
 import { notification } from 'antd';
 import lodash from 'lodash';
 import wtmfront from 'wtmfront.json';
+import Login from 'ant-design-pro/lib/Login';
 const Http = new HttpBasics("", res => {
     if (res.status == 200) {
         return res.response
@@ -28,7 +29,7 @@ export default class ObservableStore {
         if (!PRODUCTION) {
             this.init();
         }
-        // this.getModel();
+        this.getModel();
     }
     /**当前进度 */
     @observable StepsCurrent = 0;
@@ -82,29 +83,27 @@ export default class ObservableStore {
      */
     async init() {
         const data = await Http.post("/server/init", wtmfront).map(this.map).toPromise();
-        if (data) {
-            runInAction(() => {
-                this.project = data;
-                this.startFrame = true;
-            })
-        }
+        runInAction(() => {
+            this.project = data;
+            this.startFrame = true;
+           // console.log(this.project)
+        })
     }
     /**
      * 获取现有模块
      */
     async getContainers() {
         const data = await Http.get("/server/containers").map(this.map).toPromise();
-        if (data) {
-            runInAction(() => {
-                this.containers = data;
-            })
-        }
+        runInAction(() => {
+            this.containers = data;
+        })
     }
     /**
      * 创建模块
      * @param param 
      */
     async create(param?) {
+        console.log(this.createParam,param)
         const data = await Http.post("/server/create", { ...this.createParam, ...param }).map(this.map).toPromise();
         if (data) {
             runInAction(() => {
@@ -123,29 +122,22 @@ export default class ObservableStore {
      */
     async  delete(param) {
         const data = await Http.post("/server/delete", param).map(this.map).toPromise();
-        if (data) {
-            notification['success']({
-                message: '删除成功',
-                description: '',
-            });
-        } else {
-            notification['success']({
-                message: '删除失败',
-                description: '',
-            });
-        }
+        notification['success']({
+            message: '删除成功',
+            description: '',
+        });
     }
     /**
      * 获取model
      */
+   
     async getModel() {
-        const data = await Http.get("/swaggerDoc").map(docs => this.formatDocs(docs)).toPromise();
-        if (data) {
-            runInAction(() => {
-                this.swaggerLoading = false;
-                this.docData = data;
-            })
-        }
+        const data = await Http.get("/swaggerDoc")
+        .map(docs => this.formatDocs(docs)).toPromise();
+        runInAction(() => {
+            this.swaggerLoading = false;
+            this.docData = data; 
+        })
         return data
     }
     /**
@@ -172,10 +164,12 @@ export default class ObservableStore {
         try {
             // 分组所有 api 地址
             lodash.forEach(paths, (value, key) => {
+                if(/rabbitmq/.test(key))return
                 // const detail = lodash.find(value, (o) => o.tags && o.tags.length);
-                let path: any = {};
+                 let path: any = {};
                 // 标准接口
                 let standard: { name?: string, type?: string } = {};
+                //console.log(key)
                 // 判断是否公用
                 const isPubcliStandard = lodash.includes(key, wtmfront.standard.public.name);
                 // 公共接口地址
@@ -189,6 +183,7 @@ export default class ObservableStore {
                         // console.log(key, o.name);
                         return lodash.includes(key, o.name)
                     })
+                  //  if(!standard)return;
                 }
                 // 请求类型 统一小写
                 const typeKey = lodash.toLower(standard.type);
@@ -231,7 +226,7 @@ export default class ObservableStore {
                     }
                 }
             });
-            // console.log(format);
+             
             format.tags = format.tags.filter(x => !lodash.isNil(x.paths))
         } catch (error) {
             notification['error']({
@@ -239,6 +234,7 @@ export default class ObservableStore {
                 description: error,
             });
         }
+// console.log(format)
         return format;
     }
     /**

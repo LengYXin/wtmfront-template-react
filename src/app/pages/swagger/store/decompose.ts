@@ -165,6 +165,7 @@ export default class ObservableStore {
                 // 绑定模型公共地址
                 // commonAddress: this.swaggerDoc.common,
             };
+            console.log(value)
             if (value.example && value.example.combo) {
                 attribute.common = {
                     address: this.swaggerDoc.common,

@@ -225,4 +225,14 @@ export default class Store {
     async getCombo(parmas: ICommon) {
         return await Common.getCombo(parmas);
     }
+    /**Button显示隐藏*/
+    @observable buttonShow={
+        add:false,
+        import:true,
+        delete:true
+    } 
+    /**改变Button显示隐藏*/
+    @action buttonChange(show){
+        this.buttonShow=show;
+    }
 }

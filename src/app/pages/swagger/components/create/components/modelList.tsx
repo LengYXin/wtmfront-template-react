@@ -36,12 +36,14 @@ export default class App extends React.Component<{ type: "columns" | "search" | 
         Store.decompose.onExchangeModel(this.props.type, dragIndex, hoverIndex)
     }
     dataSource() {
+        console.log(Store.decompose.Model)
         return Store.decompose.Model[this.props.type].slice();
     }
     /**
      * 关联
      */
     renderExample(item) {
+        // console.log(item)
         if (item.example && item.example.combo) {
             return <>
                 <span>combo：{item.example.combo}</span>

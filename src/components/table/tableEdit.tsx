@@ -12,6 +12,7 @@ import lodash from 'lodash';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import * as React from 'react';
+import store from 'store/index';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
@@ -38,21 +39,22 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
   }
   render() {
     const deletelength = this.Store.selectedRowKeys.length;
-
+      console.log(this.Store.buttonShow.add)
     return (
       <Row>
-        <Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})} >
+      {this.Store.buttonShow.add?<Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})} >
           Add
-        </Button>
+        </Button>:null}
         <Divider type="vertical" />
-        <Button icon="cloud-download" onClick={() => { this.Store.onVisible(true, "port") }} >
+        {this.Store.buttonShow.import?<Button icon="cloud-download" onClick={() => { this.Store.onVisible(true, "port") }}>
           Import&Export
-        </Button>
+        </Button>:null}
+        
         <Divider type="vertical" />
         <Popconfirm placement="right" title={`Sure to delete ? length : (${deletelength}) `} onConfirm={this.onDelete.bind(this)} okText="Yes" cancelText="No">
-          <Button icon="delete" disabled={deletelength < 1}>
+        {this.Store.buttonShow.delete?<Button icon="delete" disabled={deletelength < 1}>
             Delete
-        </Button>
+        </Button>:null}
         </Popconfirm>
         <EditComponent {...this.props} renderItem={this.renderItem.bind(this)} />
         <PortComponent {...this.props} />
