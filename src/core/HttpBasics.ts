@@ -42,7 +42,6 @@ export class HttpBasics {
         // 处理 路由参数  示例 "test/{c}/{a}/{b}"  从 body 提取参数
         if (/\/{\S*}/.test(request.name)) {
             if (typeof body == "object") {
-                // debugger
                 const urlStr = lodash.compact(request.name.match(/\/{\w[^\/{]*}/g).map(x => {
                     return body[x.match(/{(\w*)}/)[1]];
                 })).join("/");
@@ -79,6 +78,7 @@ export class HttpBasics {
         headers = { ...this.headers, ...headers };
         body = this.formatBody(body, "body", headers);
         url = `${this.address}${url}`;
+        console.log(url,body)
         return Rx.Observable.ajax.post(
             url,
             body,
@@ -111,6 +111,7 @@ export class HttpBasics {
         headers = { ...this.headers, ...headers };
         body = this.formatBody(body);
         url = `${this.address}${url}${body}`;
+        console.log(url,headers)
         return Rx.Observable.ajax.delete(
             url,
             headers
@@ -206,6 +207,7 @@ export class HttpBasics {
      * ajax过滤
      */
     responseMap = (x) => {
+        console.log(x)
         // 关闭加载进度条
         setTimeout(() => {
             NProgress.done();

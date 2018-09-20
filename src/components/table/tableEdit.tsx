@@ -42,7 +42,7 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
       console.log(this.Store.buttonShow.add)
     return (
       <Row>
-      {this.Store.buttonShow.add?<Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})} >
+      {this.Store.buttonShow.add?<Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})}>
           Add
         </Button>:null}
         <Divider type="vertical" />
@@ -99,7 +99,13 @@ class FormComponent extends React.Component<Props, any> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // 转换时间对象  moment 对象 valueOf 为时间戳，其他类型数据 为原始数据。
+       // console.log(values.createDate[0].valueOf()) //时间转化为毫秒数
+        values.createDateFrom= values.createDate[0]||undefined
+        values.createDateTo= values.createDate[1]||undefined
+        values.createDate=undefined
+        //转换时间对象  moment 对象 valueOf 为时间戳，其他类型数据 为原始数据。
+        //lodash.pickBy(values, x => !lodash.isNil(x)) ==>过滤出有属性值的对象集合
+        //然后 遍历这个对象, 每个属性值都使用valueOf()方法装换
         values = lodash.mapValues(lodash.pickBy(values, x => !lodash.isNil(x)), x => x.valueOf());
         this.Store.onEdit(values);
       }
@@ -221,6 +227,7 @@ class PortComponent extends React.Component<{ Store: Store }, any> {
               </Dragger>
             </div>
           </TabPane>
+
           <TabPane tab={<span><Icon type="cloud-download" />Export</span>} key="Export">
             <div className="app-table-port-tab-pane">
               <Alert message="导出当前筛选条件下的数据" type="info" showIcon />

@@ -5,7 +5,7 @@
  * @modify date 2018-09-10 05:01:05
  * @desc [description]
 */
-import { notification } from 'antd';
+import { notification, Button } from 'antd';
 import lodash from 'lodash';
 import { action, toJS, observable } from 'mobx';
 import wtmfront from 'wtmfront.json';
@@ -27,13 +27,23 @@ export default class ObservableStore {
         search: [],     //搜索条件
         // edit: {},    //编辑字段
         install: [],    //添加字段
-        update: []      //修改字段
+        update: [] ,    //修改字段
+        buttonShow: {
+            add:true,
+            import:true,
+            delete:true
+        }   //功能按钮
     }
     /** 选择的 tag */
     selectTag = {
         name: "",
         paths: []
     };
+    /** 功能改变 */
+    @action.bound changeButton(attr,flag:boolean){
+       this.Model.buttonShow[attr]=flag
+        console.log(this.Model)
+    }
     /** swaggerDoc */
     definitions = null;// toJS(this.swaggerDoc.docData.definitions);
     @action.bound
@@ -165,7 +175,7 @@ export default class ObservableStore {
                 // 绑定模型公共地址
                 // commonAddress: this.swaggerDoc.common,
             };
-            console.log(value)
+            // console.log(value)
             if (value.example && value.example.combo) {
                 attribute.common = {
                     address: this.swaggerDoc.common,
@@ -183,7 +193,7 @@ export default class ObservableStore {
      * 交换模型位置
      */
     @action.bound
-    onExchangeModel(type: "columns" | "search" | "install" | "update", dragIndex: number, hoverIndex: number) {
+    onExchangeModel(type: "columns" | "search" | "install" | "update"|"btn", dragIndex: number, hoverIndex: number) {
         let dataSource = toJS(this.Model[type]);
         const drag = dataSource[dragIndex];
         // const hover = dataSource[hoverIndex];
