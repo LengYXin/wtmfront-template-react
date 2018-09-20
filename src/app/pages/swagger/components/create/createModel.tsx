@@ -5,7 +5,7 @@
  * @modify date 2018-09-10 04:47:48
  * @desc [description]
 */
-import { Button, Select, Tabs, message, Spin, Divider } from 'antd';
+import { Button, Select, Tabs, message, Spin, Divider, Table } from 'antd';
 import { action } from "mobx";
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -13,6 +13,7 @@ import { } from 'react-dnd';
 import Store from '../../store';
 import BindModel from './components/bindModel';
 import ModelList from './components/modelList';
+import { Action } from 'rxjs/scheduler/Action';
 const TabPane = Tabs.TabPane;
 const { swaggerDoc, decompose } = Store;
 const Option = Select.Option;
@@ -151,6 +152,7 @@ const Option = Select.Option;
 export default class App extends React.Component<any, any> {
     constructor(props) {
         super(props)
+        console.log(swaggerDoc)
         // ModelStore.getModel();
     }
     handleSubmit() {
