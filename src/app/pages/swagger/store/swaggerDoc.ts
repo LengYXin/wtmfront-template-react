@@ -12,6 +12,7 @@ import lodash from 'lodash';
 import wtmfront from 'wtmfront.json';
 import Login from 'ant-design-pro/lib/Login';
 const Http = new HttpBasics("", res => {
+    console.log(res);
     if (res.status == 200) {
         return res.response
     }
@@ -106,8 +107,6 @@ export default class ObservableStore {
      * @param param 
      */
     async create(param?) {
-        console.log(this.createParam, param)
-        console.log(param)
         const data = await Http.post("/server/create", { ...this.createParam, ...param }).map(this.map).toPromise();
         if (data) {
             runInAction(() => {
@@ -176,15 +175,17 @@ export default class ObservableStore {
         try {
             // 分组所有 api 地址
             lodash.forEach(paths, (value, key) => {
-                if (/rabbitmq/.test(key)) return
+                // 排除的控制器
+                if (wtmfront.excludeStandard.some(x => lodash.includes(key, x))) return
                 // const detail = lodash.find(value, (o) => o.tags && o.tags.length);
                 let path: any = {};
                 // 标准接口
                 let standard: { name?: string, type?: string } = {};
                 //console.log(key)
-                // 判断是否公用
-                const isPubcliStandard = lodash.includes(key, wtmfront.standard.public.name);
-                // 公共接口地址
+                // 公共控制器
+                const isPubcliStandard = wtmfront.publicStandard.some(x => lodash.includes(key, x)) //lodash.includes(wtmfront.publicStandard, key);
+                // console.log(isPubcliStandard, wtmfront.excludeStandard, key);
+                // 公共控制器
                 if (isPubcliStandard) {
                     format.common.push({
                         key,
@@ -241,9 +242,10 @@ export default class ObservableStore {
 
             format.tags = format.tags.filter(x => !lodash.isNil(x.paths))
         } catch (error) {
+            console.log(error);
             notification['error']({
                 message: '解析Swagger文档失败',
-                description: error,
+                description: error.message,
             });
         }
         // console.log(format)

@@ -11,7 +11,6 @@ class Common {
     constructor() {
         console.log("Common", this);
     }
-    address = PRODUCTION ? '' : '/api';
     /** 缓存 http 请求 */
     CacheHttp = new Map<string, Promise<any>>();
     /** 缓存数据 */
@@ -25,7 +24,7 @@ class Common {
         if (this.CacheHttp.has(key)) {
             promise = this.CacheHttp.get(key);
         } else {
-            promise = Http.get(this.address + parmas.address, parmas.params).toPromise();
+            promise = Http.get(parmas.address, parmas.params).toPromise();
             // promise = new Promise((resolve, reject) => {
             //     setTimeout(() => {
             //         const list = [];

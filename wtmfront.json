@@ -39,9 +39,12 @@
         "template": {
             "name": "template",
             "type": "Post"
-        },
-        "public": {
-            "name": "common"
         }
-    }
+    },
+    "publicStandard": [
+        "common"
+    ],
+    "excludeStandard": [
+        "rabbitmq"
+    ]
 }

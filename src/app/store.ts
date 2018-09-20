@@ -21,7 +21,7 @@ interface subMenu {
     Children?: any[],
     // [key: string]: any
 }
-const Http = new HttpBasics(null, (x) => {
+const Http = new HttpBasics('', (x) => {
     if (x.status == 200) {
         if (x.response && x.response.status) {
             if (x.response.status == 200) {
@@ -75,7 +75,7 @@ export class Store {
         this.setSubMenu(subMenu.map(newGuid))
     }
     /** 菜单展开 收起 */
-    @observable collapsed = false;
+    @observable collapsed = true;
     /** 菜单 */
     @observable subMenu: subMenu[] = [];
     /**  设置菜单 */

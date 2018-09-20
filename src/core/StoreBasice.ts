@@ -79,6 +79,7 @@ export default class Store {
   @action.bound
   onSelectChange(selectedRowKeys) {
     this.selectedRowKeys = selectedRowKeys
+    console.log(this.selectedRowKeys);
   }
   /**
    * 编辑
@@ -236,6 +237,12 @@ export default class Store {
   async onDelete(params: any[]) {
     params = params.map(x => x[this.IdKey])
     const result = await this.Http.create(this.url.delete, params).toPromise()
+    if (result) {
+      message.success('删除成功')
+      this.onSelectChange([])
+    } else {
+      message.success('删除失败')
+    }
     return result
   }
   /**

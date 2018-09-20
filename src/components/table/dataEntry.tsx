@@ -15,6 +15,7 @@ const Option = Select.Option;
 interface IDataEntryProps {
     Store: Store;
     format?: string;
+    example?: any;
     common?: ICommon;
     // 表单组件传递
     placeholder?: string;
@@ -30,24 +31,38 @@ interface IDataEntryProps {
  */
 export default class DataEntry extends React.Component<IDataEntryProps, any> {
     Store = this.props.Store;
+    state = { error: null, errorInfo: null };
+    componentDidCatch(error, info) {
+        this.setState({
+            error: error,
+            errorInfo: info
+        })
+    }
     shouldComponentUpdate() {
         return false
     }
     render() {
+        if (this.state.errorInfo) {
+            return (
+                <div>
+                    <h2>组件出错~</h2>
+                </div>
+            );
+        }
         const { common, Store, format, placeholder, onChange, value } = this.props;
         let GetFieldDecoratorOptions = {
             onChange,
             defaultValue: value,
-           // placeholder: placeholder
+            // placeholder: placeholder
         }
         if (common && common.address) {
             return <DataEntrySelect {...this.props} {...GetFieldDecoratorOptions} />
         }
         switch (format) {
             case "date-time":
-                return <DatePicker 
-                format={Store.dateFormat} 
-                {...GetFieldDecoratorOptions} />
+                return <DatePicker
+                    format={Store.dateFormat}
+                    {...GetFieldDecoratorOptions} />
             case "int32":
                 return <InputNumber {...GetFieldDecoratorOptions} />
             default:
@@ -62,7 +77,14 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
     Store = this.props.Store;
     state = {
         loading: !this.Store.Common.Cache.has(JSON.stringify(this.props.common)),
-        data: []
+        data: [],
+        error: null, errorInfo: null
+    }
+    componentDidCatch(error, info) {
+        this.setState({
+            error: error,
+            errorInfo: info
+        })
     }
     async componentDidMount() {
         const data = await this.Store.getCombo(this.props.common)
@@ -71,16 +93,38 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
             data: data
         })
     }
+    onChange(event) {
+        if (this.props.example.multi) {
+            event = event.join(",")
+        }
+        console.log(event);
+        this.props.onChange(event);
+    }
     render() {
+        if (this.state.errorInfo) {
+            return (
+                <div>
+                    <h2>组件出错~</h2>
+                </div>
+            );
+        }
+        console.log(this.props);
+        const config = {
+            mode: "multiple",
+            onChange: this.onChange.bind(this),
+            tokenSeparators: [','],
+            placeholder: this.props.placeholder,
+            defaultValue: this.props.defaultValue
+        }
+        if (!this.props.example.multi) {
+            delete config.mode;
+        }
         return (
             <Spin spinning={this.state.loading}>
                 <Select
-                    onChange={this.props.onChange}
-                    tokenSeparators={[',']}
-                    placeholder={this.props.placeholder}
-                    defaultValue={this.props.defaultValue}
+                    {...config}
                 >
-                    {this.state.data.map(x => <Option key={x.key}>{x.value}</Option>)}
+                    {this.state.data.map(x => <Option key={x.value}>{x.name}</Option>)}
                 </Select>
             </Spin>
 

@@ -24,6 +24,7 @@ export interface Props extends FormComponentProps {
   Store: Store,
   renderItem: (params: renderItemParams) => React.ReactElement<any>
 }
+@observer
 export default class TableEditComponent extends React.Component<{ Store: Store }, any> {
   Store = this.props.Store;
   renderItem({ form, initialValue }: renderItemParams) {
@@ -64,6 +65,7 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
   }
   render() {
     const deletelength = this.Store.selectedRowKeys.length;
+    console.log(deletelength);
     return (
       <Row>
         {this.renderButtons()}

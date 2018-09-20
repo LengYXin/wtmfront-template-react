@@ -15,6 +15,9 @@ module.exports = (Handlebars) => {
         if (x.attribute && x.attribute.common) {
             str += ` common={${JSON.stringify(x.attribute.common)}} `
         }
+        if (x.example) {
+            str += ` example={${JSON.stringify(x.example)}} `
+        }
         if (x.description) {
             str += ` placeholder='${x.description}' `
         }
