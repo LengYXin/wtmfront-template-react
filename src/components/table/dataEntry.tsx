@@ -53,7 +53,7 @@ export default class DataEntry extends React.Component<IDataEntryProps, any> {
         let GetFieldDecoratorOptions = {
             onChange,
             defaultValue: value,
-            // placeholder: placeholder
+            placeholder: placeholder
         }
         if (common && common.address) {
             return <DataEntrySelect {...this.props} {...GetFieldDecoratorOptions} />
