@@ -8,7 +8,7 @@
 import { Button, Col, Icon, List, Row, Switch, Divider } from 'antd'
 import Sortable from 'components/sortable/index'
 import { action, toJS } from 'mobx';
-import { observer,inject } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import * as React from 'react'
 import Store from '../../../store'
 const { swaggerDoc, decompose } = Store
@@ -24,8 +24,8 @@ let gutter = 14
 // @inject(()=>Store)
 @observer
 export default class App extends React.Component<
-  { type: 'columns' | 'search' | 'install' | 'update' | 'btn' },
-  any
+{ type: 'columns' | 'search' | 'install' | 'update' | 'btn' },
+any
 > {
   @action.bound
   onChange(e, data, type = 'install') {
@@ -66,48 +66,48 @@ export default class App extends React.Component<
   render() {
     if (this.props.type === 'btn') {
       console.log(decompose)
-      const buttonShow=decompose.Model.buttonShow
-      const data=Object.keys(buttonShow)
+      const buttonShow = decompose.Model.buttonShow
+      const data = Object.keys(buttonShow)
       return (
         <>
           <Row type="flex" justify="center" align="top" gutter={gutter}>
             <Col span={ColSpan.name}>名称</Col>
             <Col span={ColSpan.available}>可用</Col>
           </Row>
-         
-              <List
-                bordered
-                dataSource={data}
-                renderItem={item => (
-                  <List.Item style={{ width: '100%',textAlign:"center" }}>
-                    <Row
-                type="flex"
-                justify="center"
-                align="top"
-                gutter={gutter}
-                style={{ width: '100%' }}
-              >
-              <Col span={ColSpan.name}>
-                 {item}
-                </Col>
-                <Col span={ColSpan.available}>
-                  <Switch
-                    onChange={(flag)=> {
+
+          <List
+            bordered
+            dataSource={data}
+            renderItem={item => (
+              <List.Item style={{ width: '100%',  }}>
+                <Row
+                  type="flex"
+                  justify="center"
+                  align="top"
+                  gutter={gutter}
+                  style={{ width: '100%' }}
+                >
+                  <Col span={ColSpan.name}>
+                    {item}
+                  </Col>
+                  <Col span={ColSpan.available}>
+                    <Switch
+                      onChange={(flag) => {
                         //拿到对应的索引
-                      //  let index=data.indexOf(item)
-                       // let attr=Object.keys(toJS(item))[0]
+                        //  let index=data.indexOf(item)
+                        // let attr=Object.keys(toJS(item))[0]
                         //改变它的属性值
-                        decompose.changeButton(item,flag)
-                    }}
-                    checkedChildren={<Icon type="check" />}
-                    unCheckedChildren={<Icon type="cross" />}
-                    defaultChecked={buttonShow[item]}
-                  />
-                </Col>
-              </Row>
-                  </List.Item>
-                )}
-              />
+                        decompose.changeButton(item, flag)
+                      }}
+                      checkedChildren={<Icon type="check" />}
+                      unCheckedChildren={<Icon type="cross" />}
+                      defaultChecked={buttonShow[item]}
+                    />
+                  </Col>
+                </Row>
+              </List.Item>
+            )}
+          />
         </>
       )
     }

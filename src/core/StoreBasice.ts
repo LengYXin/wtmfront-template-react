@@ -89,7 +89,6 @@ export default class Store {
    * @param details 详情 有唯一 key 判定为修改
    */
   async onModalShow(details = {}) {
-    this.onVisible(true)
     if (details[this.IdKey] == null) {
       runInAction(() => {
         //添加
@@ -106,6 +105,7 @@ export default class Store {
     runInAction(() => {
       this.details = details
     })
+    this.onVisible(true)
   }
   /**
    * 弹出框状态

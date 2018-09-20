@@ -26,8 +26,6 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
       render: this.renderAction.bind(this),
     }
   ]
-  // 时间格式化
-  // dateFormat = 'YYYY-MM-DD';
   // 处理 表格类型输出
   columnsMap(column) {
     switch (column.format) {

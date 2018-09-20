@@ -41,19 +41,19 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
     const deletelength = this.Store.selectedRowKeys.length;
     return (
       <Row>
-      {this.Store.buttonShow.add?<Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})}>
+        {this.Store.buttonShow.add ? <Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})}>
           Add
-        </Button>:null}
+        </Button> : null}
         <Divider type="vertical" />
-        {this.Store.buttonShow.import?<Button icon="cloud-download" onClick={() => { this.Store.onVisible(true, "port") }}>
+        {this.Store.buttonShow.import ? <Button icon="cloud-download" onClick={() => { this.Store.onVisible(true, "port") }}>
           Import&Export
-        </Button>:null}
-        
+        </Button> : null}
+
         <Divider type="vertical" />
         <Popconfirm placement="right" title={`Sure to delete ? length : (${deletelength}) `} onConfirm={this.onDelete.bind(this)} okText="Yes" cancelText="No">
-        {this.Store.buttonShow.delete?<Button icon="delete" disabled={deletelength < 1}>
+          {this.Store.buttonShow.delete ? <Button icon="delete" disabled={deletelength < 1}>
             Delete
-        </Button>:null}
+        </Button> : null}
         </Popconfirm>
         <EditComponent {...this.props} renderItem={this.renderItem.bind(this)} />
         <PortComponent {...this.props} />
@@ -98,14 +98,12 @@ class FormComponent extends React.Component<Props, any> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-       // console.log(values.createDate[0].valueOf()) //时间转化为毫秒数
-        values.createDateFrom= values.createDate[0]||undefined
-        values.createDateTo= values.createDate[1]||undefined
-        values.createDate=undefined
-        //转换时间对象  moment 对象 valueOf 为时间戳，其他类型数据 为原始数据。
-        //lodash.pickBy(values, x => !lodash.isNil(x)) ==>过滤出有属性值的对象集合
-        //然后 遍历这个对象, 每个属性值都使用valueOf()方法装换
-        values = lodash.mapValues(lodash.pickBy(values, x => !lodash.isNil(x)), x => x.valueOf());
+        values = lodash.mapValues(lodash.pickBy(values, x => !lodash.isNil(x)), x => {
+          if (x instanceof moment) {
+            x = moment(x.format(this.Store.dateFormat))
+          }
+          return x.valueOf()
+        });
         this.Store.onEdit(values);
       }
     });
@@ -136,7 +134,7 @@ class FormComponent extends React.Component<Props, any> {
    */
   moment(date) {
     if (date == '' || date == null || date == undefined) {
-      date = new Date();
+      date = moment(new Date(), this.Store.dateFormat);
     }
     if (typeof date == 'string') {
       date = moment(date, this.Store.dateFormat)
@@ -203,7 +201,7 @@ class PortComponent extends React.Component<{ Store: Store }, any> {
     //     }
     //   },
     // };
-    const props=this.Store.onImport();
+    const props = this.Store.onImport();
     return (
       <Modal
         title="Import&Export"

@@ -94,7 +94,12 @@ class FormComponent extends React.Component<Props, any> {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // 转换时间对象  moment 对象 valueOf 为时间戳，其他类型数据 为原始数据。
-        values = lodash.mapValues(lodash.pickBy(values, x => !lodash.isNil(x)), x => x.valueOf());
+        values = lodash.mapValues(lodash.pickBy(values, x => !lodash.isNil(x)), x => {
+          if (x instanceof moment) {
+            x = moment(x.format(this.Store.dateFormat))
+          }
+          return x.valueOf()
+        });
         this.Store.onGet(values)
       }
     });
