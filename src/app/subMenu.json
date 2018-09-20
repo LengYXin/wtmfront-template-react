@@ -19,42 +19,18 @@
                     "Key": "401f84d3-5a77-4b30-92c4-9c723ed29356",
                     "Name": "test",
                     "Icon": "menu-fold",
-                    "Path": "/test",
+                    "Path": "/null",
                     "Component": "test",
                     "Children": []
                 }
             ]
         },
         {
-            "Key": "9b7ed8f5-3aa2-48f2-a5ef-8beaa98d1cd8",
-            "Name": "testz",
+            "Key": "99c25aca-09d1-4004-a65a-f8755ba822b4",
+            "Name": "test",
             "Icon": "menu-fold",
-            "Path": "/testz",
-            "Component": "testz",
-            "Children": []
-        },
-        {
-            "Key": "65288cbd-b314-4f37-92cb-db8c4ed2a865",
-            "Name": "testbbb",
-            "Icon": "menu-fold",
-            "Path": "/testbbbb",
-            "Component": "testbbbb",
-            "Children": []
-        },
-        {
-            "Key": "f3c21f71-36d4-4581-b824-e73115e1809c",
-            "Name": "testsdfdsfds",
-            "Icon": "menu-fold",
-            "Path": "/testsfsdffds",
-            "Component": "testsfsdffds",
-            "Children": []
-        },
-        {
-            "Key": "6366bdc9-05a8-4c7b-97dc-52de513b7e78",
-            "Name": "testbUTTON",
-            "Icon": "menu-fold",
-            "Path": "/testBUTTON",
-            "Component": "testBUTTON",
+            "Path": "/test",
+            "Component": "test",
             "Children": []
         }
     ]

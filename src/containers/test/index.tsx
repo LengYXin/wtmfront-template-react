@@ -7,7 +7,6 @@ import "./style.less";
 
 export default class App extends React.Component<any, any> {
   render() {
-    console.log(this.props);
     return (
       <div className="app-table-content">
         <Header Store={Store} />
@@ -17,4 +16,3 @@ export default class App extends React.Component<any, any> {
     );
   }
 }
- 

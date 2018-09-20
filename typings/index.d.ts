@@ -1,4 +1,3 @@
-// import { ISwaggerModel } from 'module';
 /**
  * Swagger 解析格式
  */
@@ -36,9 +35,8 @@ interface IAttribute {
     // 公共属性
     common?: ICommon
 }
-// declare var swaggerModel: any;
 /**
- * 当前环境 true：生成
+ * 当前环境 true：生产
  */
 declare var PRODUCTION: boolean;
 /**
@@ -58,23 +56,3 @@ declare module "*.json" {
     export default value;
 }
 declare var VConsole: any;
-// declare var android;
-// declare var WebViewJavascriptBridge;
-// declare var WVJBCallbacks;
-
-// declare enum EnumNotice {
-//     /**
-//      * 退出登录
-//      */ 
-//     LoginOut = 0,
-//     /**登录成功 */
-//     LoginSuccess = 1,
-//     /**音乐播放 */
-//     MusicPlay = 2,
-//     /**MV 播放*/
-//     MVPlay = 3,
-// }
-// declare interface NoticeObserver {
-//     type: EnumNotice;
-//     data?: any;
-// }

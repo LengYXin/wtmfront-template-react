@@ -29,7 +29,6 @@ export default class ObservableStore {
         if (!PRODUCTION) {
             this.init();
         }
-        this.getModel();
     }
     /**当前进度 */
     @observable StepsCurrent = 0;

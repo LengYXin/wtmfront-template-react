@@ -60,7 +60,6 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
       selectedRowKeys: this.Store.selectedRowKeys,
       onChange: e => this.Store.onSelectChange(e),
     };
-    console.log(this.Store.selectedRowKeys)
     const dataSource = this.Store.dataSource
     return (
       <Row>

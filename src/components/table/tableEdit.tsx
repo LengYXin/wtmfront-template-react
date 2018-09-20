@@ -39,7 +39,6 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
   }
   render() {
     const deletelength = this.Store.selectedRowKeys.length;
-      console.log(this.Store.buttonShow.add)
     return (
       <Row>
       {this.Store.buttonShow.add?<Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})}>

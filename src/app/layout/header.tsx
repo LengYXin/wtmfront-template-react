@@ -59,7 +59,7 @@ class UserMenu extends React.Component<any, any> {
                 </Menu.Item> */}
                 </Menu>
             } placement="bottomCenter">
-                <div style={{ display: "inline-block" }}> <Avatar size="large" icon="user" /> &nbsp;<span>UserName</span></div>
+                <div style={{ display: "inline-block" }}> <Avatar size="large" icon="user" src="https://avatars0.githubusercontent.com/u/19631404?s=460&v=4" /> &nbsp;<span>冷</span></div>
             </Dropdown>
         );
     }

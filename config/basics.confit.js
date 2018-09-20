@@ -161,6 +161,7 @@ module.exports = (params) => {
             new webpack.DefinePlugin({
                 // 生成环境？
                 PRODUCTION: false,
+                APIADDRESS: '',
                 ...DefinePlugin
             }),
             new CopyWebpackPlugin([{

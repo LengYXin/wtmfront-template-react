@@ -5,7 +5,7 @@ const config = {
     changeOrigin: true,
     logLevel: "debug"
 };
-module.exports = webpack(evn => {
+module.exports = webpack(env => {
     return {
         __dirname: __dirname,
         port: 8100,
@@ -43,7 +43,7 @@ module.exports = webpack(evn => {
         `,
         // 字符串写入 需要 使用 JSON.stringify 转换
         DefinePlugin: {
-            // APIADDRESS: JSON.stringify(env.type == "deploy" ? "http://api.tjise.edudot.cn" : "http://api.tjise.stonemonth.com"),
+            APIADDRESS: JSON.stringify(env.type == "deploy" ? "/api" : "/api"),
         }
     }
 })

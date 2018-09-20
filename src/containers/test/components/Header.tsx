@@ -51,11 +51,11 @@ export default class HeaderComponent extends TableHeader {
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="公司ID" {...formItemLayout}>
+                <FormItem label="用户ID" {...formItemLayout}>
                 {getFieldDecorator('id',{
                     initialValue: initialValue('id',''),
                 })(
-                    <DataEntry {...this.props}  common={{"address":"/common/combo","params":{"id":1}}}  placeholder='公司ID'  />
+                    <DataEntry {...this.props}  placeholder='用户ID'  />
                 )}
                 </FormItem>
             </Col> 
@@ -78,38 +78,47 @@ export default class HeaderComponent extends TableHeader {
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="公司名" {...formItemLayout}>
-                {getFieldDecorator('corpName',{
-                    initialValue: initialValue('corpName',''),
+                <FormItem label="公司ID" {...formItemLayout}>
+                {getFieldDecorator('corpID',{
+                    initialValue: initialValue('corpID',''),
                 })(
-                    <DataEntry {...this.props}  placeholder='公司名'  />
+                    <DataEntry {...this.props}  placeholder='公司ID'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="管理员ID" {...formItemLayout}>
-                {getFieldDecorator('managerID',{
-                    initialValue: initialValue('managerID',''),
+                <FormItem label="用户名" {...formItemLayout}>
+                {getFieldDecorator('userName',{
+                    initialValue: initialValue('userName',''),
                 })(
-                    <DataEntry {...this.props}  common={{"address":"/common/combo","params":{"id":3}}}  placeholder='管理员ID'  />
+                    <DataEntry {...this.props}  placeholder='用户名'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="上级公司ID" {...formItemLayout}>
-                {getFieldDecorator('parentCorpID',{
-                    initialValue: initialValue('parentCorpID',''),
+                <FormItem label="手机号" {...formItemLayout}>
+                {getFieldDecorator('mobileNo',{
+                    initialValue: initialValue('mobileNo',''),
                 })(
-                    <DataEntry {...this.props}  common={{"address":"/common/combo","params":{"id":1}}}  placeholder='上级公司ID'  />
+                    <DataEntry {...this.props}  placeholder='手机号'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="总员工数" {...formItemLayout}>
-                {getFieldDecorator('corpEmpTotals',{
-                    initialValue: initialValue('corpEmpTotals','int32'),
+                <FormItem label="座机号" {...formItemLayout}>
+                {getFieldDecorator('telNo',{
+                    initialValue: initialValue('telNo',''),
                 })(
-                    <DataEntry {...this.props}  format="int32"  placeholder='总员工数'  />
+                    <DataEntry {...this.props}  placeholder='座机号'  />
+                )}
+                </FormItem>
+            </Col> 
+             <Col {...colLayout} >
+                <FormItem label="邮箱" {...formItemLayout}>
+                {getFieldDecorator('email',{
+                    initialValue: initialValue('email',''),
+                })(
+                    <DataEntry {...this.props}  placeholder='邮箱'  />
                 )}
                 </FormItem>
             </Col> 
@@ -118,7 +127,43 @@ export default class HeaderComponent extends TableHeader {
                 {getFieldDecorator('useYN',{
                     initialValue: initialValue('useYN','int32'),
                 })(
-                    <DataEntry {...this.props}  format="int32"  common={{"address":"/common/combo","params":{"id":4}}}  placeholder='使用与否'  />
+                    <DataEntry {...this.props}  format="int32"  placeholder='使用与否'  />
+                )}
+                </FormItem>
+            </Col> 
+             <Col {...colLayout} >
+                <FormItem label="职位ID" {...formItemLayout}>
+                {getFieldDecorator('posID',{
+                    initialValue: initialValue('posID',''),
+                })(
+                    <DataEntry {...this.props}  placeholder='职位ID'  />
+                )}
+                </FormItem>
+            </Col> 
+             <Col {...colLayout} >
+                <FormItem label="职责ID" {...formItemLayout}>
+                {getFieldDecorator('dutyID',{
+                    initialValue: initialValue('dutyID',''),
+                })(
+                    <DataEntry {...this.props}  placeholder='职责ID'  />
+                )}
+                </FormItem>
+            </Col> 
+             <Col {...colLayout} >
+                <FormItem label="密码" {...formItemLayout}>
+                {getFieldDecorator('password',{
+                    initialValue: initialValue('password',''),
+                })(
+                    <DataEntry {...this.props}  placeholder='密码'  />
+                )}
+                </FormItem>
+            </Col> 
+             <Col {...colLayout} >
+                <FormItem label="部门组织ID" {...formItemLayout}>
+                {getFieldDecorator('deptGroup',{
+                    initialValue: initialValue('deptGroup',''),
+                })(
+                    <DataEntry {...this.props}  placeholder='部门组织ID'  />
                 )}
                 </FormItem>
             </Col> 

@@ -6,7 +6,7 @@ export class Store extends storeBasice {
     constructor() {
         super({
             // api 地址前缀
-            address: '/corp/'
+            address: '/user/'
         });
     }
     /** 数据 ID 索引 */
@@ -14,34 +14,59 @@ export class Store extends storeBasice {
     /** table 列配置  title dataIndex 必备字段 其他为api 返回默认字段*/
     columns = [
     {
-        "title": "公司ID",
+        "title": "用户ID",
         "dataIndex": "id",
         "format": ""
     },
     {
-        "title": "公司名",
-        "dataIndex": "corpName",
+        "title": "公司ID",
+        "dataIndex": "corpID",
         "format": ""
     },
     {
-        "title": "管理员ID",
-        "dataIndex": "managerID",
+        "title": "用户名",
+        "dataIndex": "userName",
         "format": ""
     },
     {
-        "title": "上级公司ID",
-        "dataIndex": "parentCorpID",
+        "title": "手机号",
+        "dataIndex": "mobileNo",
         "format": ""
     },
     {
-        "title": "总员工数",
-        "dataIndex": "corpEmpTotals",
-        "format": "int32"
+        "title": "座机号",
+        "dataIndex": "telNo",
+        "format": ""
+    },
+    {
+        "title": "邮箱",
+        "dataIndex": "email",
+        "format": ""
     },
     {
         "title": "使用与否",
         "dataIndex": "useYN",
         "format": "int32"
+    },
+    {
+        "title": "职位ID",
+        "dataIndex": "posID",
+        "format": ""
+    },
+    {
+        "title": "职责ID",
+        "dataIndex": "dutyID",
+        "format": ""
+    },
+    {
+        "title": "密码",
+        "dataIndex": "password",
+        "format": ""
+    },
+    {
+        "title": "部门组织ID",
+        "dataIndex": "deptGroup",
+        "format": ""
     },
     {
         "title": "创建用户ID",
