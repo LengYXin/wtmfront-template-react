@@ -108,8 +108,7 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
                 </div>
             );
         }
-        console.log(this.props);
-        const config = {
+        let config = {
             mode: "multiple",
             onChange: this.onChange.bind(this),
             tokenSeparators: [','],
@@ -118,6 +117,13 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
         }
         if (!this.props.example.multi) {
             delete config.mode;
+        } else {
+            if (config.defaultValue == "") {
+                delete config.defaultValue;
+            }
+            if (typeof config.defaultValue == "string") {
+                config.defaultValue = config.defaultValue.split(",")
+            }
         }
         return (
             <Spin spinning={this.state.loading}>
