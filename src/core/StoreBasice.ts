@@ -13,7 +13,7 @@ import { message } from 'antd'
 import wtmfront from 'wtmfront.json'
 import Common from './Common'
 export default class Store {
-  constructor(public StoreConfig) {}
+  constructor(public StoreConfig) { }
   CONFIGJSON: ISwaggerModel = {
     idKey: 'id', //唯一标识
     address: '', //地址控制器
@@ -21,12 +21,11 @@ export default class Store {
     search: [], //搜索条件
     install: [], //添加字段
     update: [], //修改字段
-    buttonShow: [
-      //功能按钮
-      { add: '' },
-      { import: '' },
-      { delete: '' }
-    ]
+    buttonShow: {
+      add: true,
+      import: true,
+      delete: true
+    }   //功能按钮
   }
   Common = Common
   /** dev 环境 加上代理 前缀 */

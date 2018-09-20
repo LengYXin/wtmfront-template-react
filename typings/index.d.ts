@@ -9,7 +9,12 @@ interface ISwaggerModel {
     search: any[],     //搜索条件
     // edit: {},    //编辑字段
     install: any[],    //添加字段
-    update: any[]      //修改字段
+    update: any[],      //修改字段
+    buttonShow: {     //按钮 
+        add: boolean,
+        import: boolean,
+        delete: boolean
+    }
 }
 /**
  * 公共属性
