@@ -104,6 +104,7 @@ export default class ObservableStore {
      */
     async create(param?) {
         console.log(this.createParam,param)
+        console.log(param)
         const data = await Http.post("/server/create", { ...this.createParam, ...param }).map(this.map).toPromise();
         if (data) {
             runInAction(() => {

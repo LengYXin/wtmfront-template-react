@@ -22,7 +22,7 @@ interface IDataEntryProps {
     value?: any;
     defaultValue?: any;
 }
-const RangePicker = DatePicker.RangePicker;
+// const RangePicker = DatePicker.RangePicker;
 /**
  * 数据渲染组件
  * 自定义数据组件
@@ -45,7 +45,9 @@ export default class DataEntry extends React.Component<IDataEntryProps, any> {
         }
         switch (format) {
             case "date-time":
-                return <RangePicker format={Store.dateFormat} {...GetFieldDecoratorOptions} />
+                return <DatePicker 
+                format={Store.dateFormat} 
+                {...GetFieldDecoratorOptions} />
             case "int32":
                 return <InputNumber {...GetFieldDecoratorOptions} />
             default:

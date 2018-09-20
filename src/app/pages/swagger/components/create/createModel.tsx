@@ -224,6 +224,9 @@ class ModelBody extends React.Component<any, any> {
                 <TabPane tab="Add" key="3">
                     <ModelList type="install" />
                 </TabPane>
+                <TabPane tab="button" key="4">
+                    <ModelList type="btn" />
+                </TabPane>
                 {/* <TabPane tab="Update" key="4">
                     <ModelList type="update" />
                 </TabPane> */}

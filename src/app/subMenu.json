@@ -42,14 +42,6 @@
             "Children": []
         },
         {
-            "Key": "c01d71e9-73ac-4397-aa6b-b252c337b873",
-            "Name": "testpioip",
-            "Icon": "menu-fold",
-            "Path": "/testoiopip",
-            "Component": "testoiopip",
-            "Children": []
-        },
-        {
             "Key": "f3c21f71-36d4-4581-b824-e73115e1809c",
             "Name": "testsdfdsfds",
             "Icon": "menu-fold",
@@ -58,19 +50,11 @@
             "Children": []
         },
         {
-            "Key": "bf733a3e-dc92-4ca8-aa8c-a19fd25716ef",
-            "Name": "testsdfsdf",
+            "Key": "6366bdc9-05a8-4c7b-97dc-52de513b7e78",
+            "Name": "testbUTTON",
             "Icon": "menu-fold",
-            "Path": "/testsdfsdf",
-            "Component": "testsdfsdf",
-            "Children": []
-        },
-        {
-            "Key": "b8085aaa-279d-4c76-9003-5e29c79d88e8",
-            "Name": "test",
-            "Icon": "menu-fold",
-            "Path": "/testSDFSDFS",
-            "Component": "testSDFSDFS",
+            "Path": "/testBUTTON",
+            "Component": "testBUTTON",
             "Children": []
         }
     ]
