@@ -18,6 +18,7 @@ module.exports = (params) => {
             port: port,
             proxy: proxy,
         },
+        deployWrite: deployWrite,
         DefinePlugin: {
             ...DefinePlugin
         }

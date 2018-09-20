@@ -182,6 +182,7 @@ module.exports = (params) => {
                 vconsole: `
         <!--              Q&A @冷颖鑫 (lengyingxin8966@gmail.com)          -->   
         <!--              Build Time： ${time}   ( *¯ ꒳¯*)!!              -->
+        ${deployWrite}
                 `
             }),
             ...plugins,

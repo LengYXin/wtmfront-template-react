@@ -39,7 +39,10 @@ module.exports = webpack(env => {
             },
         },
         deployWrite: `
-        
+        <!--             写点什么进去？             -->
+        <script>
+            console.log("写点什么？");
+        </script>
         `,
         // 字符串写入 需要 使用 JSON.stringify 转换
         DefinePlugin: {

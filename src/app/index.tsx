@@ -21,7 +21,10 @@ import Login from "./pages/login";
 import swagger, { Entrance } from "./pages/swagger/index";
 import System from "./pages/system";
 import './style.less';
-import { Skeleton } from 'antd';
+import { Skeleton, LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+
+
 @observer
 export default class RootRoutes extends React.Component<any, any> {
     /**
@@ -201,10 +204,12 @@ export default class RootRoutes extends React.Component<any, any> {
     renderApp() {
         if (store.User.isLogin) {
             console.log("-----------路由列表-----------", this.routes);
-            return <>
-                {renderRoutes(this.routes)}
-                <Entrance />
-            </>
+            return <LocaleProvider locale={zhCN}>
+                <>
+                    {renderRoutes(this.routes)}
+                    <Entrance />
+                </>
+            </LocaleProvider>
         }
         return <Login />
     }
