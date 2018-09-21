@@ -94,7 +94,7 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
         })
     }
     onChange(event) {
-        if (this.props.example.multi) {
+        if (this.props.example && this.props.example.multi) {
             event = event.join(",")
         }
         console.log(event);
@@ -115,7 +115,7 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
             placeholder: this.props.placeholder,
             defaultValue: this.props.defaultValue
         }
-        if (!this.props.example.multi) {
+        if (this.props.example && !this.props.example.multi) {
             delete config.mode;
         } else {
             if (config.defaultValue == "") {
