@@ -33,12 +33,13 @@ export function mapValues(values, dateFormat) {
     // 去除空值
     lodash.pickBy(values, data => !lodash.isNil(data)),
     data => {
-      if (data instanceof moment) {
-        console.log(data);
-        data = moment(data.format(dateFormat))
-      }
+      // if (data instanceof moment) {
+      //   console.log(data);
+      //   data = moment(data.format(dateFormat))
+      // }
       if (Array.isArray(data) && data.some(x => x instanceof moment)) {
-        data = data.map(x => moment(x.format(dateFormat)).valueOf()).join(',')
+        // data = data.map(x => moment(x.format(dateFormat)).valueOf()).join(',')
+        data = data.map(x => x.valueOf()).join(',')
       }
       return data.valueOf()
     }
