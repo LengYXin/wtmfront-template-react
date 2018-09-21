@@ -83,24 +83,24 @@ export default class ObservableStore {
      */
     async init() {
         const data = await Http.post("/server/init", wtmfront).map(this.map).toPromise();
-        runInAction(() => {
-            if (data) {
+        if (data) {
+            runInAction(() => {
                 this.project = data;
-            }
-            this.startFrame = true;
-            // console.log(this.project)
-        })
+                this.startFrame = true;
+                // console.log(this.project)
+            })
+        }
     }
     /**
      * 获取现有模块
      */
     async getContainers() {
         const data = await Http.get("/server/containers").map(this.map).toPromise();
-        runInAction(() => {
-            if (data) {
+        if (data) {
+            runInAction(() => {
                 this.containers = data;
-            }
-        })
+            })
+        }
     }
     /**
      * 创建模块
