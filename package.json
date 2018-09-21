@@ -30,6 +30,7 @@
     "react-dnd-html5-backend": "^5.0.1",
     "react-dom": "^16.5.0",
     "react-loadable": "^5.5.0",
+    "react-resizable": "^1.7.5",
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1",
     "react-transition-group": "^2.4.0",

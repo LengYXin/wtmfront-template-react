@@ -9,8 +9,7 @@ import { DatePicker, Input, InputNumber, Select, Spin } from 'antd';
 import Store from 'core/StoreBasice';
 import moment from 'moment';
 import * as React from 'react';
-
-
+const RangePicker = DatePicker.RangePicker;
 const Option = Select.Option;
 interface IDataEntryProps {
     Store: Store;
@@ -23,7 +22,6 @@ interface IDataEntryProps {
     value?: any;
     defaultValue?: any;
 }
-// const RangePicker = DatePicker.RangePicker;
 /**
  * 数据渲染组件
  * 自定义数据组件
@@ -49,14 +47,26 @@ export default class DataEntry extends React.Component<IDataEntryProps, any> {
                 </div>
             );
         }
-        const { common, Store, format, placeholder, onChange, value } = this.props;
-        let GetFieldDecoratorOptions = {
+        const { example, common, Store, format, placeholder, onChange, value } = this.props;
+        let GetFieldDecoratorOptions: any = {
             onChange,
             defaultValue: value,
             placeholder: placeholder
         }
         if (common && common.address) {
             return <DataEntrySelect {...this.props} {...GetFieldDecoratorOptions} />
+        }
+        if (example && example.date === true) {
+            return <DatePicker
+                format={Store.dateFormat}
+                {...GetFieldDecoratorOptions} />
+        }
+        if (example && example.datetime === true) {
+            GetFieldDecoratorOptions.placeholder = [GetFieldDecoratorOptions.placeholder, GetFieldDecoratorOptions.placeholder]
+            return <>
+                <RangePicker format={Store.dateFormat}
+                    {...GetFieldDecoratorOptions} />
+            </>
         }
         switch (format) {
             case "date-time":

@@ -12,6 +12,7 @@ import lodash from 'lodash';
 import moment from 'moment';
 import { Props, renderItemParams } from './tableEdit';
 import { observer } from 'mobx-react';
+import { mapValues } from './tableEdit';
 const FormItem = Form.Item;
 const Option = Select.Option;
 export default class TableHeaderComponent extends React.Component<{ Store: Store }, any> {
@@ -94,12 +95,7 @@ class FormComponent extends React.Component<Props, any> {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // 转换时间对象  moment 对象 valueOf 为时间戳，其他类型数据 为原始数据。
-        values = lodash.mapValues(lodash.pickBy(values, x => !lodash.isNil(x)), x => {
-          if (x instanceof moment) {
-            x = moment(x.format(this.Store.dateFormat))
-          }
-          return x.valueOf()
-        });
+        values = mapValues(values, this.Store.dateFormat)
         this.Store.onGet(values)
       }
     });

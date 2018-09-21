@@ -5,11 +5,13 @@
  * @modify date 2018-09-12 18:53:22
  * @desc [description]
 */
-import { Divider, Popconfirm, Row, Table, Pagination } from 'antd';
-import { observer } from 'mobx-react';
-import * as React from 'react';
-import moment from 'moment';
+import { Divider, Popconfirm, Row, Table } from 'antd';
 import Store from 'core/StoreBasice';
+import { observer } from 'mobx-react';
+import moment from 'moment';
+import * as React from 'react';
+import lodash from 'lodash';
+import { Resizable } from 'react-resizable';
 import "./style.less";
 @observer
 export default class TableBodyComponent extends React.Component<{ Store: Store }, any> {
@@ -17,6 +19,7 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     super(props)
     this.Store.onGet();
   }
+
   Store = this.props.Store;
   columns = [
     ...this.Store.columns.map(this.columnsMap.bind(this)),
@@ -26,8 +29,50 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
       render: this.renderAction.bind(this),
     }
   ]
+  /**
+   * 覆盖默认的 table 元素
+   */
+  components = {
+    header: {
+      cell: (props) => {
+        const { onResize, width, ...restProps } = props;
+
+        if (!width) {
+          return <th {...restProps} />;
+        }
+
+        return (
+          <Resizable width={width} height={0} onResize={onResize}>
+            <th {...restProps} />
+          </Resizable>
+        );
+      },
+    },
+  };
+  handleResize = index => (e, { size }) => {
+    // console.log(index, e, size);
+    // this.setState(({ columns }) => {
+    //   const nextColumns = [...columns];
+    //   nextColumns[index] = {
+    //     ...nextColumns[index],
+    //     width: size.width,
+    //   };
+    //   return { columns: nextColumns };
+    // });
+    let column = {
+      ...this.columns[index],
+      width: size.width,
+    }
+    this.columns = [
+      ...this.columns.slice(0, index),
+      column,
+      ...this.columns.slice(index + 1, this.columns.length),
+    ]
+    // console.log(this.columns);
+    this.forceUpdate();
+  };
   // 处理 表格类型输出
-  columnsMap(column) {
+  columnsMap(column, index) {
     switch (column.format) {
       case 'date-time':
         column.render = (record) => {
@@ -42,11 +87,24 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
         }
         break;
     }
-    return column
+    return {
+      ...column,
+      width: 100,
+      // 列拖拽
+      onHeaderCell: col => ({
+        width: col.width,
+        onResize: this.handleResize(index),
+      }),
+    }
   }
   renderAction(text, record) {
     return <ActionComponent {...this.props} data={record} />;
   }
+  /**
+   * 分页、排序、筛选变化时触发
+   * @param page 
+   * @param pageSize 
+   */
   onChange(page, pageSize) {
     this.Store.onGet({
       pageNo: page.current,
@@ -54,15 +112,24 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     })
   }
   render() {
+    /**
+     * 行选择
+     */
     const rowSelection = {
       selectedRowKeys: this.Store.selectedRowKeys,
       onChange: e => this.Store.onSelectChange(e),
     };
+    /**
+     * 数据集合
+     */
     const dataSource = this.Store.dataSource
+    // console.log(this.columns);
     return (
       <Row>
         <Divider />
         <Table
+          bordered
+          components={this.components}
           dataSource={dataSource.list.slice()}
           onChange={this.onChange.bind(this)}
           columns={this.columns}
@@ -84,6 +151,9 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     );
   }
 }
+/**
+ * 数据操作按钮
+ */
 class ActionComponent extends React.Component<{ Store: Store, data: any }, any> {
   Store = this.props.Store;
   async onDelete() {
