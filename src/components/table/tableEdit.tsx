@@ -34,6 +34,7 @@ export function mapValues(values, dateFormat) {
     lodash.pickBy(values, data => !lodash.isNil(data)),
     data => {
       if (data instanceof moment) {
+        console.log(data);
         data = moment(data.format(dateFormat))
       }
       if (Array.isArray(data) && data.some(x => x instanceof moment)) {

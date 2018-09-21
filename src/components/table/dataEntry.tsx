@@ -57,21 +57,19 @@ export default class DataEntry extends React.Component<IDataEntryProps, any> {
             return <DataEntrySelect {...this.props} {...GetFieldDecoratorOptions} />
         }
         if (example && example.date === true) {
-            return <DatePicker
-                format={Store.dateFormat}
-                {...GetFieldDecoratorOptions} />
+            return <DatePicker showTime format={Store.dateTimeFormat} {...GetFieldDecoratorOptions} />
         }
         if (example && example.datetime === true) {
             GetFieldDecoratorOptions.placeholder = [GetFieldDecoratorOptions.placeholder, GetFieldDecoratorOptions.placeholder]
             return <>
-                <RangePicker format={Store.dateFormat}
-                    {...GetFieldDecoratorOptions} />
+                <RangePicker showTime format={Store.dateTimeFormat} {...GetFieldDecoratorOptions} />
             </>
         }
         switch (format) {
             case "date-time":
                 return <DatePicker
-                    format={Store.dateFormat}
+                    showTime
+                    format={Store.dateTimeFormat}
                     {...GetFieldDecoratorOptions} />
             case "int32":
                 return <InputNumber {...GetFieldDecoratorOptions} />
