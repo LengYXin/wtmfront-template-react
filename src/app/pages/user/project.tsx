@@ -1,16 +1,14 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { List, Card,Avatar } from 'antd';
 import moment from 'moment';
 import {inject,observer} from 'mobx-react';
-import Store from "../../../store/user"
-const store=new Store;
 
 // import  from "./articles.less"
-@inject(()=>store)
 @observer
-class Center extends PureComponent<any,any> {
+class Center extends React.Component<any,any> {
+  User=this.props.store.User
   render() {
-    const project=this.props.User.project
+    const project=this.User.project
     return <>
     <div>
       <List

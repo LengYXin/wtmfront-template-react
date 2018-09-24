@@ -1,14 +1,15 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Card, Row, Col, Icon, Avatar, Tag, Divider, Spin, Input } from 'antd'
-import Store from '../../../store/user'
+import Store from '../../../store'
 import { inject, observer } from 'mobx-react'
 import './css/Center.less'
 import InfoCard from './infoCard'
 import Articles from './articles'
 import AppList from './Applications'
 import Project from './project'
-const store = new Store()
+import store from 'store/index';
+// const store = new Store()
 
 const operationTabList = [
   {
@@ -39,17 +40,18 @@ const operationTabList = [
 
 
 
-@inject(() => store)
+@inject(() => Store)
 @observer
 export default class IApp extends React.Component<any, any> {
+  store=this.props.User
   state = {
     key: 'articles',
     noTitleKey: 'articles'
   }
   contentListNoTitle = {
-    articles:<Articles/> ,
-    app: <AppList/>,
-    project: <Project/>
+    articles:<Articles store={this.store}/> ,
+    app: <AppList store={this.store}/>,
+    project: <Project store={this.store}/>
   }
   onTabChange = (key, type) => {
     // console.log(key, type);
@@ -60,7 +62,7 @@ export default class IApp extends React.Component<any, any> {
     return (
         <Row gutter={24} >
           <Col lg={7} md={24}>
-            <InfoCard/>
+            <InfoCard store={this.store}/>
           </Col>
           <Col lg={17} md={24}>
             <Card

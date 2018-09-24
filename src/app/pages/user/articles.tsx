@@ -1,17 +1,15 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { List, Icon, Avatar, Tag } from 'antd';
 import moment from 'moment';
 import {inject,observer} from 'mobx-react';
-import Store from "../../../store/user"
-const store=new Store;
 
 // import  from "./articles.less"
-@inject(()=>store)
 @observer
-class Center extends PureComponent<any,any> {
+class Center extends React.Component<any,any> {
   render() {
-    console.log(this.props.User.lists)
-    const lists=this.props.User.lists
+   // console.log(this.props)
+    //console.log(this.props.User.lists)
+    const lists=this.props.store.User.lists
     // const {list}=this.props.
     // const IconText = ({ type, text }) => (
     //   <span>
@@ -23,7 +21,7 @@ class Center extends PureComponent<any,any> {
     const ListContent = ({ data: { content, updatedAt, avatar, owner, href } }) => (
       <div>
         <div>{content}</div>
-        <div>
+        <div style={{marginTop:"10px"}}>
           <Avatar src={avatar} size="small" />
           <a href={href}>{owner}</a> 发布在
           <a href={href}>{href}</a>

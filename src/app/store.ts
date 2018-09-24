@@ -45,13 +45,21 @@ const Http = new HttpBasics('', (x) => {
 export class Store {
     constructor() {
         subMenu.push({
+            "Key": "user",
+            "Name": "个人中心",
+            "Icon": "home",
+            "Path": "/user",
+            "Component": "",
+            "Children": []
+        });
+        subMenu.push({
             "Key": "system",
             "Name": "系统设置",
             "Icon": "setting",
             "Path": "/system",
             "Component": "",
             "Children": []
-        });
+        })
         // 填充 Key
         const newGuid = (x: subMenu) => {
             if (typeof x.Key == "undefined" || x.Key == "") {

@@ -2,16 +2,14 @@ import React, { PureComponent } from 'react';
 import { List, Card, Icon, Dropdown, Menu, Avatar, Tooltip } from 'antd';
 import moment from 'moment';
 import {inject,observer} from 'mobx-react';
-import Store from "../../../store/user"
 import "./css/Applications.less"
-const store=new Store;
 
 // import  from "./articles.less"
-@inject(()=>store)
 @observer
-class Center extends PureComponent<any,any> {
+class Center extends React.Component<any,any> {
+  User=this.props.store.User
   render() {
-    const appList=this.props.User.appList
+    const appList=this.User.appList
     console.log(appList)
     const itemMenu = (
       <Menu>

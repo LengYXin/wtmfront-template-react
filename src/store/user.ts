@@ -11,6 +11,7 @@ import { HttpBasics } from 'core/HttpBasics';
 import { message, Input } from 'antd';
 import { userInfo } from 'os';
 import { mapValues } from '../components/table/tableEdit';
+import { Action } from "rxjs/scheduler/Action";
 const Http = new HttpBasics('/user/');
 export default class Store {
     constructor() {
@@ -157,10 +158,12 @@ export default class Store {
         ]
 
     };
-    @action.bound addInput(value){
+    @action.bound
+    addInput(value){
+        console.log(value)
        let key=this.User.Tags.length+1
-        this.User.Tags.push({value,key})
-    }
+       this.User.Tags.push({value,key})
+    };
     @action.bound
     async Login(params) {
         this.User = params;

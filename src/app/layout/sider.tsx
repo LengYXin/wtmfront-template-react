@@ -82,13 +82,13 @@ export default class App extends React.Component<any, any> {
               <Icon type="home" /><span>首页</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="/user">
+          {/* <Menu.Item key="/user">
             <Link to="/user">
               <Icon type="home" /><span>个人中心</span>
             </Link>
-          </Menu.Item>
+          </Menu.Item> */}
           {this.runderSubMenu()}
-          
+
         </Menu>
       </div>
     );
