@@ -6,6 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');//清理
 const CopyWebpackPlugin = require('copy-webpack-plugin');//拷贝
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");//提取css
 const tsImportPluginFactory = require('ts-import-plugin');//按需导入
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
 const rootDir = path.dirname(__dirname);
@@ -19,6 +20,8 @@ module.exports = (params) => {
             path: outputPaht,
         },
         plugins: [
+            // 图片压缩
+            new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
             // 清理目录
             new CleanWebpackPlugin([outputPaht], { root: rootDir }),
             // gzip 压缩

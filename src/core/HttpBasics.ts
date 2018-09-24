@@ -37,7 +37,7 @@ export class HttpBasics {
     /**
      * 请求超时设置
      */
-    timeout = 10000;
+    timeout = 3000;
     /**
      * ajax
      */
@@ -127,6 +127,8 @@ export class HttpBasics {
             headers
         ).timeout(this.timeout).catch(err => Rx.Observable.of(err)).map(this.responseMap);
     }
+    /** 文件获取状态 */
+    downloadLoading = false
     /**
      * 下载文件
      * @param AjaxRequest 
@@ -134,11 +136,16 @@ export class HttpBasics {
      * @param fileName 
      */
     async download(AjaxRequest: Rx.AjaxRequest, fileType = '.xls', fileName = moment().format("YYYY_MM_DD_hh_mm_ss")) {
+        if (this.downloadLoading) {
+            return message.warn('文件获取中，请勿重复操作~')
+        }
+        this.downloadLoading = true;
         NProgress.start();
         AjaxRequest = {
             // url: url,
             method: "post",
             responseType: "blob",
+            timeout: this.timeout,
             headers: this.headers,
             ...AjaxRequest
         }
@@ -147,6 +154,7 @@ export class HttpBasics {
         }
         const result = await Rx.Observable.ajax(AjaxRequest).catch(err => Rx.Observable.of(err)).toPromise();
         NProgress.done();
+        this.downloadLoading = false;
         try {
             if (result.status == 200) {
                 const blob = result.response;
@@ -180,6 +188,7 @@ export class HttpBasics {
             });
         }
     }
+    /** jsonp 回调 计数 */
     jsonpCounter = 0;
     /**
      * jsonP

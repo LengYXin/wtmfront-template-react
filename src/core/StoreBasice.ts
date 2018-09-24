@@ -129,6 +129,10 @@ export default class Store {
    */
   dateFormat = 'YYYY-MM-DD'
   /**
+   * 时间格式化
+   */
+  dateTimeFormat = 'YYYY-MM-DD HH:mm:ss'
+  /**
    * 加载数据 列表
    * @param params 搜索参数
    */

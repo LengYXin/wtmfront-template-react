@@ -24,6 +24,27 @@ export interface Props extends FormComponentProps {
   Store: Store,
   renderItem: (params: renderItemParams) => React.ReactElement<any>
 }
+/**
+ * 处理数据类型
+ * @param values 
+ */
+export function mapValues(values, dateFormat) {
+  return lodash.mapValues(
+    // 去除空值
+    lodash.pickBy(values, data => !lodash.isNil(data)),
+    data => {
+      // if (data instanceof moment) {
+      //   console.log(data);
+      //   data = moment(data.format(dateFormat))
+      // }
+      if (Array.isArray(data) && data.some(x => x instanceof moment)) {
+        // data = data.map(x => moment(x.format(dateFormat)).valueOf()).join(',')
+        data = data.map(x => x.valueOf()).join(',')
+      }
+      return data.valueOf()
+    }
+  );
+}
 @observer
 export default class TableEditComponent extends React.Component<{ Store: Store }, any> {
   Store = this.props.Store;
@@ -112,12 +133,7 @@ class FormComponent extends React.Component<Props, any> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        values = lodash.mapValues(lodash.pickBy(values, x => !lodash.isNil(x)), x => {
-          if (x instanceof moment) {
-            x = moment(x.format(this.Store.dateFormat))
-          }
-          return x.valueOf()
-        });
+        values = mapValues(values, this.Store.dateFormat)
         this.Store.onEdit(values);
       }
     });

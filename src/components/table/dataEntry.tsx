@@ -9,8 +9,7 @@ import { DatePicker, Input, InputNumber, Select, Spin } from 'antd';
 import Store from 'core/StoreBasice';
 import moment from 'moment';
 import * as React from 'react';
-
-
+const RangePicker = DatePicker.RangePicker;
 const Option = Select.Option;
 interface IDataEntryProps {
     Store: Store;
@@ -23,7 +22,6 @@ interface IDataEntryProps {
     value?: any;
     defaultValue?: any;
 }
-// const RangePicker = DatePicker.RangePicker;
 /**
  * 数据渲染组件
  * 自定义数据组件
@@ -49,8 +47,8 @@ export default class DataEntry extends React.Component<IDataEntryProps, any> {
                 </div>
             );
         }
-        const { common, Store, format, placeholder, onChange, value } = this.props;
-        let GetFieldDecoratorOptions = {
+        const { example, common, Store, format, placeholder, onChange, value } = this.props;
+        let GetFieldDecoratorOptions: any = {
             onChange,
             defaultValue: value,
             placeholder: placeholder
@@ -58,10 +56,20 @@ export default class DataEntry extends React.Component<IDataEntryProps, any> {
         if (common && common.address) {
             return <DataEntrySelect {...this.props} {...GetFieldDecoratorOptions} />
         }
+        if (example && example.date === true) {
+            return <DatePicker showTime format={Store.dateTimeFormat} {...GetFieldDecoratorOptions} />
+        }
+        if (example && example.datetime === true) {
+            GetFieldDecoratorOptions.placeholder = [GetFieldDecoratorOptions.placeholder, GetFieldDecoratorOptions.placeholder]
+            return <>
+                <RangePicker showTime format={Store.dateTimeFormat} {...GetFieldDecoratorOptions} />
+            </>
+        }
         switch (format) {
             case "date-time":
                 return <DatePicker
-                    format={Store.dateFormat}
+                    showTime
+                    format={Store.dateTimeFormat}
                     {...GetFieldDecoratorOptions} />
             case "int32":
                 return <InputNumber {...GetFieldDecoratorOptions} />
@@ -94,7 +102,7 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
         })
     }
     onChange(event) {
-        if (this.props.example.multi) {
+        if (this.props.example && this.props.example.multi) {
             event = event.join(",")
         }
         console.log(event);
@@ -115,7 +123,7 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
             placeholder: this.props.placeholder,
             defaultValue: this.props.defaultValue
         }
-        if (!this.props.example.multi) {
+        if (this.props.example && !this.props.example.multi) {
             delete config.mode;
         } else {
             if (config.defaultValue == "") {
