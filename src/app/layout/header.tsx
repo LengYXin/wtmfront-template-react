@@ -30,7 +30,7 @@ export default class App extends React.Component<any, any> {
                     <Col span={4}><Icon onClick={() => { appStore.toggleCollapsed() }} className="app-collapsed-trigger" type="menu-fold" theme="outlined" /></Col>
                     <Col span={20} style={{ textAlign: "right", padding: "0 20px" }}>
                         <NoticeIconComponent />
-                        <UserMenu />
+                        <UserMenu {...this.props} />
                     </Col>
                 </Row>
             </Header>
@@ -43,7 +43,10 @@ class UserMenu extends React.Component<any, any> {
             <Dropdown overlay={
                 <Menu>
                     <Menu.Item>
-                        <a onClick={() => { store.User.outLogin() }}>  <Icon type={'appstore'} />个人中心</a>
+                        <a onClick={()=>{
+                            this.props.history.push("/user")
+                            console.log(this.props)
+                        } }>  <Icon type={'appstore'} />个人中心</a>
                     </Menu.Item>
                     <Menu.Item>
                         <a onClick={() => { store.User.outLogin() }}>  <Icon type={'appstore'} />设置</a>

@@ -17,12 +17,14 @@ import { BrowserRouter } from 'react-router-dom';
 import store from 'store/index';
 import layout from "./layout/index";
 import Home from "./pages/home";
+import user from "./pages/user";
 import Login from "./pages/login";
 import swagger, { Entrance } from "./pages/swagger/index";
 import System from "./pages/system";
 import './style.less';
 import { Skeleton, LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
+import { userInfo } from 'os';
 
 
 @observer
@@ -54,6 +56,11 @@ export default class RootRoutes extends React.Component<any, any> {
                     path: "/system",
                     exact: true,
                     component: this.createCSSTransition(System)
+                },
+                {
+                    path: "/user",
+                    exact: true,
+                    component: this.createCSSTransition(user)
                 },
                 ...this.initRouters(),
                 // 404  首页

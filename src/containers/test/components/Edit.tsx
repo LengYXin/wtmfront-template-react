@@ -9,6 +9,8 @@ import { Form, Button, Popconfirm, Divider } from 'antd';
 import DataEntry from 'components/table/dataEntry';
 import TableEdit, { renderItemParams } from 'components/table/tableEdit';
 import * as React from 'react';
+import "./Edit.less"
+
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -19,6 +21,7 @@ const formItemLayout = {
         xs: { span: 24 },
         sm: { span: 16 },
     },
+    
 };
 /**
  * 组件继承 支持重写,
@@ -51,7 +54,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='用户名'  />
             )}
         </FormItem> 
-         <FormItem label="手机号" {...formItemLayout}>
+         <FormItem label="手机号" {...formItemLayout} style={{textAlign:"left"}}>
             {getFieldDecorator('mobileNo',{
                 rules: [{"min":0,"message":"min length 0!"},{"max":20,"message":"max length 20!"}],
                 initialValue: initialValue('mobileNo',''),
@@ -59,7 +62,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='手机号'  />
             )}
         </FormItem> 
-         <FormItem label="座机号" {...formItemLayout}>
+         <FormItem label="座机号" {...formItemLayout} style={{textAlign:"left"}}>
             {getFieldDecorator('telNo',{
                 rules: [{"min":0,"message":"min length 0!"},{"max":20,"message":"max length 20!"}],
                 initialValue: initialValue('telNo',''),
@@ -67,7 +70,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='座机号'  />
             )}
         </FormItem> 
-         <FormItem label="邮箱" {...formItemLayout}>
+         <FormItem label="邮箱" {...formItemLayout} style={{textAlign:"left"}}>
             {getFieldDecorator('email',{
                 rules: [{"min":0,"message":"min length 0!"},{"max":50,"message":"max length 50!"}],
                 initialValue: initialValue('email',''),
@@ -75,12 +78,12 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='邮箱'  />
             )}
         </FormItem> 
-         <FormItem label="使用与否" {...formItemLayout}>
+         <FormItem label="使用与否" {...formItemLayout} className="useYn">
             {getFieldDecorator('useYN',{
                 rules: [],
                 initialValue: initialValue('useYN','int32'),
             })(
-               <DataEntry {...this.props}  format="int32"  placeholder='使用与否'  />
+               <DataEntry   {...this.props}  format="int32"  placeholder='使用与否'  />
             )}
         </FormItem> 
          <FormItem label="职位ID" {...formItemLayout}>
@@ -123,7 +126,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='创建用户ID'  />
             )}
         </FormItem> 
-         <FormItem label="创建日期" {...formItemLayout}>
+         <FormItem label="创建日期" {...formItemLayout} className="createDate">
             {getFieldDecorator('createDate',{
                 rules: [],
                 initialValue: initialValue('createDate','date-time'),
@@ -139,7 +142,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='修改用户ID'  />
             )}
         </FormItem> 
-         <FormItem label="修改日期" {...formItemLayout}>
+         <FormItem label="修改日期" {...formItemLayout} className="createDate">
             {getFieldDecorator('updateDate',{
                 rules: [],
                 initialValue: initialValue('updateDate','date-time'),
