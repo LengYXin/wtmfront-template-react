@@ -24,6 +24,7 @@ export default class Store {
   //   install: [], //添加字段
   //   update: [], //修改字段
   // }
+  /** 公共数据类 */
   Common = Common
   url = wtmfront.standard
   /** Ajax   */

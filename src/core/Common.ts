@@ -7,6 +7,9 @@
 */
 import Http from './HttpBasics';
 import { runInAction } from 'mobx';
+/**
+ * 公共数据接口
+ */
 class Common {
     constructor() {
         console.log("Common", this);

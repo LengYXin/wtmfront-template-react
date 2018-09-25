@@ -11,6 +11,11 @@ import NProgress from 'nprogress';
 import lodash from 'lodash';
 import moment from 'moment';
 export class HttpBasics {
+    /**
+     * 
+     * @param address 替换默认地址前缀
+     * @param newResponseMap 替换默认过滤函数
+     */
     constructor(address?, public newResponseMap?) {
         if (typeof address == "string") {
             // if (/^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/.test(address)) {
