@@ -32,7 +32,7 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
   /**
    * 覆盖默认的 table 元素
    */
-  components = {
+  private components = {
     header: {
       cell: (props) => {
         const { onResize, width, ...restProps } = props;
@@ -49,7 +49,10 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
       },
     },
   };
-  handleResize = index => (e, { size }) => {
+  /**
+   * 拖拽
+   */
+  private handleResize = index => (e, { size }) => {
     // console.log(index, e, size);
     // this.setState(({ columns }) => {
     //   const nextColumns = [...columns];
@@ -71,7 +74,11 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     // console.log(this.columns);
     this.forceUpdate();
   };
-  // 处理 表格类型输出
+  /**
+   *  处理 表格类型输出
+   * @param column 
+   * @param index 
+   */
   columnsMap(column, index) {
     switch (column.format) {
       case 'date-time':
@@ -97,6 +104,11 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
       }),
     }
   }
+  /**
+   * 选项
+   * @param text 
+   * @param record 
+   */
   renderAction(text, record) {
     return <ActionComponent {...this.props} data={record} />;
   }
@@ -105,7 +117,7 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
    * @param page 
    * @param pageSize 
    */
-  onChange(page, pageSize) {
+  private onChange(page, pageSize) {
     this.Store.onGet({
       pageNo: page.current,
       pageSize: page.pageSize

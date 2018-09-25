@@ -18,7 +18,10 @@ const Option = Select.Option;
 export default class TableHeaderComponent extends React.Component<{ Store: Store }, any> {
   Store = this.props.Store;
   WrappedFormComponent = Form.create()(FormComponent);
-
+  /**
+   * 表单 item
+   * @param param0 
+   */
   renderItem({ form, initialValue }: renderItemParams): JSX.Element | JSX.Element[] {
     const { getFieldDecorator } = form;
     const formItemLayout = {
