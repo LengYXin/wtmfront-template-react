@@ -107,7 +107,7 @@ class EditComponent extends React.Component<{ Store: Store, renderItem: (params:
     return (
       <Drawer
         title={this.Store.isUpdate ? 'Update' : 'Add'}
-        width={800}
+        width={500}
         placement="right"
         closable={false}
         onClose={() => this.Store.onVisible(false)}
