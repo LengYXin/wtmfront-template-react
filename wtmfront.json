@@ -5,8 +5,8 @@
     "template": "wtmfront/template",
     "subMenu": "src/app/subMenu.json",
     "containers": "src/containers",
-    "api": "http://10.111.105.128:8010",
-    "swaggerDoc": "http://10.111.105.128:8010/v2/api-docs",
+    "api": "http://10.99.246.52:8010",
+    "swaggerDoc": "http://10.99.246.52:8010/v2/api-docs",
     "standard": {
         "search": {
             "name": "search",
