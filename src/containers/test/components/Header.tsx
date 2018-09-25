@@ -9,7 +9,6 @@ import { Col, Form } from 'antd';
 import DataEntry from 'components/table/dataEntry';
 import TableHeader from 'components/table/tableHeader';
 import * as React from 'react';
-import "./Edit.less"
 const FormItem = Form.Item;
 const colLayout = {
     xl: 6,

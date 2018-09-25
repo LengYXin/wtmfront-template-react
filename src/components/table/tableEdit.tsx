@@ -16,42 +16,17 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
 const Dragger = Upload.Dragger;
-export interface renderItemParams {
-  form: WrappedFormUtils,
-  initialValue?: (key: string, type: string) => any;
-}
-export interface Props extends FormComponentProps {
-  Store: Store,
-  renderItem: (params: renderItemParams) => React.ReactElement<any>
-}
-/**
- * 处理数据类型
- * @param values 
- */
-export function mapValues(values, dateFormat) {
-  return lodash.mapValues(
-    // 去除空值
-    lodash.pickBy(values, data => !lodash.isNil(data)),
-    data => {
-      // if (data instanceof moment) {
-      //   console.log(data);
-      //   data = moment(data.format(dateFormat))
-      // }
-      if (Array.isArray(data) && data.some(x => x instanceof moment)) {
-        // data = data.map(x => moment(x.format(dateFormat)).valueOf()).join(',')
-        data = data.map(x => x.valueOf()).join(',')
-      }
-      return data.valueOf()
-    }
-  );
-}
 @observer
 export default class TableEditComponent extends React.Component<{ Store: Store }, any> {
   Store = this.props.Store;
+  /**
+   * 表单 item
+   * @param param0 
+   */
   renderItem({ form, initialValue }: renderItemParams) {
 
   }
-  async onDelete() {
+  private async onDelete() {
     const params = this.Store.dataSource.list.filter(x => this.Store.selectedRowKeys.some(y => y == x.key));
     let data = await this.Store.onDelete(params)
     if (data) {
@@ -270,3 +245,32 @@ class PortComponent extends React.Component<{ Store: Store }, any> {
   }
 }
 
+export interface renderItemParams {
+  form: WrappedFormUtils,
+  initialValue?: (key: string, type: string) => any;
+}
+export interface Props extends FormComponentProps {
+  Store: Store,
+  renderItem: (params: renderItemParams) => React.ReactElement<any>
+}
+/**
+ * 处理数据类型
+ * @param values 
+ */
+export function mapValues(values, dateFormat) {
+  return lodash.mapValues(
+    // 去除空值
+    lodash.pickBy(values, data => !lodash.isNil(data)),
+    data => {
+      // if (data instanceof moment) {
+      //   console.log(data);
+      //   data = moment(data.format(dateFormat))
+      // }
+      if (Array.isArray(data) && data.some(x => x instanceof moment)) {
+        // data = data.map(x => moment(x.format(dateFormat)).valueOf()).join(',')
+        data = data.map(x => x.valueOf()).join(',')
+      }
+      return data.valueOf()
+    }
+  );
+}
