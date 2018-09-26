@@ -9,6 +9,10 @@
     "build": "webpack --progress --env.type=deploy",
     "test": "wtmfronttest server"
   },
+  "engines": {
+    "node": ">=8.0.0",
+    "npm": ">=6.0.0"
+  },
   "keywords": [],
   "author": "lengyingxin <lengyingxin8966@gmail.com> (https://github.com/LengYXin)",
   "license": "ISC",
