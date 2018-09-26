@@ -48,17 +48,21 @@ export default class DataEntry extends React.Component<IDataEntryProps, any> {
             );
         }
         const { example, common, Store, format, placeholder, onChange, value } = this.props;
+        // 传递 from 高阶组件中的 onchange 事件 和其他属性
         let GetFieldDecoratorOptions: any = {
             onChange,
             defaultValue: value,
             placeholder: placeholder
         }
+        // 远程 数据选择
         if (common && common.address) {
             return <DataEntrySelect {...this.props} {...GetFieldDecoratorOptions} />
         }
+        // 日期选择
         if (example && example.date === true) {
             return <DatePicker showTime format={Store.dateTimeFormat} {...GetFieldDecoratorOptions} />
         }
+        // 日期区选择
         if (example && example.datetime === true) {
             GetFieldDecoratorOptions.placeholder = [GetFieldDecoratorOptions.placeholder, GetFieldDecoratorOptions.placeholder]
             return <>
@@ -66,13 +70,16 @@ export default class DataEntry extends React.Component<IDataEntryProps, any> {
             </>
         }
         switch (format) {
+            // 日期
             case "date-time":
                 return <DatePicker
                     showTime
                     format={Store.dateTimeFormat}
                     {...GetFieldDecoratorOptions} />
+            // 数字
             case "int32":
                 return <InputNumber {...GetFieldDecoratorOptions} />
+            // 默认文本
             default:
                 return <Input type="text" {...GetFieldDecoratorOptions} />
         }
@@ -102,10 +109,10 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
         })
     }
     onChange(event) {
+        // 多选使用 ，连接
         if (this.props.example && this.props.example.multi) {
             event = event.join(",")
         }
-        console.log(event);
         this.props.onChange(event);
     }
     render() {
@@ -123,9 +130,11 @@ export class DataEntrySelect extends React.Component<IDataEntryProps, any> {
             placeholder: this.props.placeholder,
             defaultValue: this.props.defaultValue
         }
+        // 非多选，删除多选属性
         if (this.props.example && !this.props.example.multi) {
             delete config.mode;
         } else {
+            // 多选默认值 拆分数组
             if (config.defaultValue == "") {
                 delete config.defaultValue;
             }
