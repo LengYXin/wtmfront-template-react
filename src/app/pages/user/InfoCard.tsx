@@ -27,7 +27,7 @@ export default class InfoCard extends React.Component<any, any> {
   // 脱离焦点   创建input
   handleInputConfirm = () => {
     if(this.state.value){
-      this.props.store.addInput(this.state.value)
+      this.props.store.addLabel(this.state.value)
     }
     // 为什么拿不到mobx中的action函数
     this.setState({

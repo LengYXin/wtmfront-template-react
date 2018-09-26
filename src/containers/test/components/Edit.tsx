@@ -77,7 +77,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='邮箱'  />
             )}
         </FormItem> 
-         <FormItem label="使用与否" {...formItemLayout} className="useYn">
+         <FormItem label="使用与否" {...formItemLayout}>
             {getFieldDecorator('useYN',{
                 rules: [],
                 initialValue: initialValue('useYN','int32'),
@@ -125,7 +125,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='创建用户ID'  />
             )}
         </FormItem> 
-         <FormItem label="创建日期" {...formItemLayout} className="createDate">
+         <FormItem label="创建日期" {...formItemLayout} >
             {getFieldDecorator('createDate',{
                 rules: [],
                 initialValue: initialValue('createDate','date-time'),
@@ -141,7 +141,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='修改用户ID'  />
             )}
         </FormItem> 
-         <FormItem label="修改日期" {...formItemLayout} className="createDate">
+         <FormItem label="修改日期" {...formItemLayout} >
             {getFieldDecorator('updateDate',{
                 rules: [],
                 initialValue: initialValue('updateDate','date-time'),
