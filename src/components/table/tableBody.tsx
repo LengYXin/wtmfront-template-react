@@ -13,22 +13,77 @@ import * as React from 'react';
 import lodash from 'lodash';
 import { Resizable } from 'react-resizable';
 import "./style.less";
+import ReactDOM from 'react-dom';
 @observer
 export default class TableBodyComponent extends React.Component<{ Store: Store }, any> {
-  constructor(props) {
-    super(props)
-    this.Store.onGet();
-  }
 
   Store = this.props.Store;
   columns = [
-    ...this.Store.columns.map(this.columnsMap.bind(this)),
-    {
-      title: 'Action',
-      dataIndex: 'Action',
-      render: this.renderAction.bind(this),
-    }
+    // ...this.Store.columns.map(this.columnsMap.bind(this)),
+    // {
+    //   title: 'Action',
+    //   dataIndex: 'Action',
+    //   render: this.renderAction.bind(this),
+    // }
   ]
+  /**
+  *  处理 表格类型输出
+  * @param column 
+  * @param index 
+  */
+  columnsMap(column, index, width) {
+    switch (column.format) {
+      case 'date-time':
+        column.render = (record) => {
+          try {
+            if (record == null || record == undefined) {
+              return "";
+            }
+            return moment(record).format(this.Store.dateFormat)
+          } catch (error) {
+            return error.toString()
+          }
+        }
+        break;
+    }
+    return {
+      ...column,
+      sorter: true,
+      width: width,
+      // 列拖拽
+      onHeaderCell: col => ({
+        width: col.width,
+        onResize: this.handleResize(index),
+      }),
+    }
+  }
+  /**
+   * 选项
+   * @param text 
+   * @param record 
+   */
+  renderAction(text, record) {
+    return <ActionComponent {...this.props} data={record} />;
+  }
+  /**
+   * 分页、排序、筛选变化时触发
+   * @param page 
+   * @param filters 
+   * @param sorter 
+   */
+  onChange(page, filters, sorter) {
+    this.Store.onGet({
+      pageNo: page.current,
+      pageSize: page.pageSize
+    })
+  }
+  /**
+    * 行选择
+    */
+  private rowSelection = {
+    selectedRowKeys: this.Store.selectedRowKeys,
+    onChange: e => this.Store.onSelectChange(e),
+  };
   /**
    * 覆盖默认的 table 元素
    */
@@ -53,15 +108,6 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
    * 拖拽
    */
   private handleResize = index => (e, { size }) => {
-    // console.log(index, e, size);
-    // this.setState(({ columns }) => {
-    //   const nextColumns = [...columns];
-    //   nextColumns[index] = {
-    //     ...nextColumns[index],
-    //     width: size.width,
-    //   };
-    //   return { columns: nextColumns };
-    // });
     let column = {
       ...this.columns[index],
       width: size.width,
@@ -74,70 +120,25 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     // console.log(this.columns);
     this.forceUpdate();
   };
-  /**
-   *  处理 表格类型输出
-   * @param column 
-   * @param index 
-   */
-  columnsMap(column, index) {
-    switch (column.format) {
-      case 'date-time':
-        column.render = (record) => {
-          try {
-            if (record == null || record == undefined) {
-              return "";
-            }
-            return moment(record).format(this.Store.dateFormat)
-          } catch (error) {
-            return error.toString()
-          }
-        }
-        break;
-    }
-    return {
-      ...column,
-      width: 100,
-      // 列拖拽
-      onHeaderCell: col => ({
-        width: col.width,
-        onResize: this.handleResize(index),
+  private rowDom: HTMLDivElement;
+  componentDidMount() {
+    const width = Math.floor(this.rowDom.clientWidth / (this.Store.columns.length + 2))
+    this.columns = [
+      ...this.Store.columns.map((col, index) => {
+        return this.columnsMap(col, index, width)
       }),
-    }
-  }
-  /**
-   * 选项
-   * @param text 
-   * @param record 
-   */
-  renderAction(text, record) {
-    return <ActionComponent {...this.props} data={record} />;
-  }
-  /**
-   * 分页、排序、筛选变化时触发
-   * @param page 
-   * @param pageSize 
-   */
-  private onChange(page, pageSize) {
-    this.Store.onGet({
-      pageNo: page.current,
-      pageSize: page.pageSize
-    })
+      {
+        title: 'Action',
+        dataIndex: 'Action',
+        render: this.renderAction.bind(this),
+      }
+    ];
+    this.Store.onGet();
   }
   render() {
-    /**
-     * 行选择
-     */
-    const rowSelection = {
-      selectedRowKeys: this.Store.selectedRowKeys,
-      onChange: e => this.Store.onSelectChange(e),
-    };
-    /**
-     * 数据集合
-     */
-    const dataSource = this.Store.dataSource
-    // console.log(this.columns);
+    const dataSource = this.Store.dataSource;
     return (
-      <Row>
+      <Row ref={e => this.rowDom = ReactDOM.findDOMNode(e) as any}>
         <Divider />
         <Table
           bordered
@@ -145,7 +146,7 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
           dataSource={dataSource.list.slice()}
           onChange={this.onChange.bind(this)}
           columns={this.columns}
-          rowSelection={rowSelection}
+          rowSelection={this.rowSelection}
           loading={this.Store.pageConfig.loading}
           pagination={
             {

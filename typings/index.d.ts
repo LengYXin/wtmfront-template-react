@@ -1,5 +1,5 @@
 /**
- * Swagger 解析格式
+ * 页面按钮
  */
 interface IPageButton {
     /** 添加按钮 */
@@ -13,14 +13,16 @@ interface IPageButton {
     /** 导出按钮 */
     export: boolean
 }
+/**
+ * Swagger 解析格式
+ */
 interface ISwaggerModel {
-    idKey: string,    //唯一标识
-    address: string,    //地址控制器
-    columns: any[],    //teble 列
-    search: any[],     //搜索条件
-    // edit: {},    //编辑字段
-    install: any[],    //添加字段
-    update: any[],      //修改字段
+    idKey?: string,    //唯一标识
+    address?: string,    //地址控制器
+    columns?: any[],    //teble 列
+    search?: any[],     //搜索条件
+    install?: any[],    //添加字段
+    update?: any[],      //修改字段
     pageButtons?: IPageButton
 }
 /**

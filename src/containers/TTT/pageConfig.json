@@ -31,7 +31,8 @@
         {
             "type": "string",
             "example": {
-                "combo": 1
+                "combo": 1,
+                "multi": true
             },
             "description": "公司ID",
             "allowEmptyValue": true,
@@ -180,7 +181,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "posID"
@@ -202,7 +203,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "dutyID"
@@ -246,7 +247,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "deptGroup"
@@ -268,7 +269,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "createUser"
@@ -280,7 +281,7 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "createDate"
@@ -302,7 +303,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "updateUser"
@@ -314,43 +315,13 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "updateDate"
         }
     ],
     "search": [
-        {
-            "type": "string",
-            "format": "date-time",
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "createDateFrom"
-        },
-        {
-            "type": "string",
-            "format": "date-time",
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "createDateTo"
-        },
         {
             "type": "string",
             "description": "用户ID",
@@ -379,38 +350,9 @@
         },
         {
             "type": "string",
-            "format": "date-time",
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "updateDateFrom"
-        },
-        {
-            "type": "string",
-            "format": "date-time",
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "updateDateTo"
-        },
-        {
-            "type": "string",
             "example": {
-                "combo": 1
+                "combo": 1,
+                "multi": true
             },
             "description": "公司ID",
             "allowEmptyValue": true,
@@ -544,6 +486,20 @@
         },
         {
             "type": "string",
+            "example": {
+                "datetime": true
+            },
+            "description": "创建日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDateStr"
+        },
+        {
+            "type": "string",
             "description": "职位ID",
             "allowEmptyValue": true,
             "minLength": 0,
@@ -566,6 +522,20 @@
         },
         {
             "type": "string",
+            "example": {
+                "date": true
+            },
+            "description": "修改日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateDateStr"
+        },
+        {
+            "type": "string",
             "description": "职责ID",
             "allowEmptyValue": true,
             "minLength": 0,
@@ -581,7 +551,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "dutyID"
@@ -603,7 +573,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "password"
@@ -625,7 +595,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "deptGroup"
@@ -647,7 +617,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "createUser"
@@ -659,7 +629,7 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "createDate"
@@ -681,7 +651,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "updateUser"
@@ -693,7 +663,7 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "updateDate"
@@ -729,7 +699,8 @@
         {
             "type": "string",
             "example": {
-                "combo": 1
+                "combo": 1,
+                "multi": true
             },
             "description": "公司ID",
             "allowEmptyValue": true,
@@ -878,7 +849,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "posID"
@@ -900,7 +871,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "dutyID"
@@ -922,7 +893,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "password"
@@ -944,7 +915,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "deptGroup"
@@ -966,7 +937,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "createUser"
@@ -978,7 +949,7 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "createDate"
@@ -1000,7 +971,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "updateUser"
@@ -1012,7 +983,7 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "updateDate"
@@ -1048,7 +1019,8 @@
         {
             "type": "string",
             "example": {
-                "combo": 1
+                "combo": 1,
+                "multi": true
             },
             "description": "公司ID",
             "allowEmptyValue": true,
@@ -1339,9 +1311,9 @@
     ],
     "pageButtons": {
         "install": true,
-        "update": false,
-        "delete": false,
+        "update": true,
+        "delete": true,
         "import": true,
-        "export": false
+        "export": true
     }
 }

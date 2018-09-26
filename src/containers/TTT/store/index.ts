@@ -49,44 +49,9 @@ export class Store extends storeBasice {
         "format": "int32"
     },
     {
-        "title": "职位ID",
-        "dataIndex": "posID",
-        "format": ""
-    },
-    {
-        "title": "职责ID",
-        "dataIndex": "dutyID",
-        "format": ""
-    },
-    {
         "title": "密码",
         "dataIndex": "password",
         "format": ""
-    },
-    {
-        "title": "部门组织ID",
-        "dataIndex": "deptGroup",
-        "format": ""
-    },
-    {
-        "title": "创建用户ID",
-        "dataIndex": "createUser",
-        "format": ""
-    },
-    {
-        "title": "创建日期",
-        "dataIndex": "createDate",
-        "format": "date-time"
-    },
-    {
-        "title": "修改用户ID",
-        "dataIndex": "updateUser",
-        "format": ""
-    },
-    {
-        "title": "修改日期",
-        "dataIndex": "updateDate",
-        "format": "date-time"
     }
 ]
     pageButtons = {
@@ -94,7 +59,7 @@ export class Store extends storeBasice {
     "update": true,
     "delete": true,
     "import": true,
-    "export": false
+    "export": true
 }
 }
 export default new Store();

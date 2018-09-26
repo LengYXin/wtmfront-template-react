@@ -45,14 +45,6 @@ const Http = new HttpBasics('', (x) => {
 export class Store {
     constructor() {
         subMenu.push({
-            "Key": "user",
-            "Name": "个人中心",
-            "Icon": "user",
-            "Path": "/user",
-            "Component": "",
-            "Children": []
-        });
-        subMenu.push({
             "Key": "system",
             "Name": "系统设置",
             "Icon": "setting",
@@ -119,6 +111,7 @@ export class Store {
     @action.bound
     toggleCollapsed() {
         this.collapsed = !this.collapsed;
+        dispatchEvent(new CustomEvent('resize'));
     }
 }
 export default new Store();

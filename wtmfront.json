@@ -6,7 +6,7 @@
     "subMenu": "src/app/subMenu.json",
     "containers": "src/containers",
     "api": "http://10.99.246.52:8010",
-    "swaggerDoc": "http://10.99.246.52:8010/v2/api-docs",
+    "swaggerDoc": "http://localhost:8765/api-docs",
     "standard": {
         "search": {
             "name": "search",

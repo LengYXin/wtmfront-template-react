@@ -15,17 +15,11 @@ import Common from './Common'
 import moment from 'moment';
 export default class Store {
   constructor(public StoreConfig) { }
-  // 也没 默认 json 配置
-  // CONFIGJSON: ISwaggerModel = {
-  //   idKey: 'id', //唯一标识
-  //   address: '', //地址控制器
-  //   columns: [], //teble 列
-  //   search: [], //搜索条件
-  //   install: [], //添加字段
-  //   update: [], //修改字段
-  // }
+  // 页面 默认 json 配置
+  CONFIGJSON: ISwaggerModel;
   /** 公共数据类 */
   Common = Common
+  /** url 规范 */
   url = wtmfront.standard
   /** Ajax   */
   Http = new HttpBasics(APIADDRESS + this.StoreConfig.address)
@@ -160,16 +154,14 @@ export default class Store {
       pageNo: pageNo,
       pageSize: pageSize,
       search: this.searchParams
-    })
-      .map(result => {
-        if (result.list) {
-          result.list = result.list.map((x, i) => {
-            return { key: i, ...x }
-          })
-        }
-        return result
-      })
-      .toPromise()
+    }).map(result => {
+      if (result.list) {
+        result.list = result.list.map((x, i) => {
+          return { key: i, ...x }
+        })
+      }
+      return result
+    }).toPromise()
     runInAction(() => {
       this.dataSource = result || this.dataSource
       this.pageConfig.loading = false
@@ -183,7 +175,6 @@ export default class Store {
   async onGetDetails(params) {
     this.onEditLoading(true)
     const result = await this.Http.create(this.url.details, params).toPromise()
-    console.log(result);
     this.onEditLoading(false)
     return result || {}
   }
@@ -211,6 +202,7 @@ export default class Store {
     const result = await this.Http.create(this.url.install, params).toPromise()
     if (result) {
       message.success('添加成功')
+      // 刷新数据
       this.onGet()
       this.onVisible(false)
     } else {
@@ -227,6 +219,7 @@ export default class Store {
     const result = await this.Http.create(this.url.update, params).toPromise()
     if (result) {
       message.success('更新成功')
+      // 刷新数据
       this.onGet()
       this.onVisible(false)
     } else {
@@ -244,7 +237,9 @@ export default class Store {
     const result = await this.Http.create(this.url.delete, params).toPromise()
     if (result) {
       message.success('删除成功')
-      this.onSelectChange([])
+      this.onSelectChange([]);
+      // 刷新数据
+      this.onGet();
     } else {
       message.success('删除失败')
     }
@@ -268,6 +263,7 @@ export default class Store {
         if (status === 'done') {
           const response = info.file.response
           if (response.status == 200) {
+            // 刷新数据
             this.onGet();
             message.success(`${info.file.name} file uploaded successfully.`)
           } else {
@@ -291,7 +287,6 @@ export default class Store {
   }
   /**
   * 模板
-  * @param params 筛选参数
   */
   async onTemplate() {
     //   url: APIADDRESS + this.StoreConfig.address + this.url.template.name,
@@ -304,12 +299,5 @@ export default class Store {
    */
   async getCombo(parmas: ICommon) {
     return await Common.getCombo(parmas)
-  }
-  /**Button显示隐藏*/
-
-  /**改变Button显示隐藏*/
-  @action
-  buttonChange(show) {
-    this.pageButtons = show
   }
 }

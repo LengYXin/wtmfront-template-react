@@ -32,6 +32,14 @@
                     "Children": []
                 }
             ]
+        },
+        {
+            "Key": "999a8e7a-b7f8-4e23-a1f4-20c4cd530ffd",
+            "Name": "测试",
+            "Icon": "menu-fold",
+            "Path": "/TTT",
+            "Component": "TTT",
+            "Children": []
         }
     ]
 }

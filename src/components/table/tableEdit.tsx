@@ -26,13 +26,9 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
   renderItem({ form, initialValue }: renderItemParams) {
 
   }
-  private async onDelete() {
-    const params = this.Store.dataSource.list.filter(x => this.Store.selectedRowKeys.some(y => y == x.key));
-    let data = await this.Store.onDelete(params)
-    if (data) {
-      this.Store.onGet();
-    }
-  }
+  /**
+   * 渲染按钮组
+   */
   renderButtons(): JSX.Element | JSX.Element[] {
     const button = [];
     const { pageButtons, selectedRowKeys } = this.Store;
@@ -59,9 +55,14 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
       </React.Fragment>
     })
   }
+  /**
+   * 多选删除事件
+   */
+  private async onDelete() {
+    const params = this.Store.dataSource.list.filter(x => this.Store.selectedRowKeys.some(y => y == x.key));
+    await this.Store.onDelete(params)
+  }
   render() {
-    const deletelength = this.Store.selectedRowKeys.length;
-    console.log(deletelength);
     return (
       <Row>
         {this.renderButtons()}
