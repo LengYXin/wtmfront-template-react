@@ -13,7 +13,7 @@ class store {
         this.ready();
         this.init();
     }
-    User = new user();
+    User = user;
     /**
      * 定义全局 变量 枚举 ===
      */
