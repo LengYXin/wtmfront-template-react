@@ -2,7 +2,9 @@ import React, { PureComponent } from 'react';
 import { List, Card, Icon, Dropdown, Menu, Avatar, Tooltip } from 'antd';
 import moment from 'moment';
 import {inject,observer} from 'mobx-react';
+import "./css/Applications.less"
 
+// import  from "./articles.less"
 @observer
 class Center extends React.Component<any,any> {
   User=this.props.store.User
