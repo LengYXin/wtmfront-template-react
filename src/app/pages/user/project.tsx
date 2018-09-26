@@ -3,6 +3,7 @@ import { List, Card,Avatar } from 'antd';
 import moment from 'moment';
 import {inject,observer} from 'mobx-react';
 
+// import  from "./articles.less"
 @observer
 class Center extends React.Component<any,any> {
   User=this.props.store.User

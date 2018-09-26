@@ -47,7 +47,7 @@ export class Store {
         subMenu.push({
             "Key": "user",
             "Name": "个人中心",
-            "Icon": "user",
+            "Icon": "home",
             "Path": "/user",
             "Component": "",
             "Children": []

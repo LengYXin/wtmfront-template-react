@@ -159,7 +159,7 @@ export default class Store {
 
     };
     @action.bound
-    addLabel(value){
+    addInput(value){
         console.log(value)
        let key=this.User.Tags.length+1
        this.User.Tags.push({value,key})
