@@ -33,7 +33,7 @@ export default class HeaderComponent extends TableHeader {
         const { getFieldDecorator } = form;
         return <>
                 <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout} className="createDate">
+                <FormItem label="未配置说明" {...formItemLayout} >
                 {getFieldDecorator('createDateFrom',{
                     initialValue: initialValue('createDateFrom','date-time'),
                 })(
@@ -42,7 +42,7 @@ export default class HeaderComponent extends TableHeader {
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout} className="createDate">
+                <FormItem label="未配置说明" {...formItemLayout} >
                 {getFieldDecorator('createDateTo',{
                     initialValue: initialValue('createDateTo','date-time'),
                 })(
@@ -60,7 +60,7 @@ export default class HeaderComponent extends TableHeader {
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout} className="createDate">
+                <FormItem label="未配置说明" {...formItemLayout} >
                 {getFieldDecorator('updateDateFrom',{
                     initialValue: initialValue('updateDateFrom','date-time'),
                 })(
@@ -69,7 +69,7 @@ export default class HeaderComponent extends TableHeader {
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout} className="createDate">
+                <FormItem label="未配置说明" {...formItemLayout} >
                 {getFieldDecorator('updateDateTo',{
                     initialValue: initialValue('updateDateTo','date-time'),
                 })(
@@ -177,7 +177,7 @@ export default class HeaderComponent extends TableHeader {
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="创建日期" {...formItemLayout} className="createDate">
+                <FormItem label="创建日期" {...formItemLayout} >
                 {getFieldDecorator('createDate',{
                     initialValue: initialValue('createDate','date-time'),
                 })(
@@ -195,7 +195,7 @@ export default class HeaderComponent extends TableHeader {
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="修改日期" {...formItemLayout} className="createDate">
+                <FormItem label="修改日期" {...formItemLayout} >
                 {getFieldDecorator('updateDate',{
                     initialValue: initialValue('updateDate','date-time'),
                 })(
