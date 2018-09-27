@@ -147,7 +147,7 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
           onChange={this.onChange.bind(this)}
           columns={this.columns}
           rowSelection={this.rowSelection}
-          loading={this.Store.pageConfig.loading}
+          loading={this.Store.pageState.loading}
           pagination={
             {
               // hideOnSinglePage: true,//只有一页时是否隐藏分页器

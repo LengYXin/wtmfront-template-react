@@ -37,7 +37,7 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
       button.push(<Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})}>添加</Button>)
     }
     if (pageButtons.import) {
-      button.push(<Button icon="cloud-download" onClick={() => { this.Store.onVisible(true, "port") }}>  导入 / 导出 </Button>)
+      button.push(<Button icon="cloud-download" onClick={() => { this.Store.onPageState("visiblePort", true) }}>  导入 / 导出 </Button>)
     }
     if (pageButtons.delete) {
       button.push(
@@ -82,12 +82,12 @@ class EditComponent extends React.Component<{ Store: Store, renderItem: (params:
   render() {
     return (
       <Drawer
-        title={this.Store.isUpdate ? 'Update' : 'Add'}
+        title={this.Store.pageState.isUpdate ? 'Update' : 'Add'}
         width={500}
         placement="right"
         closable={false}
-        onClose={() => this.Store.onVisible(false)}
-        visible={this.Store.visible.edit}
+        onClose={() => this.Store.onPageState("visibleEdit", false)}
+        visible={this.Store.pageState.visibleEdit}
         destroyOnClose={true}
       >
         <this.WrappedFormComponent {...this.props} renderItem={this.props.renderItem} />
@@ -153,13 +153,13 @@ class FormComponent extends React.Component<Props, any> {
     return this.props.renderItem({ form: this.props.form, initialValue: this.initialValue.bind(this) })
   }
   componentWillUnmount() {
-    this.Store.onEditLoading(false)
+    this.Store.onPageState("loadingEdit", false)
   }
   render() {
     return (
 
       <Form onSubmit={this.handleSubmit} className="app-table-edit-form">
-        <Spin spinning={this.Store.pageConfig.editLoading}>
+        <Spin spinning={this.Store.pageState.loadingEdit}>
           {this.renderItem()}
         </Spin>
         <div
@@ -175,9 +175,9 @@ class FormComponent extends React.Component<Props, any> {
             borderRadius: '0 0 4px 4px',
           }}
         >
-          <Button onClick={() => this.Store.onVisible(false)} >Cancel </Button>
+          <Button onClick={() => this.Store.onPageState("visibleEdit", false)} >Cancel </Button>
           <Divider type="vertical" />
-          <Button loading={this.Store.pageConfig.editLoading} type="primary" htmlType="submit"  >Submit </Button>
+          <Button loading={this.Store.pageState.loadingEdit} type="primary" htmlType="submit"  >Submit </Button>
         </div>
       </Form>
     );
@@ -191,32 +191,15 @@ class PortComponent extends React.Component<{ Store: Store }, any> {
   Store = this.props.Store;
 
   render() {
-    // const props = {
-    //   name: 'file',
-    //   multiple: true,
-    //   action: '//jsonplaceholder.typicode.com/posts/',
-    //   onChange(info) {
-    //     const status = info.file.status;
-    //     if (status !== 'uploading') {
-    //       console.log(info.file, info.fileList);
-    //     }
-    //     if (status === 'done') {
-    //       message.success(`${info.file.name} file uploaded successfully.`);
-    //     } else if (status === 'error') {
-    //       message.error(`${info.file.name} file upload failed.`);
-    //     }
-    //   },
-    // };
-    const props = this.Store.onImport();
     return (
       <Modal
         title="Import&Export"
         centered
-        visible={this.Store.visible.port}
+        visible={this.Store.pageState.visiblePort}
         // destroyOnClose={true}
         closable={false}
-        onOk={() => { this.Store.onVisible(false, "port") }}
-        onCancel={() => { this.Store.onVisible(false, "port") }}
+        onOk={() => { this.Store.onPageState("visiblePort", false) }}
+        onCancel={() => { this.Store.onPageState("visiblePort", false) }}
         className="app-table-port-modal"
       >
         <Tabs defaultActiveKey="Import">
@@ -224,7 +207,7 @@ class PortComponent extends React.Component<{ Store: Store }, any> {
             <div className="app-table-port-tab-pane">
               <Button icon="download" block size="large" onClick={() => { this.Store.onTemplate() }}>模板</Button>
               <Divider />
-              <Dragger {...props}>
+              <Dragger {...this.Store.importConfig}>
                 <p className="ant-upload-drag-icon">
                   <Icon type="inbox" />
                 </p>

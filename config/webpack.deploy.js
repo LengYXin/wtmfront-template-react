@@ -10,10 +10,10 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
 const rootDir = path.dirname(__dirname);
+const outputPaht = path.resolve(rootDir, "build");
 const basicConfig = require("./basics.confit");
 module.exports = (params) => {
-    const { __dirname, port = 8000, proxy = {}, deployWrite = "", DefinePlugin } = params;
-    const outputPaht = path.resolve(rootDir, "build");
+    const { deployWrite = "", DefinePlugin } = params;
     console.log(`-------------------------------------- 'deploy' --------------------------------------`);
     return [basicConfig({
         output: {

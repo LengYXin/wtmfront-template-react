@@ -7,7 +7,6 @@ const config = {
 };
 module.exports = webpack(env => {
     return {
-        __dirname: __dirname,
         port: 8100,
         proxy: {
             /**

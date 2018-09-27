@@ -5,28 +5,39 @@
  * @modify date 2018-09-12 18:52:27
  * @desc [description]
  */
-import Rx from 'rxjs'
+import { message } from 'antd';
+import { action, computed, observable, runInAction } from 'mobx';
+import NProgress from 'nprogress';
+import wtmfront from 'wtmfront.json';
+import Common from './Common';
+import { HttpBasics } from './HttpBasics';
 
-import { action, observable, runInAction, toJS } from 'mobx'
-import { HttpBasics } from './HttpBasics'
-import { message } from 'antd'
-import wtmfront from 'wtmfront.json'
-import Common from './Common'
-import moment from 'moment';
 export default class Store {
   constructor(public StoreConfig) { }
-  // 页面 默认 json 配置
-  CONFIGJSON: ISwaggerModel;
+  /**  swagger json */
+  Swagger: ISwaggerModel;
   /** 公共数据类 */
   Common = Common
-  /** url 规范 */
-  url = wtmfront.standard
   /** Ajax   */
   Http = new HttpBasics(APIADDRESS + this.StoreConfig.address)
   /** 数据 ID 索引 */
   IdKey = 'id'
+  /** 日期格式 */
+  dateFormat = 'YYYY-MM-DD'
+  /** 日期时间格式 */
+  dateTimeFormat = 'YYYY-MM-DD HH:mm:ss'
   /** table 列配置 */
-  columns = []
+  // columns = []
+  @computed get columns() {
+    // 取出 所有标记可用的 table选项
+    return this.Swagger.columns.filter(x => x.attribute.available).map(x => {
+      return {
+        title: x.description,
+        dataIndex: x.key,
+        format: x.format || '',
+      }
+    })
+  }
   /** 按钮功能 */
   pageButtons: IPageButton = {
     install: true,
@@ -47,26 +58,36 @@ export default class Store {
     pageNo: 1,
     pageSize: 10
   }
-
   /** table 已选择 keys */
   @observable selectedRowKeys = []
   /**  详情 */
   @observable details: any = {}
-  @observable visible = {
-    edit: false,
-    port: false
+  /** 页面动作 */
+  @observable pageState = {
+    visibleEdit: false,//编辑显示
+    visiblePort: false,//导入显示
+    loading: false,//数据加载
+    loadingEdit: false,//数据提交
+    isUpdate: false//编辑状态
   }
-  /** 页面 配置 */
-  @observable pageConfig = {
-    /** Modal 显示状态  */
-    // visible: false,
-    /** 数据加载 */
-    loading: false,
-    /** 编辑 加载 */
-    editLoading: false
+  /**
+   *  修改页面动作状态
+   * @param key 
+   * @param value 
+   */
+  @action.bound
+  onPageState(
+    key: "visibleEdit" | "visiblePort" | "loading" | "loadingEdit" | "isUpdate",
+    value?: boolean) {
+    const prevVal = this.pageState[key];
+    if (prevVal == value) {
+      return
+    }
+    if (typeof value == "undefined") {
+      value = !prevVal;
+    }
+    this.pageState[key] = value;
   }
-  /** true 修改 or false 添加 */
-  @observable isUpdate = false
   /**
    * table 选择 行 
    * @param selectedRowKeys 选中的keys
@@ -84,60 +105,26 @@ export default class Store {
    */
   async onModalShow(details = {}) {
     if (details[this.IdKey] == null) {
-      runInAction(() => {
-        //添加
-        this.isUpdate = false
-      })
+      this.onPageState("isUpdate", false)
     } else {
-      //修改
-      runInAction(() => {
-        //添加
-        this.isUpdate = true
-      })
+      this.onPageState("isUpdate", true)
       details = await this.onGetDetails(details)
     }
     runInAction(() => {
       this.details = details
     })
-    this.onVisible(true)
+    this.onPageState("visibleEdit", true)
   }
-  /**
-   * 弹出框状态
-   * @param visible 状态 true|false
-   * @param type type只能是 edit 和 port  默认参数 edit
-   */
-  @action.bound
-  onVisible(visible: boolean, type: 'edit' | 'port' = 'edit') {
-    //没传参，默认为edit
-    this.visible[type] = visible
-  }
-  /**
-   * 编辑数据 加载状态
-   * @param visible 状态 true|false
-   */
-  @action.bound
-  onEditLoading(visible: boolean = !this.pageConfig.editLoading) {
-    this.pageConfig.editLoading = visible
-  }
-  /**
-   * 时间格式化
-   */
-  dateFormat = 'YYYY-MM-DD'
-  /**
-   * 时间格式化
-   */
-  dateTimeFormat = 'YYYY-MM-DD HH:mm:ss'
+
   /**
    * 加载数据 列表
    * @param params 搜索参数
    */
   async onGet(params?) {
-    if (this.pageConfig.loading == true) {
+    if (this.pageState.loading == true) {
       return message.warn('数据正在加载中')
     }
-    runInAction(() => {
-      this.pageConfig.loading = true
-    })
+    this.onPageState("loading", true)
     this.searchParams = { ...this.searchParams, ...params }
     // 页码 参数特殊处理,不需要从 search 字段中传递
     let pageNo = this.dataSource.pageNo,
@@ -150,7 +137,7 @@ export default class Store {
       pageSize = this.searchParams.pageSize
       delete this.searchParams.pageSize
     }
-    const result = await this.Http.create(this.url.search, {
+    const result = await this.Http.create(wtmfront.standard.search, {
       pageNo: pageNo,
       pageSize: pageSize,
       search: this.searchParams
@@ -164,7 +151,7 @@ export default class Store {
     }).toPromise()
     runInAction(() => {
       this.dataSource = result || this.dataSource
-      this.pageConfig.loading = false
+      this.onPageState("loading", false)
     })
     return result
   }
@@ -173,9 +160,9 @@ export default class Store {
    * @param params 数据实体
    */
   async onGetDetails(params) {
-    this.onEditLoading(true)
-    const result = await this.Http.create(this.url.details, params).toPromise()
-    this.onEditLoading(false)
+    this.onPageState("loadingEdit", true)
+    const result = await this.Http.create(wtmfront.standard.details, params).toPromise()
+    this.onPageState("loadingEdit", false)
     return result || {}
   }
   /**
@@ -183,13 +170,13 @@ export default class Store {
    * @param params 数据实体
    */
   async onEdit(params) {
-    if (this.pageConfig.editLoading) {
+    if (this.pageState.loadingEdit) {
       return
     }
     const details = { ...this.details, ...params }
-    this.onEditLoading(true)
+    this.onPageState("loadingEdit", true)
     // 添加 | 修改
-    if (this.isUpdate) {
+    if (this.pageState.isUpdate) {
       return await this.onUpdate(details)
     }
     return await this.onInstall(details)
@@ -199,16 +186,16 @@ export default class Store {
    * @param params 数据实体
    */
   async onInstall(params) {
-    const result = await this.Http.create(this.url.install, params).toPromise()
+    const result = await this.Http.create(wtmfront.standard.install, params).toPromise()
     if (result) {
       message.success('添加成功')
       // 刷新数据
       this.onGet()
-      this.onVisible(false)
+      this.onPageState("visibleEdit", false)
     } else {
       message.error('添加失败')
     }
-    this.onEditLoading(false)
+    this.onPageState("loadingEdit", false)
     return result
   }
   /**
@@ -216,16 +203,16 @@ export default class Store {
    * @param params 数据实体
    */
   async onUpdate(params) {
-    const result = await this.Http.create(this.url.update, params).toPromise()
+    const result = await this.Http.create(wtmfront.standard.update, params).toPromise()
     if (result) {
       message.success('更新成功')
       // 刷新数据
       this.onGet()
-      this.onVisible(false)
+      this.onPageState("visibleEdit", false)
     } else {
       message.error('更新失败')
     }
-    this.onEditLoading(false)
+    this.onPageState("loadingEdit", false)
     return result
   }
   /**
@@ -234,7 +221,7 @@ export default class Store {
    */
   async onDelete(params: any[]) {
     params = params.map(x => x[this.IdKey])
-    const result = await this.Http.create(this.url.delete, params).toPromise()
+    const result = await this.Http.create(wtmfront.standard.delete, params).toPromise()
     if (result) {
       message.success('删除成功')
       this.onSelectChange([]);
@@ -246,22 +233,24 @@ export default class Store {
     return result
   }
   /**
-   * 导入
+   * 导入 配置 参数
    * https://ant.design/components/upload-cn/#components-upload-demo-picture-style
    */
-  onImport() {
-    const action = this.Http.address + this.url.import.name
+  @computed get importConfig() {
+    const action = this.Http.address + wtmfront.standard.import.name
     return {
       name: 'file',
       multiple: true,
       action: action,
       onChange: info => {
         const status = info.file.status
+        // NProgress.start();
         if (status !== 'uploading') {
           console.log(info.file, info.fileList)
         }
         if (status === 'done') {
           const response = info.file.response
+          // NProgress.done();
           if (response.status == 200) {
             // 刷新数据
             this.onGet();
@@ -281,7 +270,7 @@ export default class Store {
    */
   async onExport(params = this.searchParams) {
     await this.Http.download({
-      url: APIADDRESS + this.StoreConfig.address + this.url.export.name,
+      url: APIADDRESS + this.StoreConfig.address + wtmfront.standard.export.name,
       body: params
     })
   }
@@ -289,9 +278,9 @@ export default class Store {
   * 模板
   */
   async onTemplate() {
-    //   url: APIADDRESS + this.StoreConfig.address + this.url.template.name,
+    //   url: APIADDRESS + this.StoreConfig.address + wtmfront.standard.template.name,
     await this.Http.download({
-      url: APIADDRESS + this.StoreConfig.address + this.url.template.name,
+      url: APIADDRESS + this.StoreConfig.address + wtmfront.standard.template.name,
     })
   }
   /**
