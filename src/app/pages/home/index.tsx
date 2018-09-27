@@ -11,6 +11,18 @@ export default class IApp extends React.Component<any, any> {
         return (
             <div>
                 <Row type="flex" gutter={16}>
+                    <Col span={24} >
+                        <Card bordered={false}>
+                            <div style={{
+                                textAlign:"center",
+                                fontSize:60
+                            }}>
+                                <a href="https://lengyxin.github.io/wtmfront-cli" target="_block">WTM文档地址</a>
+                            </div>
+                        </Card>
+                    </Col>
+                </Row>
+                <Row type="flex" gutter={16}>
                     <Col span={12} >
                         <Card bordered={false}>  <Antv1 /></Card>
                     </Col>
