@@ -32,14 +32,6 @@
                     "Children": []
                 }
             ]
-        },
-        {
-            "Key": "240f15eb-b274-4bbc-ace7-52ac52743a71",
-            "Name": "test",
-            "Icon": "menu-fold",
-            "Path": "/test",
-            "Component": "test",
-            "Children": []
         }
     ]
 }

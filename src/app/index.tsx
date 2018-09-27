@@ -6,6 +6,8 @@
  * @desc [description]
 */
 import Exception from 'ant-design-pro/lib/Exception';
+import { LocaleProvider, Skeleton } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 import containers from 'containers/index';
 import lodash from 'lodash';
 import { observer } from 'mobx-react';
@@ -17,14 +19,11 @@ import { BrowserRouter } from 'react-router-dom';
 import store from 'store/index';
 import layout from "./layout/index";
 import Home from "./pages/home";
-import user from "./pages/user";
 import Login from "./pages/login";
 import swagger, { Entrance } from "./pages/swagger/index";
 import System from "./pages/system";
+import user from "./pages/user";
 import './style.less';
-import { Skeleton, LocaleProvider } from 'antd';
-import zhCN from 'antd/lib/locale-provider/zh_CN';
-import { userInfo } from 'os';
 
 
 @observer
