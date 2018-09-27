@@ -34,11 +34,11 @@
             ]
         },
         {
-            "Key": "999a8e7a-b7f8-4e23-a1f4-20c4cd530ffd",
-            "Name": "测试",
+            "Key": "240f15eb-b274-4bbc-ace7-52ac52743a71",
+            "Name": "test",
             "Icon": "menu-fold",
-            "Path": "/TTT",
-            "Component": "TTT",
+            "Path": "/test",
+            "Component": "test",
             "Children": []
         }
     ]

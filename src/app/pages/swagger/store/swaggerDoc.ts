@@ -12,7 +12,6 @@ import lodash from 'lodash';
 import wtmfront from 'wtmfront.json';
 import Login from 'ant-design-pro/lib/Login';
 const Http = new HttpBasics("", res => {
-    console.log(res);
     if (res.status == 200) {
         return res.response
     }

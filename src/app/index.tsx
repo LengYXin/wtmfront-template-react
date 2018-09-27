@@ -96,29 +96,26 @@ export default class RootRoutes extends React.Component<any, any> {
 
     // 组件加载动画
     Loading = (props) => {
-        // if (props.error) {
-        //     // When the loader has errored
-        //     return <div>Error! {props.error}</div>;
-        // } else if (props.timedOut) {
-        //     // When the loader has taken longer than the timeout
-        //     return <div>Taking a long time...</div>;
-        // } else if (props.pastDelay) {
-        //     // When the loader has taken longer than the delay
-        //     return <div className="app-loadable-loading">
-        //         <div></div>
-        //     </div>;
-        // } else {
-        //     // NProgress.start();
-        //     // When the loader has just started
-        //     return <div></div>;
-        // }
-        return <>
-            <Skeleton active />
-            <Skeleton active />
-            <Skeleton active />
-            <Skeleton active />
-            <Skeleton active />
-        </>
+        if (props.error) {
+            // When the loader has errored
+            return <div>Error! {props.error}</div>;
+        } else if (props.timedOut) {
+            // When the loader has taken longer than the timeout
+            return <div>Taking a long time...</div>;
+        } else if (props.pastDelay) {
+            // When the loader has taken longer than the delay
+            return <>
+                <Skeleton active />
+                <Skeleton active />
+                <Skeleton active />
+                <Skeleton active />
+                <Skeleton active />
+            </>
+        } else {
+            // NProgress.start();
+            // When the loader has just started
+            return <div></div>;
+        }
     };
     /**
      * 

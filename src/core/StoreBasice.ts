@@ -11,11 +11,11 @@ import NProgress from 'nprogress';
 import wtmfront from 'wtmfront.json';
 import Common from './Common';
 import { HttpBasics } from './HttpBasics';
-
-export default class Store {
-  constructor(public StoreConfig) { }
-  /**  swagger json */
-  Swagger: ISwaggerModel;
+import SwaggerModel from "./SwaggerModel";
+export default class Store extends SwaggerModel {
+  constructor(public StoreConfig) {
+    super();
+  }
   /** 公共数据类 */
   Common = Common
   /** Ajax   */
@@ -26,18 +26,6 @@ export default class Store {
   dateFormat = 'YYYY-MM-DD'
   /** 日期时间格式 */
   dateTimeFormat = 'YYYY-MM-DD HH:mm:ss'
-  /** table 列配置 */
-  // columns = []
-  @computed get columns() {
-    // 取出 所有标记可用的 table选项
-    return this.Swagger.columns.filter(x => x.attribute.available).map(x => {
-      return {
-        title: x.description,
-        dataIndex: x.key,
-        format: x.format || '',
-      }
-    })
-  }
   /** 按钮功能 */
   pageButtons: IPageButton = {
     install: true,

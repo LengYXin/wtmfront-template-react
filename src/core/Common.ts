@@ -12,7 +12,7 @@ import { runInAction } from 'mobx';
  */
 class Common {
     constructor() {
-        console.log("Common", this);
+        // console.log("Common", this);
     }
     /** 缓存 http 请求 */
     CacheHttp = new Map<string, Promise<any>>();

@@ -5,13 +5,14 @@
  * @modify date 2018-09-12 18:53:26
  * @desc [description]
 */
-import { Alert, Button, Divider, Drawer, Form, Icon, Modal, Popconfirm, Row, Select, Spin, Tabs, Upload } from 'antd';
+import { Alert, Button, Divider, Drawer, Form, Icon, Modal, Popconfirm, Row, Select, Spin, Tabs, Upload, List, Checkbox } from 'antd';
 import { FormComponentProps, WrappedFormUtils } from 'antd/lib/form/Form';
 import Store from 'core/StoreBasice';
 import lodash from 'lodash';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import * as React from 'react';
+import DataEntry from './dataEntry';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
@@ -82,20 +83,64 @@ class EditComponent extends React.Component<{ Store: Store, renderItem: (params:
   render() {
     return (
       <Drawer
-        title={this.Store.pageState.isUpdate ? 'Update' : 'Add'}
+        title={this.Store.pageState.isUpdate ? '修改' : '添加'}
         width={500}
         placement="right"
         closable={false}
         onClose={() => this.Store.onPageState("visibleEdit", false)}
         visible={this.Store.pageState.visibleEdit}
+        className="app-table-edit-drawer"
         destroyOnClose={true}
       >
         <this.WrappedFormComponent {...this.props} renderItem={this.props.renderItem} />
+        <HideInstall Store={this.Store} />
       </Drawer>
     );
   }
 }
+@observer
+class HideInstall extends React.Component<{ Store: Store }, any> {
+  Store = this.props.Store;
+  state = {
+    visible: false
+  }
+  onVisible() {
+    this.setState(state => {
+      return { visible: !state.visible }
+    });
+  }
+  onChange(checkedValues) {
+    this.Store.appendInstall = checkedValues
+  }
+  render() {
+    return (
+      <>
+        <div className="app-hide-install" title="展示隐藏属性" onClick={this.onVisible.bind(this)}>
+          <Icon type="edit" theme="outlined" />
+        </div>
+        <Drawer
+          title="隐藏属性"
+          width={320}
+          onClose={this.onVisible.bind(this)}
+          closable={false}
+          visible={this.state.visible}
+          className="app-hide-install-drawer"
+        >
+          <Checkbox.Group defaultValue={this.Store.appendInstall.map(x => x.key)} onChange={this.onChange.bind(this)}>
+            <List
+              bordered
+              dataSource={this.Store.hideInstall}
+              renderItem={item => (<List.Item>
+                <Checkbox value={item.key} >{item.description}</Checkbox>
+              </List.Item>)}
+            />
+          </Checkbox.Group>
+        </Drawer>
+      </>
 
+    );
+  }
+}
 /**
  * 表单
  */
@@ -149,8 +194,45 @@ class FormComponent extends React.Component<Props, any> {
     }
     return date
   }
+  /**
+   * 表单 项
+   */
   renderItem() {
-    return this.props.renderItem({ form: this.props.form, initialValue: this.initialValue.bind(this) })
+    const { getFieldDecorator } = this.props.form;
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+      },
+    };
+    let renderItem = this.props.renderItem({ form: this.props.form, initialValue: this.initialValue.bind(this) }) as any;
+    // 没有传递 表单项 由框架解析
+    if (typeof renderItem == "undefined") {
+      renderItem = this.Store.install.map(x => <FormItem label={x.description} {...formItemLayout} key={x.key}>
+        {getFieldDecorator(x.key, {
+          rules: x.rules,
+          initialValue: this.initialValue(x.key, x.format),
+        })(
+          <DataEntry {...this.props} {...x} common={x.attribute.common} />
+        )}
+      </FormItem>);
+    }
+    const appendInstall = this.Store.appendInstall.map(x => <FormItem label={x.description} {...formItemLayout} key={x.key}>
+      {getFieldDecorator(x.key, {
+        rules: x.rules,
+        initialValue: this.initialValue(x.key, x.format),
+      })(
+        <DataEntry {...this.props} {...x} common={x.attribute.common} />
+      )}
+    </FormItem>);
+    return <>
+      {renderItem}
+      {appendInstall}
+    </>
   }
   componentWillUnmount() {
     this.Store.onPageState("loadingEdit", false)
@@ -162,22 +244,10 @@ class FormComponent extends React.Component<Props, any> {
         <Spin spinning={this.Store.pageState.loadingEdit}>
           {this.renderItem()}
         </Spin>
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            width: '100%',
-            borderTop: '1px solid #e8e8e8',
-            padding: '10px 16px',
-            textAlign: 'right',
-            left: 0,
-            background: '#fff',
-            borderRadius: '0 0 4px 4px',
-          }}
-        >
-          <Button onClick={() => this.Store.onPageState("visibleEdit", false)} >Cancel </Button>
+        <div className="app-table-edit-btns" >
+          <Button onClick={() => this.Store.onPageState("visibleEdit", false)} >取消 </Button>
           <Divider type="vertical" />
-          <Button loading={this.Store.pageState.loadingEdit} type="primary" htmlType="submit"  >Submit </Button>
+          <Button loading={this.Store.pageState.loadingEdit} type="primary" htmlType="submit"  >提交 </Button>
         </div>
       </Form>
     );

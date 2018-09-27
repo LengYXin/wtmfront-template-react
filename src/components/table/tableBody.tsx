@@ -14,6 +14,7 @@ import lodash from 'lodash';
 import { Resizable } from 'react-resizable';
 import "./style.less";
 import ReactDOM from 'react-dom';
+import Rx, { Observable, Subscription } from 'rxjs';
 @observer
 export default class TableBodyComponent extends React.Component<{ Store: Store }, any> {
 
@@ -25,7 +26,23 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     //   dataIndex: 'Action',
     //   render: this.renderAction.bind(this),
     // }
-  ]
+  ];
+  /**
+   * 初始化列参数配置
+   */
+  initColumns() {
+    const width = Math.floor(this.rowDom.clientWidth / (this.Store.columns.length + 2))
+    this.columns = [
+      ...this.Store.columns.map((col, index) => {
+        return this.columnsMap(col, index, width)
+      }),
+      {
+        title: 'Action',
+        dataIndex: 'Action',
+        render: this.renderAction.bind(this),
+      }
+    ];
+  }
   /**
   *  处理 表格类型输出
   * @param column 
@@ -33,13 +50,14 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
   */
   columnsMap(column, index, width) {
     switch (column.format) {
+      // 转换时间类型 输出
       case 'date-time':
         column.render = (record) => {
           try {
             if (record == null || record == undefined) {
               return "";
             }
-            return moment(record).format(this.Store.dateFormat)
+            return moment(record).format(this.Store.dateTimeFormat)
           } catch (error) {
             return error.toString()
           }
@@ -120,20 +138,19 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     // console.log(this.columns);
     this.forceUpdate();
   };
+  resize: Subscription;
   private rowDom: HTMLDivElement;
   componentDidMount() {
-    const width = Math.floor(this.rowDom.clientWidth / (this.Store.columns.length + 2))
-    this.columns = [
-      ...this.Store.columns.map((col, index) => {
-        return this.columnsMap(col, index, width)
-      }),
-      {
-        title: 'Action',
-        dataIndex: 'Action',
-        render: this.renderAction.bind(this),
-      }
-    ];
+    this.initColumns();
     this.Store.onGet();
+    // 窗口变化重新计算列宽度
+    this.resize = Rx.Observable.fromEvent(window, "resize").debounceTime(800).subscribe(e => {
+      this.initColumns();
+      this.forceUpdate();
+    });
+  }
+  componentWillUnmount() {
+    this.resize.unsubscribe();
   }
   render() {
     const dataSource = this.Store.dataSource;
