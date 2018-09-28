@@ -6,6 +6,7 @@
             "Icon": "menu-unfold",
             "Path": "/404",
             "Component": "",
+            "Action": [],
             "Children": [
                 {
                     "Key": "401f84d3-5a77-4b30-92c4-9c723ed29356",
@@ -13,6 +14,7 @@
                     "Icon": "menu-fold",
                     "Path": "/null",
                     "Component": "test",
+                    "Action": [],
                     "Children": []
                 },
                 {
@@ -21,6 +23,7 @@
                     "Icon": "menu-fold",
                     "Path": "/test",
                     "Component": "test",
+                    "Action": [],
                     "Children": []
                 },
                 {
@@ -29,9 +32,19 @@
                     "Icon": "menu-fold",
                     "Path": "/editer",
                     "Component": "editer",
+                    "Action": [],
                     "Children": []
                 }
             ]
+        },
+        {
+            "Key": "8cca035f-2bbe-4f7e-8af6-f1d50348464f",
+            "Name": "test",
+            "Icon": "menu-fold",
+            "Path": "/test",
+            "Component": "test",
+            "Action": [],
+            "Children": []
         }
     ]
 }

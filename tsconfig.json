@@ -69,7 +69,7 @@
     "./src"
   ],
   "exclude": [
-    "./wtmfront",
+    "./wtmfront/template",
     "../node_modules",
   ]
 }

@@ -33,7 +33,9 @@ export default class SwaggerModel {
     /**
     * 列属性配置
     */
+    @observable
     private _columns: Icolumns[];
+    @computed
     public get columns(): Icolumns[] {
         // 取出 所有标记可用的 table选项
         if (!this._columns) {

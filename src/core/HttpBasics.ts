@@ -30,7 +30,7 @@ export class HttpBasics {
     /** 
      * 请求路径前缀
      */
-    address = APIADDRESS
+    address = APIADDRESS + ""
     /**
      * 请求头
      */
@@ -200,7 +200,7 @@ export class HttpBasics {
      */
     jsonp(url, body?: { [key: string]: any } | string, callbackKey = 'callback') {
         body = this.formatBody(body);
-        url = this.compatibleUrl(this.address, url, `${body}&${callbackKey}=`);
+        url = this.compatibleUrl(this.address, url, `${body || '?time=' + new Date().getTime()}&${callbackKey}=`);
         return new Rx.Observable(observer => {
             this.jsonpCounter++;
             const key = '_jsonp_callback_' + this.jsonpCounter;

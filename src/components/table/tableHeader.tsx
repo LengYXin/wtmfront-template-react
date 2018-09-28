@@ -128,6 +128,8 @@ class FormComponent extends React.Component<Props, any> {
             <Button icon="retweet" onClick={this.onReset.bind(this)} loading={this.Store.pageState.loading}>重置</Button>
             <Divider type="vertical" />
             <Button icon="search" htmlType="submit" loading={this.Store.pageState.loading}>搜索</Button>
+            <Divider type="vertical" />
+            <Button icon="edit" ></Button>
           </Col>
         </Row>
       </Form>

@@ -78,7 +78,7 @@ export default class IApp extends React.Component<any, any> {
         }
         return (
             <div>
-                <Alert message="除了Home 和 system 之外 " type="info" showIcon />
+                <Alert message="除了Home 和 system 之外 仅用于 开发配置 " type="info" showIcon />
                 <Tree
                     showLine
                     showIcon
