@@ -11,7 +11,7 @@ import decompose from "./decompose";
 class Store {
     constructor() {
     }
-    swaggerDoc = new swaggerDoc();
-    decompose = new decompose(this.swaggerDoc);
+    swaggerDoc = swaggerDoc;
+    decompose = decompose;
 }
 export default new Store();

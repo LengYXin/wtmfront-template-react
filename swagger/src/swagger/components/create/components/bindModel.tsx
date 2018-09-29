@@ -36,7 +36,7 @@ export default class App extends React.Component<any, any> {
                     <Col span={18} >
                         <Select
                             placeholder='选择接口'
-                            defaultValue={swaggerDoc.common}
+                            defaultValue={decompose.common}
                             style={{ width: '100%' }}
                             onChange={this.handleChange.bind(this)}
                         >

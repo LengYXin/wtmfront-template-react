@@ -962,7 +962,7 @@ var App = /** @class */ (function (_super) {
             react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "flex", justify: "center", align: "middle" },
                 react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: 3, style: { height: 32, lineHeight: "32px" } }, "\u9009\u62E9\u63A5\u53E3\uFF1A"),
                 react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: 18 },
-                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_select__WEBPACK_IMPORTED_MODULE_6___default.a, { placeholder: '\u9009\u62E9\u63A5\u53E3', defaultValue: swaggerDoc.common, style: { width: '100%' }, onChange: this.handleChange.bind(this) }, swaggerDoc.docData.common.map(function (x, i) {
+                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_select__WEBPACK_IMPORTED_MODULE_6___default.a, { placeholder: '\u9009\u62E9\u63A5\u53E3', defaultValue: decompose.common, style: { width: '100%' }, onChange: this.handleChange.bind(this) }, swaggerDoc.docData.common.map(function (x, i) {
                         return react__WEBPACK_IMPORTED_MODULE_9__["createElement"](Option, { key: x.key, value: x.key }, x.key);
                     })))),
             react__WEBPACK_IMPORTED_MODULE_9__["createElement"]("div", { style: {
@@ -1665,10 +1665,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
-        var _this = _super.call(this, props) || this;
-        console.log(_this.props);
-        _this.props.swaggerDoc.getContainers();
-        return _this;
+        return _super.call(this, props) || this;
     }
     App.prototype.componentDidMount = function () {
     };
@@ -1844,11 +1841,17 @@ var IApp = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     IApp.prototype.componentDidMount = function () {
+        _store__WEBPACK_IMPORTED_MODULE_6__["default"].swaggerDoc.init();
         _store__WEBPACK_IMPORTED_MODULE_6__["default"].swaggerDoc.getModel();
+    };
+    IApp.prototype.onChange = function (key) {
+        if (key == 3) {
+            _store__WEBPACK_IMPORTED_MODULE_6__["default"].swaggerDoc.getContainers();
+        }
     };
     IApp.prototype.render = function () {
         return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", { className: "sam-container-manage" },
-            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](antd_lib_tabs__WEBPACK_IMPORTED_MODULE_0___default.a, { defaultActiveKey: "1" },
+            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](antd_lib_tabs__WEBPACK_IMPORTED_MODULE_0___default.a, { defaultActiveKey: "1", onChange: this.onChange.bind(this) },
                 react__WEBPACK_IMPORTED_MODULE_1__["createElement"](TabPane, { tab: "\u57FA\u7840\u4FE1\u606F", key: "1" },
                     react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_components_info__WEBPACK_IMPORTED_MODULE_3__["default"], null)),
                 react__WEBPACK_IMPORTED_MODULE_1__["createElement"](TabPane, { tab: "\u521B\u5EFA\u7EC4\u4EF6", key: "2" },
@@ -2197,7 +2200,7 @@ var HttpBasics = /** @class */ (function () {
         var _this = this;
         if (callbackKey === void 0) { callbackKey = 'callback'; }
         body = this.formatBody(body);
-        url = this.compatibleUrl(this.address, url, body + "&" + callbackKey + "=");
+        url = this.compatibleUrl(this.address, url, (body || '?time=' + new Date().getTime()) + "&" + callbackKey + "=");
         return new rxjs__WEBPACK_IMPORTED_MODULE_0___default.a.Observable(function (observer) {
             _this.jsonpCounter++;
             var key = '_jsonp_callback_' + _this.jsonpCounter;
@@ -2335,6 +2338,7 @@ __webpack_require__.r(__webpack_exports__);
 var wtmfront_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! wtmfront.json */ "../wtmfront.json", 1);
 /* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! immutability-helper */ "../node_modules/immutability-helper/index.js");
 /* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(immutability_helper__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _swaggerDoc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./swaggerDoc */ "./src/swagger/store/swaggerDoc.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2347,12 +2351,12 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var ObservableStore = /** @class */ (function () {
     /**
      * 构造
      */
-    function ObservableStore(swaggerDoc) {
-        this.swaggerDoc = swaggerDoc;
+    function ObservableStore() {
         this.ModelMap = new Map();
         this.visible = false;
         this.Model = {
@@ -2378,11 +2382,34 @@ var ObservableStore = /** @class */ (function () {
         };
         /** swaggerDoc */
         this.definitions = null; // toJS(this.swaggerDoc.docData.definitions);
+        this.common = "/common/combo";
     }
     /** 功能改变 */
     ObservableStore.prototype.changeButton = function (attr, flag) {
         this.Model.pageButtons[attr] = flag;
         console.log(this.Model);
+    };
+    ObservableStore.prototype.onReset = function () {
+        this.Model = {
+            idKey: "id",
+            address: "",
+            columns: [],
+            search: [],
+            // edit: {},    //编辑字段
+            install: [],
+            update: [],
+            pageButtons: {
+                install: true,
+                update: true,
+                delete: true,
+                import: true,
+                export: true
+            } //功能按钮
+        };
+        this.selectTag = {
+            name: "",
+            paths: []
+        };
     };
     ObservableStore.prototype.onVisible = function () {
         this.visible = !this.visible;
@@ -2394,9 +2421,9 @@ var ObservableStore = /** @class */ (function () {
     ObservableStore.prototype.onAnalysis = function (index) {
         // console.time();
         if (!this.definitions) {
-            this.definitions = Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(this.swaggerDoc.docData.definitions);
+            this.definitions = Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(_swaggerDoc__WEBPACK_IMPORTED_MODULE_6__["default"].docData.definitions);
         }
-        var selectTag = this.selectTag = Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(this.swaggerDoc.docData.tags[index]);
+        var selectTag = this.selectTag = Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(_swaggerDoc__WEBPACK_IMPORTED_MODULE_6__["default"].docData.tags[index]);
         if (this.ModelMap.has(selectTag.name)) {
             this.Model = this.ModelMap.get(selectTag.name);
         }
@@ -2516,7 +2543,7 @@ var ObservableStore = /** @class */ (function () {
             // console.log(value)
             if (value.example && value.example.combo) {
                 attribute.common = {
-                    address: _this.swaggerDoc.common,
+                    address: _this.common,
                     params: {
                         id: value.example.combo
                     }
@@ -2548,8 +2575,14 @@ var ObservableStore = /** @class */ (function () {
         mobx__WEBPACK_IMPORTED_MODULE_3__["observable"]
     ], ObservableStore.prototype, "Model", void 0);
     __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["observable"]
+    ], ObservableStore.prototype, "selectTag", void 0);
+    __decorate([
         mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
     ], ObservableStore.prototype, "changeButton", null);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
+    ], ObservableStore.prototype, "onReset", null);
     __decorate([
         mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
     ], ObservableStore.prototype, "onVisible", null);
@@ -2570,7 +2603,7 @@ var ObservableStore = /** @class */ (function () {
     ], ObservableStore.prototype, "onExchangeModel", null);
     return ObservableStore;
 }());
-/* harmony default export */ __webpack_exports__["default"] = (ObservableStore);
+/* harmony default export */ __webpack_exports__["default"] = (new ObservableStore());
 
 
 /***/ }),
@@ -2597,8 +2630,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var Store = /** @class */ (function () {
     function Store() {
-        this.swaggerDoc = new _swaggerDoc__WEBPACK_IMPORTED_MODULE_0__["default"]();
-        this.decompose = new _decompose__WEBPACK_IMPORTED_MODULE_1__["default"](this.swaggerDoc);
+        this.swaggerDoc = _swaggerDoc__WEBPACK_IMPORTED_MODULE_0__["default"];
+        this.decompose = _decompose__WEBPACK_IMPORTED_MODULE_1__["default"];
     }
     return Store;
 }());
@@ -2616,14 +2649,15 @@ var Store = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _HttpBasics__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HttpBasics */ "./src/swagger/store/HttpBasics.ts");
-/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mobx */ "../node_modules/mobx/lib/mobx.module.js");
-/* harmony import */ var antd_lib_notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/notification */ "../node_modules/antd/lib/notification/index.js");
-/* harmony import */ var antd_lib_notification__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_notification__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var wtmfront_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! wtmfront.json */ "../wtmfront.json");
-var wtmfront_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! wtmfront.json */ "../wtmfront.json", 1);
+/* harmony import */ var antd_lib_notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/notification */ "../node_modules/antd/lib/notification/index.js");
+/* harmony import */ var antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_notification__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobx */ "../node_modules/mobx/lib/mobx.module.js");
+/* harmony import */ var wtmfront_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! wtmfront.json */ "../wtmfront.json");
+var wtmfront_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! wtmfront.json */ "../wtmfront.json", 1);
+/* harmony import */ var _HttpBasics__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./HttpBasics */ "./src/swagger/store/HttpBasics.ts");
+/* harmony import */ var _decompose__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./decompose */ "./src/swagger/store/decompose.ts");
 var __assign = (undefined && undefined.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -2696,24 +2730,12 @@ var __spread = (undefined && undefined.__spread) || function () {
     for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
     return ar;
 };
-/**
- * @author 冷 (https://github.com/LengYXin)
- * @email lengyingxin8966@gmail.com
- * @create date 2018-09-10 05:01:12
- * @modify date 2018-09-10 05:01:12
- * @desc [description]
-*/
 
 
 
 
 
-var Http = new _HttpBasics__WEBPACK_IMPORTED_MODULE_0__["HttpBasics"]("", function (res) {
-    if (res.status == 200) {
-        return res.response;
-    }
-    return false;
-});
+
 var ObservableStore = /** @class */ (function () {
     /**
      * 构造
@@ -2753,13 +2775,13 @@ var ObservableStore = /** @class */ (function () {
         /**
          * 公共接口
          */
-        this.common = "/common/combo";
         this.map = function (x) {
+            console.log(x);
             if (x.code) {
                 if (x.code == 200) {
                     return x.data;
                 }
-                antd_lib_notification__WEBPACK_IMPORTED_MODULE_2___default.a['error']({
+                antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['error']({
                     message: x.code,
                     description: x.message,
                 });
@@ -2783,11 +2805,11 @@ var ObservableStore = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, Http.post("/server/init", wtmfront_json__WEBPACK_IMPORTED_MODULE_4__).map(this.map).toPromise()];
+                    case 0: return [4 /*yield*/, _HttpBasics__WEBPACK_IMPORTED_MODULE_4__["default"].post("/server/init", wtmfront_json__WEBPACK_IMPORTED_MODULE_3__).map(this.map).toPromise()];
                     case 1:
                         data = _a.sent();
                         if (data) {
-                            Object(mobx__WEBPACK_IMPORTED_MODULE_1__["runInAction"])(function () {
+                            Object(mobx__WEBPACK_IMPORTED_MODULE_2__["runInAction"])(function () {
                                 _this.project = data;
                                 _this.startFrame = true;
                                 // console.log(this.project)
@@ -2807,11 +2829,11 @@ var ObservableStore = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, Http.get("/server/containers").map(this.map).toPromise()];
+                    case 0: return [4 /*yield*/, _HttpBasics__WEBPACK_IMPORTED_MODULE_4__["default"].get("/server/containers").map(this.map).toPromise()];
                     case 1:
                         data = _a.sent();
                         if (data) {
-                            Object(mobx__WEBPACK_IMPORTED_MODULE_1__["runInAction"])(function () {
+                            Object(mobx__WEBPACK_IMPORTED_MODULE_2__["runInAction"])(function () {
                                 _this.containers = data;
                             });
                         }
@@ -2830,14 +2852,16 @@ var ObservableStore = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, Http.post("/server/create", __assign({}, this.createParam, param)).map(this.map).toPromise()];
+                    case 0: return [4 /*yield*/, _HttpBasics__WEBPACK_IMPORTED_MODULE_4__["default"].post("/server/create", __assign({}, this.createParam, param)).map(this.map).toPromise()];
                     case 1:
                         data = _a.sent();
                         if (data) {
-                            Object(mobx__WEBPACK_IMPORTED_MODULE_1__["runInAction"])(function () {
+                            _decompose__WEBPACK_IMPORTED_MODULE_5__["default"].onReset();
+                            this.StepsCurrent = 0;
+                            Object(mobx__WEBPACK_IMPORTED_MODULE_2__["runInAction"])(function () {
                                 _this.createState = true;
                             });
-                            antd_lib_notification__WEBPACK_IMPORTED_MODULE_2___default.a['success']({
+                            antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['success']({
                                 message: '创建成功',
                                 description: '',
                             });
@@ -2856,17 +2880,18 @@ var ObservableStore = /** @class */ (function () {
             var data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, Http.post("/server/delete", param).map(this.map).toPromise()];
+                    case 0: return [4 /*yield*/, _HttpBasics__WEBPACK_IMPORTED_MODULE_4__["default"].post("/server/delete", param).map(this.map).toPromise()];
                     case 1:
                         data = _a.sent();
                         if (data) {
-                            antd_lib_notification__WEBPACK_IMPORTED_MODULE_2___default.a['success']({
+                            this.getContainers();
+                            antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['success']({
                                 message: '删除成功',
                                 description: '',
                             });
                         }
                         else {
-                            antd_lib_notification__WEBPACK_IMPORTED_MODULE_2___default.a['error']({
+                            antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['error']({
                                 message: '删除失败',
                                 description: '',
                             });
@@ -2885,11 +2910,11 @@ var ObservableStore = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, Http.get("/swaggerDoc")
+                    case 0: return [4 /*yield*/, _HttpBasics__WEBPACK_IMPORTED_MODULE_4__["default"].get("/swaggerDoc")
                             .map(function (docs) { return _this.formatDocs(docs); }).toPromise()];
                     case 1:
                         data = _a.sent();
-                        Object(mobx__WEBPACK_IMPORTED_MODULE_1__["runInAction"])(function () {
+                        Object(mobx__WEBPACK_IMPORTED_MODULE_2__["runInAction"])(function () {
                             _this.swaggerLoading = false;
                             _this.docData = data;
                         });
@@ -2904,7 +2929,7 @@ var ObservableStore = /** @class */ (function () {
      */
     ObservableStore.prototype.formatDocs = function (docs) {
         if (!docs) {
-            antd_lib_notification__WEBPACK_IMPORTED_MODULE_2___default.a['error']({
+            antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['error']({
                 message: '获取Swagger文档失败',
                 description: '',
             });
@@ -2921,9 +2946,9 @@ var ObservableStore = /** @class */ (function () {
         };
         try {
             // 分组所有 api 地址
-            lodash__WEBPACK_IMPORTED_MODULE_3___default.a.forEach(paths, function (value, key) {
+            lodash__WEBPACK_IMPORTED_MODULE_1___default.a.forEach(paths, function (value, key) {
                 // 排除的控制器
-                if (wtmfront_json__WEBPACK_IMPORTED_MODULE_4__.excludeStandard.some(function (x) { return lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(key, x); }))
+                if (wtmfront_json__WEBPACK_IMPORTED_MODULE_3__.excludeStandard.some(function (x) { return lodash__WEBPACK_IMPORTED_MODULE_1___default.a.includes(key, x); }))
                     return;
                 // const detail = lodash.find(value, (o) => o.tags && o.tags.length);
                 var path = {};
@@ -2931,7 +2956,7 @@ var ObservableStore = /** @class */ (function () {
                 var standard = {};
                 //console.log(key)
                 // 公共控制器
-                var isPubcliStandard = wtmfront_json__WEBPACK_IMPORTED_MODULE_4__.publicStandard.some(function (x) { return lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(key, x); }); //lodash.includes(wtmfront.publicStandard, key);
+                var isPubcliStandard = wtmfront_json__WEBPACK_IMPORTED_MODULE_3__.publicStandard.some(function (x) { return lodash__WEBPACK_IMPORTED_MODULE_1___default.a.includes(key, x); }); //lodash.includes(wtmfront.publicStandard, key);
                 // console.log(isPubcliStandard, wtmfront.excludeStandard, key);
                 // 公共控制器
                 if (isPubcliStandard) {
@@ -2941,20 +2966,20 @@ var ObservableStore = /** @class */ (function () {
                     });
                 }
                 else {
-                    standard = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.find(wtmfront_json__WEBPACK_IMPORTED_MODULE_4__.standard, function (o) {
+                    standard = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.find(wtmfront_json__WEBPACK_IMPORTED_MODULE_3__.standard, function (o) {
                         // console.log(key, o.name);
-                        return lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(key, o.name);
+                        return lodash__WEBPACK_IMPORTED_MODULE_1___default.a.includes(key, o.name);
                     });
                     //  if(!standard)return;
                 }
                 // 请求类型 统一小写
-                var typeKey = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.toLower(standard.type);
+                var typeKey = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.toLower(standard.type);
                 // 获取文档中的对应类型接口
                 path = value[typeKey];
                 if (path) {
                     // 获取 tag 名称。
-                    var tagName_1 = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.find(path.tags, function (o) { return o && o.length; });
-                    var tag = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.find(format.tags, function (o) { return o.name == tagName_1; });
+                    var tagName_1 = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.find(path.tags, function (o) { return o && o.length; });
+                    var tag = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.find(format.tags, function (o) { return o.name == tagName_1; });
                     // tag 已经存在直接 添加 api 解析地址
                     if (tag) {
                         // tag.paths = tag.paths || [];
@@ -2983,11 +3008,11 @@ var ObservableStore = /** @class */ (function () {
                     }
                 }
             });
-            format.tags = format.tags.filter(function (x) { return !lodash__WEBPACK_IMPORTED_MODULE_3___default.a.isNil(x.paths); });
+            format.tags = format.tags.filter(function (x) { return !lodash__WEBPACK_IMPORTED_MODULE_1___default.a.isNil(x.paths); });
         }
         catch (error) {
             console.log(error);
-            antd_lib_notification__WEBPACK_IMPORTED_MODULE_2___default.a['error']({
+            antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['error']({
                 message: '解析Swagger文档失败',
                 description: error.message,
             });
@@ -3011,41 +3036,41 @@ var ObservableStore = /** @class */ (function () {
         this.createParam.model = __assign({}, this.createParam.model, model);
     };
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["observable"]
+        mobx__WEBPACK_IMPORTED_MODULE_2__["observable"]
     ], ObservableStore.prototype, "StepsCurrent", void 0);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["observable"]
+        mobx__WEBPACK_IMPORTED_MODULE_2__["observable"]
     ], ObservableStore.prototype, "startFrame", void 0);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["observable"]
+        mobx__WEBPACK_IMPORTED_MODULE_2__["observable"]
     ], ObservableStore.prototype, "project", void 0);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["observable"]
+        mobx__WEBPACK_IMPORTED_MODULE_2__["observable"]
     ], ObservableStore.prototype, "containers", void 0);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["observable"]
+        mobx__WEBPACK_IMPORTED_MODULE_2__["observable"]
     ], ObservableStore.prototype, "createParam", void 0);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["observable"]
+        mobx__WEBPACK_IMPORTED_MODULE_2__["observable"]
     ], ObservableStore.prototype, "swaggerLoading", void 0);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["observable"]
+        mobx__WEBPACK_IMPORTED_MODULE_2__["observable"]
     ], ObservableStore.prototype, "createState", void 0);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["observable"]
+        mobx__WEBPACK_IMPORTED_MODULE_2__["observable"]
     ], ObservableStore.prototype, "docData", void 0);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["action"].bound
+        mobx__WEBPACK_IMPORTED_MODULE_2__["action"].bound
     ], ObservableStore.prototype, "updateStepsCurrent", null);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["action"].bound
+        mobx__WEBPACK_IMPORTED_MODULE_2__["action"].bound
     ], ObservableStore.prototype, "updateCPContainers", null);
     __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_1__["action"].bound
+        mobx__WEBPACK_IMPORTED_MODULE_2__["action"].bound
     ], ObservableStore.prototype, "updateCPmodel", null);
     return ObservableStore;
 }());
-/* harmony default export */ __webpack_exports__["default"] = (ObservableStore);
+/* harmony default export */ __webpack_exports__["default"] = (new ObservableStore());
 
 
 /***/ }),

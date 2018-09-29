@@ -11,11 +11,11 @@ import { action, toJS, observable } from 'mobx';
 import wtmfront from 'wtmfront.json';
 import update from 'immutability-helper';
 import swaggerDoc from './swaggerDoc';
-export default class ObservableStore {
+class ObservableStore {
     /**
      * 构造
      */
-    constructor(public swaggerDoc: swaggerDoc) {
+    constructor() {
 
     }
     ModelMap = new Map<string, any>();
@@ -37,14 +37,38 @@ export default class ObservableStore {
         }   //功能按钮
     }
     /** 选择的 tag */
-    selectTag = {
+    @observable selectTag = {
         name: "",
         paths: []
     };
     /** 功能改变 */
-    @action.bound changeButton(attr, flag: boolean) {
+    @action.bound
+    changeButton(attr, flag: boolean) {
         this.Model.pageButtons[attr] = flag
         console.log(this.Model)
+    }
+    @action.bound
+    onReset() {
+        this.Model = {
+            idKey: "id",    //唯一标识
+            address: "",    //地址控制器
+            columns: [],    //teble 列
+            search: [],     //搜索条件
+            // edit: {},    //编辑字段
+            install: [],    //添加字段
+            update: [],    //修改字段
+            pageButtons: {
+                install: true,
+                update: true,
+                delete: true,
+                import: true,
+                export: true
+            }   //功能按钮
+        };
+        this.selectTag = {
+            name: "",
+            paths: []
+        };
     }
     /** swaggerDoc */
     definitions = null;// toJS(this.swaggerDoc.docData.definitions);
@@ -59,9 +83,9 @@ export default class ObservableStore {
     onAnalysis(index) {
         // console.time();
         if (!this.definitions) {
-            this.definitions = toJS(this.swaggerDoc.docData.definitions);
+            this.definitions = toJS(swaggerDoc.docData.definitions);
         }
-        const selectTag = this.selectTag = toJS(this.swaggerDoc.docData.tags[index]);
+        const selectTag = this.selectTag = toJS(swaggerDoc.docData.tags[index]);
         if (this.ModelMap.has(selectTag.name)) {
             this.Model = this.ModelMap.get(selectTag.name);
         } else {
@@ -152,6 +176,7 @@ export default class ObservableStore {
         this.setAttribute(definitions);
         return definitions
     }
+    common = "/common/combo"
     /**
      * 设置属性 
      * @param definitions 
@@ -180,7 +205,7 @@ export default class ObservableStore {
             // console.log(value)
             if (value.example && value.example.combo) {
                 attribute.common = {
-                    address: '/common/combo',
+                    address: this.common,
                     params: {
                         id: value.example.combo
                     }
@@ -208,3 +233,4 @@ export default class ObservableStore {
         }) as any;
     }
 }
+export default new ObservableStore();

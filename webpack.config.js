@@ -14,9 +14,9 @@ module.exports = webpack(env => {
              */
             '/server': {
                 target: 'http://localhost:8765',
-                pathRewrite: {
-                    "^/server": ""
-                },
+                // pathRewrite: {
+                //     "^/server": ""
+                // },
                 ...config
             },
             /**

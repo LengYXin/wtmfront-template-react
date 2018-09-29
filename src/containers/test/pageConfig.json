@@ -432,32 +432,6 @@
     "install": [
         {
             "type": "string",
-            "description": "公司ID",
-            "allowEmptyValue": false,
-            "minLength": 0,
-            "maxLength": 5,
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                },
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 5,
-                    "message": "max length 5!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "id"
-        },
-        {
-            "type": "string",
             "description": "公司名",
             "allowEmptyValue": true,
             "minLength": 0,
@@ -473,7 +447,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "corpName"
@@ -495,7 +469,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "managerID"
@@ -517,7 +491,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "parentCorpID"
@@ -533,7 +507,7 @@
             "exclusiveMaximum": false,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "corpEmpTotals"
@@ -562,6 +536,32 @@
         },
         {
             "type": "string",
+            "description": "公司ID",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 5,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 5,
+                    "message": "max length 5!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "id"
+        },
+        {
+            "type": "string",
             "description": "创建用户ID",
             "allowEmptyValue": true,
             "minLength": 0,
@@ -577,7 +577,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "createUser"
@@ -589,7 +589,7 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "createDate"
@@ -611,7 +611,7 @@
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "updateUser"
@@ -623,7 +623,7 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "updateDate"

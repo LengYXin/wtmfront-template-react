@@ -10,7 +10,8 @@ import lodash from 'lodash';
 import { action, observable, runInAction } from "mobx";
 import wtmfront from 'wtmfront.json';
 import Http from "./HttpBasics";
-export default class ObservableStore {
+import decompose from './decompose';
+class ObservableStore {
     /**
      * 构造
      */
@@ -101,6 +102,8 @@ export default class ObservableStore {
     async create(param?) {
         const data = await Http.post("/server/create", { ...this.createParam, ...param }).map(this.map).toPromise();
         if (data) {
+            decompose.onReset();
+            this.StepsCurrent = 0;
             runInAction(() => {
                 this.createState = true;
             });
@@ -118,6 +121,7 @@ export default class ObservableStore {
     async  delete(param) {
         const data = await Http.post("/server/delete", param).map(this.map).toPromise();
         if (data) {
+            this.getContainers();
             notification['success']({
                 message: '删除成功',
                 description: '',
@@ -260,7 +264,7 @@ export default class ObservableStore {
         this.createParam.model = { ...this.createParam.model, ...model }
     }
 }
-
+export default new ObservableStore();
 
 
 

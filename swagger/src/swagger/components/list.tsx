@@ -14,8 +14,6 @@ import Store from '../store';
 export default class App extends React.Component<any, any> {
     constructor(props) {
         super(props);
-        console.log(this.props);
-        this.props.swaggerDoc.getContainers();
     }
     componentDidMount() {
 

@@ -19,12 +19,18 @@ const TabPane = Tabs.TabPane;
 @DragDropContext(HTML5Backend)
 export default class IApp extends React.Component<any, any> {
     componentDidMount() {
+        Store.swaggerDoc.init();
         Store.swaggerDoc.getModel();
+    }
+    onChange(key) {
+        if (key == 3) {
+            Store.swaggerDoc.getContainers();
+        }
     }
     public render() {
         return (
             <div className="sam-container-manage">
-                <Tabs defaultActiveKey="1" >
+                <Tabs defaultActiveKey="1" onChange={this.onChange.bind(this)} >
                     <TabPane tab="基础信息" key="1">
                         <Info />
                     </TabPane>

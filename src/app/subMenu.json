@@ -38,11 +38,20 @@
             ]
         },
         {
-            "Key": "8cca035f-2bbe-4f7e-8af6-f1d50348464f",
+            "Key": "f1fa1373-0e73-4dd1-adb8-7be1332a20ad",
             "Name": "test",
             "Icon": "menu-fold",
             "Path": "/test",
             "Component": "test",
+            "Action": [],
+            "Children": []
+        },
+        {
+            "Key": "42d03d9b-cdb8-4b40-a556-a70007280e69",
+            "Name": "test",
+            "Icon": "menu-fold",
+            "Path": "/testAAAAAAAAAAAAA",
+            "Component": "testAAAAAAAAAAAAA",
             "Action": [],
             "Children": []
         }
