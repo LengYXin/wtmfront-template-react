@@ -17,6 +17,7 @@ interface IPageButton {
  * Swagger 解析格式
  */
 interface ISwaggerModel {
+    name: string,       //名称
     idKey?: string,    //唯一标识
     address?: string,    //地址控制器
     columns?: any[],    //teble 列

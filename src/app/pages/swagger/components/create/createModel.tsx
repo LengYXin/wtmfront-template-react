@@ -6,7 +6,7 @@
  * @desc [description]
 */
 import { Button, Select, Tabs, message, Spin, Divider, Table } from 'antd';
-import { action } from "mobx";
+import { action, toJS } from "mobx";
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { } from 'react-dnd';
@@ -159,7 +159,7 @@ export default class App extends React.Component<any, any> {
         // ModelStore.Submit();
         // decompose.onAnalysis()
         if (decompose.Model.columns.length > 0) {
-            swaggerDoc.create({ model: decompose.Model })
+            swaggerDoc.create({ model: toJS(decompose.Model) })
         } else {
             message.warn("请选择模型");
         }

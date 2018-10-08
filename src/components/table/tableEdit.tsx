@@ -244,7 +244,7 @@ class FormComponent extends React.Component<Props, any> {
         <Spin spinning={this.Store.pageState.loadingEdit}>
           {this.renderItem()}
         </Spin>
-        <div className="app-table-edit-btns" >
+        <div className="app-drawer-btns" >
           <Button onClick={() => this.Store.onPageState("visibleEdit", false)} >取消 </Button>
           <Divider type="vertical" />
           <Button loading={this.Store.pageState.loadingEdit} type="primary" htmlType="submit"  >提交 </Button>

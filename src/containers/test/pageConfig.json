@@ -1,0 +1,840 @@
+{
+    "name": "test",
+    "idKey": "id",
+    "address": "/corp/",
+    "columns": [
+        {
+            "type": "string",
+            "description": "公司名",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "corpName"
+        },
+        {
+            "type": "string",
+            "description": "管理员ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "managerID"
+        },
+        {
+            "type": "string",
+            "description": "上级公司ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "parentCorpID"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "总员工数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 10,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": false,
+                "update": true
+            },
+            "key": "corpEmpTotals"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "example": {
+                "enum": {
+                    "0": "否",
+                    "1": "是"
+                }
+            },
+            "description": "使用与否",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 2,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": false,
+                "update": true
+            },
+            "key": "useYN"
+        },
+        {
+            "type": "string",
+            "description": "创建用户ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": false,
+                "update": true
+            },
+            "key": "createUser"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": false,
+                "update": true
+            },
+            "key": "createDate"
+        },
+        {
+            "type": "string",
+            "description": "修改用户ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": false,
+                "update": true
+            },
+            "key": "updateUser"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "修改日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": false,
+                "update": true
+            },
+            "key": "updateDate"
+        },
+        {
+            "type": "string",
+            "description": "公司ID",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 5,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 5,
+                    "message": "max length 5!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "id"
+        }
+    ],
+    "search": [
+        {
+            "type": "string",
+            "description": "公司ID",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 5,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 5,
+                    "message": "max length 5!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "id"
+        },
+        {
+            "type": "string",
+            "description": "公司名",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "corpName"
+        },
+        {
+            "type": "string",
+            "description": "管理员ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "managerID"
+        },
+        {
+            "type": "string",
+            "description": "上级公司ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "parentCorpID"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "总员工数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 10,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "corpEmpTotals"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "example": {
+                "enum": {
+                    "0": "否",
+                    "1": "是"
+                }
+            },
+            "description": "使用与否",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 2,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "useYN"
+        },
+        {
+            "type": "string",
+            "description": "创建用户ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createUser"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDate"
+        },
+        {
+            "type": "string",
+            "example": {
+                "datetime": true
+            },
+            "description": "创建日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDateStr"
+        },
+        {
+            "type": "string",
+            "example": {
+                "date": true
+            },
+            "description": "修改日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateDateStr"
+        },
+        {
+            "type": "string",
+            "description": "修改用户ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateUser"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "修改日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateDate"
+        }
+    ],
+    "install": [
+        {
+            "type": "string",
+            "description": "公司ID",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 5,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 5,
+                    "message": "max length 5!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "id"
+        },
+        {
+            "type": "string",
+            "description": "公司名",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "corpName"
+        },
+        {
+            "type": "string",
+            "description": "管理员ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "managerID"
+        },
+        {
+            "type": "string",
+            "description": "上级公司ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "parentCorpID"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "总员工数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 10,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "corpEmpTotals"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "example": {
+                "enum": {
+                    "0": "否",
+                    "1": "是"
+                }
+            },
+            "description": "使用与否",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 2,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "useYN"
+        },
+        {
+            "type": "string",
+            "description": "创建用户ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createUser"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDate"
+        },
+        {
+            "type": "string",
+            "description": "修改用户ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateUser"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "修改日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateDate"
+        }
+    ],
+    "update": [
+        {
+            "type": "string",
+            "description": "公司ID",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 5,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 5,
+                    "message": "max length 5!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "id"
+        },
+        {
+            "type": "string",
+            "description": "公司名",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "corpName"
+        },
+        {
+            "type": "string",
+            "description": "管理员ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "managerID"
+        },
+        {
+            "type": "string",
+            "description": "上级公司ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "parentCorpID"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "总员工数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 10,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "corpEmpTotals"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "example": {
+                "enum": {
+                    "0": "否",
+                    "1": "是"
+                }
+            },
+            "description": "使用与否",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 2,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "useYN"
+        },
+        {
+            "type": "string",
+            "description": "创建用户ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createUser"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDate"
+        },
+        {
+            "type": "string",
+            "description": "修改用户ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateUser"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "修改日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateDate"
+        }
+    ],
+    "pageButtons": {
+        "install": true,
+        "update": true,
+        "delete": true,
+        "import": true,
+        "export": true
+    }
+}

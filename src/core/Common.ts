@@ -5,19 +5,24 @@
  * @modify date 2018-09-12 18:52:42
  * @desc [description]
 */
-import Http from './HttpBasics';
 import { runInAction } from 'mobx';
+import Rx from "rxjs";
+import Http from './HttpBasics';
 /**
  * 公共数据接口
  */
 class Common {
     constructor() {
         // console.log("Common", this);
+        this.getCustomColumn();
     }
+    /** 列获取完成通知 */
+    CustomColumnSubject = new Rx.BehaviorSubject<any>([]);
     /** 缓存 http 请求 */
     CacheHttp = new Map<string, Promise<any>>();
     /** 缓存数据 */
     Cache = new Map<string, any>();
+    /** 获取 公共数据 */
     async getCombo(parmas: ICommon) {
         const key = JSON.stringify(parmas)
         if (this.Cache.has(key)) {
@@ -45,6 +50,25 @@ class Common {
         const data = await promise || [];
         this.Cache.set(key, data);
         return data;
+    }
+
+
+    /**
+     * 获取列配置
+     */
+    async getCustomColumn() {
+        const data = await Http.get("/common/getCustomColumn").toPromise();
+        runInAction(() => {
+            if (data && data.length > 0) {
+                this.CustomColumnSubject.next(data)
+            }
+        })
+    }
+    /**
+     * 设置列配置
+     */
+    async setCustomColumn(params) {
+        await Http.post("/common/setCustomColumn", params).toPromise();
     }
 }
 export default new Common();

@@ -47,7 +47,9 @@ export default class ObservableStore {
     /*** 模块列表 */
     @observable createParam = {
         // 组件信息
-        containers: {},
+        containers: {
+            containersName: null
+        },
         // 模型信息
         model: {}
     };
@@ -106,6 +108,7 @@ export default class ObservableStore {
      * @param param 
      */
     async create(param?) {
+        param.model.name = this.createParam.containers.containersName;
         const data = await Http.post("/server/create", { ...this.createParam, ...param }).map(this.map).toPromise();
         if (data) {
             runInAction(() => {

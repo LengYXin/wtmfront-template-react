@@ -5,7 +5,7 @@
  * @modify date 2018-09-12 18:53:30
  * @desc [description]
 */
-import { Button, Col, Divider, Form, Row, Select, Spin } from 'antd';
+import { Button, Col, Divider, Form, Row, Select, Spin, Drawer, Checkbox, List } from 'antd';
 import Store from 'core/StoreBasice';
 import * as React from 'react';
 import lodash from 'lodash';
@@ -124,13 +124,68 @@ class FormComponent extends React.Component<Props, any> {
           {this.renderItem()}
         </Row>
         <Row type="flex" gutter={16} justify="end">
-          <Col span={6} className="table-header-btn">
+          <Col span={24} className="table-header-btn">
             <Button icon="retweet" onClick={this.onReset.bind(this)} loading={this.Store.pageState.loading}>重置</Button>
             <Divider type="vertical" />
             <Button icon="search" htmlType="submit" loading={this.Store.pageState.loading}>搜索</Button>
+            <ColumnsComponent Store={this.Store} />
           </Col>
         </Row>
       </Form>
+    );
+  }
+}
+/**
+ * 列配置
+ */
+@observer
+class ColumnsComponent extends React.Component<{ Store: Store }, any> {
+  Store = this.props.Store;
+  state = {
+    visible: false
+  }
+  checkedValues: any[] = this.Store.columns.map(x => x.dataIndex);
+  onVisible() {
+    this.setState(state => {
+      return { visible: !state.visible }
+    });
+  }
+  onChange(checkedValues) {
+    this.checkedValues = checkedValues
+  }
+  onSubmit() {
+    this.Store.columns = this.checkedValues;
+    this.onVisible();
+  }
+  render() {
+    return (
+      <>
+        <Divider type="vertical" />
+        <Button icon="edit" loading={this.Store.pageState.loading} onClick={this.onVisible.bind(this)}>隐藏列</Button>
+        <Drawer
+          title="隐藏列"
+          width={320}
+          onClose={this.onVisible.bind(this)}
+          closable={false}
+          visible={this.state.visible}
+          className="app-hide-install-drawer"
+        >
+          <Checkbox.Group defaultValue={this.checkedValues} onChange={this.onChange.bind(this)}>
+            <List
+              bordered
+              dataSource={this.Store.allColumns}
+              renderItem={item => (<List.Item>
+                <Checkbox value={item.dataIndex} >{item.title}</Checkbox>
+              </List.Item>)}
+            />
+          </Checkbox.Group>
+          <div className="app-drawer-btns" >
+            <Button onClick={this.onVisible.bind(this)} >取消 </Button>
+            <Divider type="vertical" />
+            <Button type="primary" onClick={this.onSubmit.bind(this)}  >提交 </Button>
+          </div>
+        </Drawer>
+      </>
     );
   }
 }

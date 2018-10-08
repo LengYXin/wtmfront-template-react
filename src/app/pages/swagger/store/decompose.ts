@@ -21,6 +21,7 @@ export default class ObservableStore {
     ModelMap = new Map<string, any>();
     @observable visible = false;
     @observable Model: ISwaggerModel = {
+        name: "",       //名称
         idKey: "id",    //唯一标识
         address: "",    //地址控制器
         columns: [],    //teble 列

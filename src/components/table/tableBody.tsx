@@ -31,17 +31,19 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
    * 初始化列参数配置
    */
   initColumns() {
-    const width = Math.floor(this.rowDom.clientWidth / (this.Store.columns.length + 2))
-    this.columns = [
-      ...this.Store.columns.map((col, index) => {
-        return this.columnsMap(col, index, width)
-      }),
-      {
-        title: 'Action',
-        dataIndex: 'Action',
-        render: this.renderAction.bind(this),
-      }
-    ];
+    if (this.rowDom && this.rowDom.clientWidth) {
+      const width = Math.floor(this.rowDom.clientWidth / (this.Store.columns.length + 1))
+      this.columns = [
+        ...this.Store.columns.map((col, index) => {
+          return this.columnsMap(col, index, width)
+        }),
+        {
+          title: 'Action',
+          dataIndex: 'Action',
+          render: this.renderAction.bind(this),
+        }
+      ];
+    }
   }
   /**
   *  处理 表格类型输出
@@ -141,7 +143,6 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
   resize: Subscription;
   private rowDom: HTMLDivElement;
   componentDidMount() {
-    this.initColumns();
     this.Store.onGet();
     // 窗口变化重新计算列宽度
     this.resize = Rx.Observable.fromEvent(window, "resize").debounceTime(800).subscribe(e => {
@@ -154,6 +155,7 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
   }
   render() {
     const dataSource = this.Store.dataSource;
+    this.initColumns();
     return (
       <Row ref={e => this.rowDom = ReactDOM.findDOMNode(e) as any}>
         <Divider />

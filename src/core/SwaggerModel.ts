@@ -31,21 +31,55 @@ export default class SwaggerModel {
      */
     Swagger: ISwaggerModel;
     /**
+     * 所有列属性
+     */
+    allColumns = [];
+    /**
     * 列属性配置
     */
+    @observable
     private _columns: Icolumns[];
+    /**
+     * 表格列
+     */
+    @computed
     public get columns(): Icolumns[] {
         // 取出 所有标记可用的 table选项
         if (!this._columns) {
-            this._columns = this.Swagger.columns.filter(x => x.attribute.available).map(x => {
+            // 所有列属性
+            this.allColumns = this.Swagger.columns.map(x => {
                 return {
                     title: x.description,
                     dataIndex: x.key,
                     format: x.format || '',
+                    attribute: x.attribute
                 }
-            })
+            });
+            // 服务器推送 对比 
+            Common.CustomColumnSubject.subscribe(columns => {
+                try {
+                    if (columns.length <= 0) { return }
+                    // 获取 对应的 模块配置 
+                    columns = (lodash.find(columns, { entity: this.Swagger.name }) as any).columns
+                    this._columns = lodash.filter(this.allColumns, x => lodash.includes(columns, x.dataIndex));
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+            this._columns = this.allColumns.filter(x => x.attribute.available)
         }
         return this._columns
+    }
+    /**
+     * 设置列
+     */
+    public set columns(value: Icolumns[]) {
+        this._columns = lodash.filter(this.allColumns, x => lodash.includes(value, x.dataIndex));
+        // 保存设置到服务器
+        Common.setCustomColumn({
+            entity: this.Swagger.name,
+            columns: value
+        })
     }
     /**
      * 添加属性
