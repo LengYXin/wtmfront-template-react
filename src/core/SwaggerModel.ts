@@ -60,8 +60,20 @@ export default class SwaggerModel {
                 try {
                     if (columns.length <= 0) { return }
                     // 获取 对应的 模块配置 
-                    columns = (lodash.find(columns, { entity: this.Swagger.name }) as any).columns
-                    this._columns = lodash.filter(this.allColumns, x => lodash.includes(columns, x.dataIndex));
+                    columns = (lodash.find(columns, { entity: this.Swagger.name }) as any).columns;
+                    if (columns.length <= 0) { return }
+                    // 重置 可用列
+                    this.allColumns = this.allColumns.map(x => {
+                        if (lodash.includes(columns, x.dataIndex)) {
+                            x.attribute.available = true
+                        } else {
+                            x.attribute.available = false
+                        }
+                        return x;
+                    });
+                    runInAction(() => {
+                        this._columns = lodash.filter(this.allColumns, x => lodash.includes(columns, x.dataIndex));
+                    })
                 } catch (error) {
                     console.log(error);
                 }

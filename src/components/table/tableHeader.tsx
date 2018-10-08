@@ -144,7 +144,7 @@ class ColumnsComponent extends React.Component<{ Store: Store }, any> {
   state = {
     visible: false
   }
-  checkedValues: any[] = this.Store.columns.map(x => x.dataIndex);
+  checkedValues = [];
   onVisible() {
     this.setState(state => {
       return { visible: !state.visible }
@@ -154,7 +154,9 @@ class ColumnsComponent extends React.Component<{ Store: Store }, any> {
     this.checkedValues = checkedValues
   }
   onSubmit() {
-    this.Store.columns = this.checkedValues;
+    if (this.checkedValues.length) {
+      this.Store.columns = this.checkedValues;
+    }
     this.onVisible();
   }
   render() {
@@ -168,9 +170,10 @@ class ColumnsComponent extends React.Component<{ Store: Store }, any> {
           onClose={this.onVisible.bind(this)}
           closable={false}
           visible={this.state.visible}
+          destroyOnClose={true}
           className="app-hide-install-drawer"
         >
-          <Checkbox.Group defaultValue={this.checkedValues} onChange={this.onChange.bind(this)}>
+          <Checkbox.Group defaultValue={this.Store.columns.map(x => x.dataIndex)} onChange={this.onChange.bind(this)}>
             <List
               bordered
               dataSource={this.Store.allColumns}
@@ -182,7 +185,7 @@ class ColumnsComponent extends React.Component<{ Store: Store }, any> {
           <div className="app-drawer-btns" >
             <Button onClick={this.onVisible.bind(this)} >取消 </Button>
             <Divider type="vertical" />
-            <Button type="primary" onClick={this.onSubmit.bind(this)}  >提交 </Button>
+            <Button type="primary" onClick={this.onSubmit.bind(this)} >提交 </Button>
           </div>
         </Drawer>
       </>

@@ -124,6 +124,7 @@ class HideInstall extends React.Component<{ Store: Store }, any> {
           onClose={this.onVisible.bind(this)}
           closable={false}
           visible={this.state.visible}
+          destroyOnClose={true}
           className="app-hide-install-drawer"
         >
           <Checkbox.Group defaultValue={this.Store.appendInstall.map(x => x.key)} onChange={this.onChange.bind(this)}>

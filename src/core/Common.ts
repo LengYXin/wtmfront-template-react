@@ -58,6 +58,14 @@ class Common {
      */
     async getCustomColumn() {
         const data = await Http.get("/common/getCustomColumn").toPromise();
+        // setTimeout(() => {
+        //     this.CustomColumnSubject.next([
+        //         {
+        //             entity: "test",
+        //             columns: ["corpName","parentCorpID"]
+        //         }
+        //     ])
+        // }, 2000);
         runInAction(() => {
             if (data && data.length > 0) {
                 this.CustomColumnSubject.next(data)
