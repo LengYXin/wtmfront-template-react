@@ -7,7 +7,7 @@
 */
 import { HttpBasics } from "core/HttpBasics";
 import { action, observable, runInAction } from "mobx";
-import { notification } from 'antd';
+import { notification, Tag } from 'antd';
 import lodash from 'lodash';
 import wtmfront from 'wtmfront.json';
 import Login from 'ant-design-pro/lib/Login';
@@ -59,7 +59,9 @@ export default class ObservableStore {
         // 公共接口
         common: [],
         // 模型列表
-        definitions: {}
+        definitions: {},
+        //columns自定义列
+        commonColumns:[]
     };
     /**
      * 公共接口
@@ -146,6 +148,7 @@ export default class ObservableStore {
             .map(docs => this.formatDocs(docs)).toPromise();
         runInAction(() => {
             this.swaggerLoading = false;
+             console.log(data)
             this.docData = data;
         })
         return data
@@ -162,6 +165,7 @@ export default class ObservableStore {
             });
             return this.docData
         }
+        console.log(docs)
         let { tags, definitions, paths } = docs;
         let format = {
             // 模型控制器
@@ -169,77 +173,129 @@ export default class ObservableStore {
             // 公共控制器
             common: [],
             // 模型列表
-            definitions: { ...definitions }
+            definitions: { ...definitions },
+            //columns自定义列
+            commonColumns:[]
         };
+        
         try {
-            // 分组所有 api 地址
-            lodash.forEach(paths, (value, key) => {
-                // 排除的控制器
-                if (wtmfront.excludeStandard.some(x => lodash.includes(key, x))) return
-                // const detail = lodash.find(value, (o) => o.tags && o.tags.length);
-                let path: any = {};
-                // 标准接口
-                let standard: { name?: string, type?: string } = {};
-                //console.log(key)
-                // 公共控制器
-                const isPubcliStandard = wtmfront.publicStandard.some(x => lodash.includes(key, x)) //lodash.includes(wtmfront.publicStandard, key);
-                // console.log(isPubcliStandard, wtmfront.excludeStandard, key);
-                // 公共控制器
-                if (isPubcliStandard) {
-                    format.common.push({
-                        key,
-                        path: value
-                    });
-                } else {
-                    standard = lodash.find(wtmfront.standard, (o) => {
-                        // console.log(key, o.name);
-                        return lodash.includes(key, o.name)
-                    })
-                    //  if(!standard)return;
-                }
-                // 请求类型 统一小写
-                const typeKey = lodash.toLower(standard.type);
-                // 获取文档中的对应类型接口
-                path = value[typeKey];
-                if (path) {
-                    // 获取 tag 名称。
-                    const tagName = lodash.find(path.tags, (o) => o && o.length);
-                    const tag = lodash.find(format.tags, (o) => o.name == tagName);
-                    // tag 已经存在直接 添加 api 解析地址
-                    if (tag) {
-                        // tag.paths = tag.paths || [];
-                        // tag.paths.push({
-                        //     key,
-                        //     typeKey,
-                        //     ...path
-                        // });
-                        tag.paths = tag.paths || {};
-                        tag.paths[key] = {
-                            key,
-                            typeKey,
-                            ...path
+            //对所有api进行处理:
+            //所有的接口组成的数组
+            let pathAry=Object.keys(paths)
+            
+            pathAry.forEach((path)=>{
+                //console.log(path)
+                //path 接口名
+                //判断属于哪个分类的 tags接口类别
+                tags.forEach((tag,index)=>{
+                   // console.log(paths[path])  
+                    let methods=Object.keys(paths[path])[0]  //对应的请求方式
+                    let methodsObj=paths[path][methods]//该请求方式对应的对象
+                    
+                    //tag 是每个分组  在这里处理好数据  后期再去排除共同的接口
+                    //tag.name  Object.keys(path)[0] post/get
+                   
+                    if(tag.name===methodsObj.tags[0]){
+                        let pathObj={
+                            typeKey:methods,//请求方式
+                            key:path,//接口名
+                            ...methodsObj//改接口的请求方式下的对象
                         }
-                    } else {
-                        const tag = {
-                            name: tagName,
-                            // paths: [{
-                            //     key,
-                            //     typeKey,
-                            //     ...path
-                            // }]
-                            paths: {}
+                        //属于一类  
+                        if(!tag.paths){
+                            //第一次放的时候
+                            tag.paths={}
+                            tag.paths[path]=pathObj
+                        }else{
+                            //后续再放的时候
+                            tag.paths[path]=pathObj
                         }
-                        tag.paths[key] = {
-                            key,
-                            typeKey,
-                            ...path
-                        }
-                        format.tags.push(tag);
                     }
-                }
-            });
+                })
 
-            format.tags = format.tags.filter(x => !lodash.isNil(x.paths))
+            })
+
+            //分化tags
+            format.tags=tags.filter((item,index)=>{
+                if(/Common/.test(item.description)){
+                     //共同数据列
+                    if(/Data/.test(item.description)){
+                        format.commonColumns.push(item)  
+                    } else{
+                        format.common.push(item)   
+                    } 
+                    return false
+                }
+                return true
+            })
+            // 分组所有 api 地址
+            // lodash.forEach(paths, (value, key) => {
+            //     // 排除的控制器
+            //     if (wtmfront.excludeStandard.some(x => lodash.includes(key, x))) return
+            //     // const detail = lodash.find(value, (o) => o.tags && o.tags.length);
+            //     let path: any = {};
+            //     // 标准接口
+            //     let standard: { name?: string, type?: string } = {};
+            //     //console.log(key)
+            //     // 公共控制器
+            //     const isPubcliStandard = wtmfront.publicStandard.some(x => lodash.includes(key, x)) //lodash.includes(wtmfront.publicStandard, key);
+            //     // console.log(isPubcliStandard, wtmfront.excludeStandard, key);
+            //     // 公共控制器
+            //     if (isPubcliStandard) {
+            //         format.common.push({
+            //             key,
+            //             path: value
+            //         });
+            //     } else {
+            //         standard = lodash.find(wtmfront.standard, (o) => {
+            //             // console.log(key, o.name);
+            //             return lodash.includes(key, o.name)
+            //         })
+            //         //  if(!standard)return;
+            //     }
+            //     // 请求类型 统一小写
+            //     const typeKey = lodash.toLower(standard.type);
+            //     // 获取文档中的对应类型接口
+            //     path = value[typeKey];
+            //     if (path) {
+            //         // 获取 tag 名称。
+            //         const tagName = lodash.find(path.tags, (o) => o && o.length);
+            //         const tag = lodash.find(format.tags, (o) => o.name == tagName);
+            //         // tag 已经存在直接 添加 api 解析地址
+            //         if (tag) {
+            //             // tag.paths = tag.paths || [];
+            //             // tag.paths.push({
+            //             //     key,
+            //             //     typeKey,
+            //             //     ...path
+            //             // });
+            //             tag.paths = tag.paths || {};
+            //             tag.paths[key] = {
+            //                 key,
+            //                 typeKey,
+            //                 ...path
+            //             }
+            //         } else {
+            //             const tag = {
+            //                 name: tagName,
+            //                 // paths: [{
+            //                 //     key,
+            //                 //     typeKey,
+            //                 //     ...path
+            //                 // }]
+            //                 paths: {}
+            //             }
+            //             tag.paths[key] = {
+            //                 key,
+            //                 typeKey,
+            //                 ...path
+            //             }
+            //             format.tags.push(tag);
+            //         }
+            //     }
+            // });
+
+            // format.tags = format.tags.filter(x => !lodash.isNil(x.paths))
         } catch (error) {
             console.log(error);
             notification['error']({
@@ -247,7 +303,7 @@ export default class ObservableStore {
                 description: error.message,
             });
         }
-        // console.log(format)
+        //console.log(format)
         return format;
     }
     /**

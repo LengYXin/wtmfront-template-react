@@ -13,6 +13,7 @@ import { observer } from 'mobx-react';
 import moment from 'moment';
 import * as React from 'react';
 import DataEntry from './dataEntry';
+import { toJS } from 'mobx';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
@@ -49,6 +50,9 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
         </Popconfirm>
       )
     }
+    if (pageButtons.columns) {
+      button.push(<Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {"columns":"columns"})}>自定义列表</Button>)
+    }
     return button.map((x, i) => {
       return <React.Fragment key={i}>
         {x}
@@ -67,7 +71,7 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
     return (
       <Row>
         {this.renderButtons()}
-        <EditComponent {...this.props} renderItem={this.renderItem.bind(this)} />
+        <EditComponent {...this.props} renderItem={this.renderItem.bind(this)}/>
         <PortComponent {...this.props} />
       </Row>
     );
@@ -80,10 +84,82 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
 class EditComponent extends React.Component<{ Store: Store, renderItem: (params: renderItemParams) => React.ReactElement<any> }, any> {
   Store = this.props.Store;
   WrappedFormComponent = Form.create()(FormComponent);
+//选中项
+ selectColumns=[]
+  //增加修改
+  addUpdate = () => {
+    return <>
+      <this.WrappedFormComponent {...this.props} renderItem={this.props.renderItem} />
+      <HideInstall Store={this.Store} />
+    </>
+  }
+  //columns=toJS(this.Store.columnsSelect[0].columns)
+  // checkbox勾选状态
+  isCheck=(item)=>{
+   // this.columns=toJS(this.Store.columnsSelect[0].columns)
+     return <List.Item>
+      {this.selectColumns.includes(item.key) ? 
+      <Checkbox value={item.key} defaultChecked onChange={(e)=>{
+       //console.log(e.target.value)
+        //console.log(e.target.defaultChecked)
+        //console.log(e.target)
+        if(e.target.checked){
+          //选中:
+          if(!this.selectColumns.includes(e.target.value)){
+            this.selectColumns.push(e.target.value)
+          } 
+        }else{
+          this.selectColumns=this.selectColumns.filter((item)=>item!=e.target.value)
+        }
+        //console.log(this.selectColumns)
+          
+      }} >
+      {item.description || "未配置"}
+      </Checkbox> 
+      : 
+      <Checkbox value={item.key} onChange={(e)=>{
+          //console.log(e.target.value) //key值
+          if(e.target.checked){
+            //选中:  
+            if(!this.selectColumns.includes(e.target.value)){
+              this.selectColumns.push(e.target.value)
+            } 
+          }else{
+            this.selectColumns=this.selectColumns.filter((item)=>item!=e.target.value)
+          }
+         // console.log(this.selectColumns)
+
+      }} >{item.description || "未配置"}</Checkbox>}
+    </List.Item>
+  }
+  //自定义
+  userDefined = () => {
+    this.selectColumns=toJS(this.Store.columnsSelect.columns)
+    //点击时，会获取进行填充
+    //console.log(this.Store.columns)//选中的
+    // console.log(this.Store.Swagger.columns)//所有的
+    //获取当前模块的columns  默认保存的是key值
+    return <>
+      {/* <Checkbox.Group  style={{width:"100%"}}> */}
+      <List
+        bordered
+        dataSource={this.Store.Swagger.columns}
+        renderItem={this.isCheck}
+      />
+       <Divider type="vertical" />
+      <Button onClick={()=>{
+        this.Store.onPageState("visibleEdit",false)
+      }}>取消</Button>
+      <Divider type="vertical" />
+      <Button type="primary" onClick={()=>{
+        this.Store.setColumns(this.selectColumns)
+      }}>确定</Button>
+    </>
+  }
   render() {
     return (
       <Drawer
-        title={this.Store.pageState.isUpdate ? '修改' : '添加'}
+        title={this.Store.pageState.isUpdate ? '修改' :(this.Store.pageState.isColumns?'自定义列表':'添加')}
         width={500}
         placement="right"
         closable={false}
@@ -92,18 +168,20 @@ class EditComponent extends React.Component<{ Store: Store, renderItem: (params:
         className="app-table-edit-drawer"
         destroyOnClose={true}
       >
-        <this.WrappedFormComponent {...this.props} renderItem={this.props.renderItem} />
-        <HideInstall Store={this.Store} />
+      {this.Store.pageState.isColumns?this.userDefined():this.addUpdate()
+      }
       </Drawer>
     );
   }
 }
+//二层抽屉
 @observer
 class HideInstall extends React.Component<{ Store: Store }, any> {
   Store = this.props.Store;
   state = {
     visible: false
   }
+  //二层抽屉的显示隐藏
   onVisible() {
     this.setState(state => {
       return { visible: !state.visible }
@@ -142,7 +220,7 @@ class HideInstall extends React.Component<{ Store: Store }, any> {
   }
 }
 /**
- * 表单
+ * 表单  抽屉
  */
 @observer
 class FormComponent extends React.Component<Props, any> {

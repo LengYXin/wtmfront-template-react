@@ -15,9 +15,9 @@ import { Resizable } from 'react-resizable';
 import "./style.less";
 import ReactDOM from 'react-dom';
 import Rx, { Observable, Subscription } from 'rxjs';
+import { toJS } from 'mobx';
 @observer
 export default class TableBodyComponent extends React.Component<{ Store: Store }, any> {
-
   Store = this.props.Store;
   columns = [
     // ...this.Store.columns.map(this.columnsMap.bind(this)),
@@ -31,9 +31,18 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
    * 初始化列参数配置
    */
   initColumns() {
-    const width = Math.floor(this.rowDom.clientWidth / (this.Store.columns.length + 2))
+    //请求到的key值
+   console.log(toJS(this.Store.columnsSelect.columns))
+    //过滤信息
+   let columns= this.Store.columns.filter((col,index)=>{
+        return toJS(this.Store.columnsSelect.columns).includes(col.dataIndex)
+    })
+    if(columns.length===0){
+       columns=this.Store.columns
+    }
+    const width = Math.floor(this.rowDom.clientWidth / (columns.length + 2))
     this.columns = [
-      ...this.Store.columns.map((col, index) => {
+      ...columns.map((col, index) => {
         return this.columnsMap(col, index, width)
       }),
       {
@@ -99,8 +108,9 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     * 行选择
     */
   private rowSelection = {
-    selectedRowKeys: this.Store.selectedRowKeys,
-    onChange: e => this.Store.onSelectChange(e),
+      //selectedRowKeys: this.Store.selectedRowKeys,
+     onChange: e => this.Store.onSelectChange(e),
+   
   };
   /**
    * 覆盖默认的 table 元素
@@ -193,6 +203,7 @@ class ActionComponent extends React.Component<{ Store: Store, data: any }, any> 
     }
   }
   render() {
+    //this.props.data是当前选项的数据
     return (
       <>
         {this.Store.pageButtons.update ? <a onClick={this.Store.onModalShow.bind(this.Store, this.props.data)} >修改</a> : null}

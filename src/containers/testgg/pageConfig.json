@@ -1,0 +1,1866 @@
+{
+    "idKey": "id",
+    "address": "/baseProductinfo/",
+    "columns": [
+        {
+            "type": "integer",
+            "format": "int64",
+            "description": "产品ID",
+            "allowEmptyValue": false,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productId"
+        },
+        {
+            "type": "string",
+            "description": "商品编号",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productCode"
+        },
+        {
+            "type": "string",
+            "description": "IIPC商品编号",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "iIPCProductCode"
+        },
+        {
+            "type": "string",
+            "description": "产品名称",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 21845,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 21845,
+                    "message": "max length 21845!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productName"
+        },
+        {
+            "type": "number",
+            "description": "体积",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "volume"
+        },
+        {
+            "type": "number",
+            "description": "重量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "weight"
+        },
+        {
+            "type": "number",
+            "description": "公路标签数量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "roadTabNum"
+        },
+        {
+            "type": "number",
+            "description": "铁路标签数量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "trainTabNum"
+        },
+        {
+            "type": "number",
+            "description": "航空标签数量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "airTabNum"
+        },
+        {
+            "type": "string",
+            "description": "单位",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "unit"
+        },
+        {
+            "type": "number",
+            "description": "包装乘数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "packingMulti"
+        },
+        {
+            "type": "number",
+            "description": "包装除数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "packingDivisor"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "产品组",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productGroupID"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "是否实物发货",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "isPracticality"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 4,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "mustScan"
+        },
+        {
+            "type": "string",
+            "description": "需要扫描",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 715827882,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 715827882,
+                    "message": "max length 715827882!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "remark"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "是否可用",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "enable"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "排序号",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "orderNo"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "创建人ID",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createID"
+        },
+        {
+            "type": "string",
+            "description": "创建人",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "creator"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDate"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "修改人ID",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "modifyID"
+        },
+        {
+            "type": "string",
+            "description": "修改人",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "modifier"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "修改时间",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "modifyDate"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productBigTypeID"
+        },
+        {
+            "type": "string",
+            "description": "大类名称",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 30,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 30,
+                    "message": "max length 30!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productBigName"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "storageId"
+        },
+        {
+            "type": "string",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 1,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 1,
+                    "message": "max length 1!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "flag"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "isX86"
+        },
+        {
+            "type": "string",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 1,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 1,
+                    "message": "max length 1!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "syncflag"
+        },
+        {
+            "type": "string",
+            "description": "捕获变动数据标识",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 1,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 1,
+                    "message": "max length 1!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "tranTMSFlag"
+        }
+    ],
+    "search": [
+        {
+            "type": "string",
+            "format": "date-time",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDateFrom"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDateTo"
+        },
+        {
+            "type": "string",
+            "description": "商品编号",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productCode"
+        },
+        {
+            "type": "string",
+            "description": "IIPC商品编号",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "iIPCProductCode"
+        },
+        {
+            "type": "string",
+            "description": "产品名称",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 21845,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 21845,
+                    "message": "max length 21845!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productName"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "产品组",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productGroupID"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 4,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "mustScan"
+        },
+        {
+            "type": "string",
+            "description": "需要扫描",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 715827882,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 715827882,
+                    "message": "max length 715827882!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "remark"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "是否可用",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "enable"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDate"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "storageId"
+        }
+    ],
+    "install": [
+        {
+            "type": "integer",
+            "format": "int64",
+            "description": "产品ID",
+            "allowEmptyValue": false,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productId"
+        },
+        {
+            "type": "string",
+            "description": "商品编号",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productCode"
+        },
+        {
+            "type": "string",
+            "description": "IIPC商品编号",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "iIPCProductCode"
+        },
+        {
+            "type": "string",
+            "description": "产品名称",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 21845,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 21845,
+                    "message": "max length 21845!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productName"
+        },
+        {
+            "type": "number",
+            "description": "体积",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "volume"
+        },
+        {
+            "type": "number",
+            "description": "重量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "weight"
+        },
+        {
+            "type": "number",
+            "description": "公路标签数量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "roadTabNum"
+        },
+        {
+            "type": "number",
+            "description": "铁路标签数量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "trainTabNum"
+        },
+        {
+            "type": "number",
+            "description": "航空标签数量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "airTabNum"
+        },
+        {
+            "type": "string",
+            "description": "单位",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "unit"
+        },
+        {
+            "type": "number",
+            "description": "包装乘数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "packingMulti"
+        },
+        {
+            "type": "number",
+            "description": "包装除数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "packingDivisor"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "产品组",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productGroupID"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "是否实物发货",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "isPracticality"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 4,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "mustScan"
+        },
+        {
+            "type": "string",
+            "description": "需要扫描",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 715827882,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 715827882,
+                    "message": "max length 715827882!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "remark"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "是否可用",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "enable"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "排序号",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "orderNo"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "创建人ID",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createID"
+        },
+        {
+            "type": "string",
+            "description": "创建人",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "creator"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDate"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "修改人ID",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "modifyID"
+        },
+        {
+            "type": "string",
+            "description": "修改人",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "modifier"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "修改时间",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "modifyDate"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productBigTypeID"
+        },
+        {
+            "type": "string",
+            "description": "大类名称",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 30,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 30,
+                    "message": "max length 30!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productBigName"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "storageId"
+        },
+        {
+            "type": "string",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 1,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 1,
+                    "message": "max length 1!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "flag"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "isX86"
+        },
+        {
+            "type": "string",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 1,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 1,
+                    "message": "max length 1!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "syncflag"
+        },
+        {
+            "type": "string",
+            "description": "捕获变动数据标识",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 1,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 1,
+                    "message": "max length 1!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "tranTMSFlag"
+        }
+    ],
+    "update": [
+        {
+            "type": "integer",
+            "format": "int64",
+            "description": "产品ID",
+            "allowEmptyValue": false,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productId"
+        },
+        {
+            "type": "string",
+            "description": "商品编号",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productCode"
+        },
+        {
+            "type": "string",
+            "description": "IIPC商品编号",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "iIPCProductCode"
+        },
+        {
+            "type": "string",
+            "description": "产品名称",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 21845,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 21845,
+                    "message": "max length 21845!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productName"
+        },
+        {
+            "type": "number",
+            "description": "体积",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "volume"
+        },
+        {
+            "type": "number",
+            "description": "重量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "weight"
+        },
+        {
+            "type": "number",
+            "description": "公路标签数量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "roadTabNum"
+        },
+        {
+            "type": "number",
+            "description": "铁路标签数量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "trainTabNum"
+        },
+        {
+            "type": "number",
+            "description": "航空标签数量",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "airTabNum"
+        },
+        {
+            "type": "string",
+            "description": "单位",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "unit"
+        },
+        {
+            "type": "number",
+            "description": "包装乘数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "packingMulti"
+        },
+        {
+            "type": "number",
+            "description": "包装除数",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 20,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "packingDivisor"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "产品组",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productGroupID"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "是否实物发货",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "isPracticality"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 4,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "mustScan"
+        },
+        {
+            "type": "string",
+            "description": "需要扫描",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 715827882,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 715827882,
+                    "message": "max length 715827882!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "remark"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "是否可用",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "enable"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "排序号",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "orderNo"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "创建人ID",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createID"
+        },
+        {
+            "type": "string",
+            "description": "创建人",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "creator"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDate"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "description": "修改人ID",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "modifyID"
+        },
+        {
+            "type": "string",
+            "description": "修改人",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "modifier"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "description": "修改时间",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "modifyDate"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productBigTypeID"
+        },
+        {
+            "type": "string",
+            "description": "大类名称",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 30,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 30,
+                    "message": "max length 30!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "productBigName"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "storageId"
+        },
+        {
+            "type": "string",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 1,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 1,
+                    "message": "max length 1!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "flag"
+        },
+        {
+            "type": "integer",
+            "format": "int32",
+            "allowEmptyValue": true,
+            "minimum": 0,
+            "maximum": 11,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "isX86"
+        },
+        {
+            "type": "string",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 1,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 1,
+                    "message": "max length 1!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "syncflag"
+        },
+        {
+            "type": "string",
+            "description": "捕获变动数据标识",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 1,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 1,
+                    "message": "max length 1!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "tranTMSFlag"
+        }
+    ],
+    "pageButtons": {
+        "install": true,
+        "update": true,
+        "delete": true,
+        "import": true,
+        "export": true,
+        "columns": true
+    }
+}

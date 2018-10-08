@@ -42,7 +42,7 @@ export class HttpBasics {
     /**
      * 请求超时设置
      */
-    timeout = 3000;
+    timeout = 10000;
     /**
      * ajax
      */

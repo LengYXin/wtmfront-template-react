@@ -32,6 +32,30 @@
                     "Children": []
                 }
             ]
+        },
+        {
+            "Key": "09e3e473-6516-480b-87dd-09f05f84fcc2",
+            "Name": "test",
+            "Icon": "menu-fold",
+            "Path": "/test",
+            "Component": "test",
+            "Children": []
+        },
+        {
+            "Key": "a030074d-087f-4352-89de-6e0945831bce",
+            "Name": "testgg",
+            "Icon": "menu-fold",
+            "Path": "/testgg",
+            "Component": "testgg",
+            "Children": []
+        },
+        {
+            "Key": "59d1a60c-9cc8-4868-ba04-7f12246ca614",
+            "Name": "testuu",
+            "Icon": "menu-fold",
+            "Path": "/testuu",
+            "Component": "testuu",
+            "Children": []
         }
     ]
 }

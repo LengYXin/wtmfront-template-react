@@ -33,7 +33,8 @@ export default class ObservableStore {
             update: true,
             delete: true,
             import: true,
-            export: true
+            export: true,
+            columns:true
         }   //功能按钮
     }
     /** 选择的 tag */

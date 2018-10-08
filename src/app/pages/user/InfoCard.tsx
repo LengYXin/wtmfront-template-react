@@ -41,32 +41,32 @@ export default class InfoCard extends React.Component<any, any> {
       <>
         <Card bordered={false} style={{ marginBottom: 24 }}>
           <div>
-            <div className="avatarHolder">
+            <div className="ant-card-body-avatarHolder">
               <img
                 alt=""
                 src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
               />
-              <div className="name">{this.User.Name}</div>
+              <div className="ant-card-body-avatarHolder-name">{this.User.Name}</div>
               <div>{this.User.Info}</div>
             </div>
-            <div className="detail">
+            <div className="ant-card-body-detail">
               <p>
-                <i className="title" />
+                <i className="ant-card-body-detail-title" />
                 {this.User.Profession}
               </p>
               <p>
-                <i className="group" />
+                <i className="ant-card-body-detail-group" />
                 {this.User.Department}
               </p>
               <p>
-                <i className="address" />
+                <i className="ant-card-body-detail-address" />
                 {this.User.Place}
                 {this.User.Place}
               </p>
             </div>
             <Divider dashed />
-            <div className="tags">
-              <div className="tagsTitle">标签</div>
+            <div className="ant-card-body-tags">
+              <div className="ant-card-body-tags-tagsTitle">标签</div>
               {this.User.Tags.map(item => (
                 <Tag key={item.key}>{item.value}</Tag>
               ))}
@@ -92,8 +92,8 @@ export default class InfoCard extends React.Component<any, any> {
               )}
             </div>
             <Divider style={{ marginTop: 16 }} dashed />
-            <div className="team">
-              <div className="teamTitle">团队</div>
+            <div className="ant-card-body-team">
+              <div className="ant-card-body-team-teamTitle">团队</div>
               {/* <Spin  spinning> */}
               <Row gutter={36}>
                 {this.User.Teams.map(item => (

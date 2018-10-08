@@ -83,7 +83,7 @@ export default class IApp extends React.Component<any, any> {
             >
               {this.contentListNoTitle[this.state.noTitleKey]}
             </Card> */}
-          <Tabs defaultActiveKey="1" className="tabsCard">
+          <Tabs defaultActiveKey="1" className="app-user -tabsCard">
             <TabPane tab={operationTabList[0].tab} key="1">
               <Articles store={this.store} />
             </TabPane>

@@ -171,7 +171,7 @@ export default class App extends React.Component<any, any> {
         return <Spin spinning={swaggerDoc.swaggerLoading}>
             <ModelSelect />
             <ModelBody />
-            <BindModel />
+            {/* <BindModel /> */}
             <div style={{ textAlign: "right" }}>
                 <Button onClick={this.prev.bind(this)}>
                     上一步
