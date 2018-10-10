@@ -11,7 +11,8 @@ interface IPageButton {
     /** 导入按钮 */
     import: boolean,
     /** 导出按钮 */
-    export: boolean
+    export: boolean,
+    [key: string]: boolean
 }
 /**
  * Swagger 解析格式

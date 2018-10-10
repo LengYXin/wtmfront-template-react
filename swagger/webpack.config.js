@@ -12,6 +12,7 @@ module.exports = basicConfig({
         path: outputPaht,
     },
     devServer: {
+        port: 8001,
         proxy: {
             /**
              * 脚手架服务器地址
@@ -19,7 +20,7 @@ module.exports = basicConfig({
             '/server': {
                 target: 'http://localhost:8765',
                 pathRewrite: {
-                    "^/server": ""
+                    // "^/server": ""
                 },
                 ...config
             },
