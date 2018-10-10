@@ -38,6 +38,7 @@ class ObservableStore {
     }
     /** 选择的 tag */
     @observable selectTag = {
+        description: "",
         name: "",
         paths: []
     };
@@ -66,6 +67,7 @@ class ObservableStore {
             }   //功能按钮
         };
         this.selectTag = {
+            description: "",
             name: "",
             paths: []
         };
@@ -86,6 +88,24 @@ class ObservableStore {
             this.definitions = toJS(swaggerDoc.docData.definitions);
         }
         const selectTag = this.selectTag = toJS(swaggerDoc.docData.tags[index]);
+        if (this.ModelMap.has(selectTag.name)) {
+            this.Model = this.ModelMap.get(selectTag.name);
+        } else {
+            this.analysisAddress();
+            this.analysisColumns();
+            this.analysisSearch();
+            this.analysisEdit();
+            this.ModelMap.set(selectTag.name, toJS(this.Model));
+        }
+        // console.timeEnd();
+        console.log("--------------------------", this);
+        return this.Model;
+    }
+    onTest(tag){
+        if (!this.definitions) {
+            this.definitions = toJS(swaggerDoc.docData.definitions);
+        }
+        const selectTag = this.selectTag = toJS(tag);
         if (this.ModelMap.has(selectTag.name)) {
             this.Model = this.ModelMap.get(selectTag.name);
         } else {

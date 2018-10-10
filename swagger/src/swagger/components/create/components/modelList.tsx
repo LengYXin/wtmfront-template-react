@@ -6,7 +6,7 @@
  * @desc [description]
  */
 import { Button, Col, Icon, List, Row, Switch, Divider } from 'antd'
-import Sortable from 'components/sortable/index'
+import Sortable from '../../../../components/sortable/index'
 import { action, toJS } from 'mobx';
 import { observer, inject } from 'mobx-react'
 import * as React from 'react'

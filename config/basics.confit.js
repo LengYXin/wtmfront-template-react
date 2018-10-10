@@ -129,6 +129,7 @@ module.exports = (params) => {
             ],
             ...module,
         },
+        // cache: false,
         //  development。启用NamedModulesPlugin。 production。启用UglifyJsPlugin，ModuleConcatenationPlugin和NoEmitOnErrorsPlugin。
         mode: mode || 'development',
         //  map   
