@@ -15,7 +15,7 @@ import {
 import Store from '../../../store'
 import { inject, observer } from 'mobx-react'
 import './css/Center.less'
-import InfoCard from './infoCard'
+import InfoCard from './InfoCard'
 import Articles from './articles'
 import AppList from './Applications'
 import Project from './project'
