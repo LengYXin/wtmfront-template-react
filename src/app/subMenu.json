@@ -27,15 +27,6 @@
                     "Children": []
                 }
             ]
-        },
-        {
-            "Key": "28209a17-5cbb-41c4-bea8-239b7440717c",
-            "Name": "test",
-            "Icon": "menu-fold",
-            "Path": "/test",
-            "Component": "test",
-            "Action": [],
-            "Children": []
         }
     ]
 }
