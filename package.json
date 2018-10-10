@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --env.type=dev",
     "server": "wtmfront server",
-    "swagger": "cd ./swagger & webpack --progress",
+    "swagger": "cd ./swagger & npm start",
     "build": "webpack --progress --env.type=deploy",
     "test": "wtmfronttest server"
   },
