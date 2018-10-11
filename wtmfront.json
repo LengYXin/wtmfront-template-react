@@ -5,8 +5,8 @@
     "template": "wtmfront/template",
     "subMenu": "src/app/subMenu.json",
     "containers": "src/containers",
-    "api": "http://10.99.246.52:8010",
-    "swaggerDoc": "http://localhost:8765/api-docs",
+    "api": "http://10.99.246.52:8001",
+    "swaggerDoc": "http://10.99.246.52:8001/v2/api-docs",
     "standard": {
         "search": {
             "name": "search",
@@ -45,6 +45,13 @@
         "common"
     ],
     "excludeStandard": [
-        "rabbitmq"
+        "rabbitmq",
+        "outScanresultlist",
+        "actuator",
+        "baseProductinfo",
+        "productstocks",
+        "omsorders",
+        "omsorderdetails",
+        "ordertest"
     ]
 }

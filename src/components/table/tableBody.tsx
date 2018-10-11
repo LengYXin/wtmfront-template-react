@@ -14,10 +14,21 @@ import lodash from 'lodash';
 import { Resizable } from 'react-resizable';
 import "./style.less";
 import ReactDOM from 'react-dom';
-import Rx, { Observable, Subscription } from 'rxjs';
+import Rx, { Observable, Subscription,Subject } from 'rxjs';
+import { toJS } from 'mobx';
+
+//创建
+export const subject = new Rx.Subject();
+
 @observer
 export default class TableBodyComponent extends React.Component<{ Store: Store }, any> {
+  // state={
+  //   isScroll:{
+  //     x:false
+  //   }
+  // }
 
+  isMove=false//是否拖拽
   Store = this.props.Store;
   columns = [
     // ...this.Store.columns.map(this.columnsMap.bind(this)),
@@ -68,7 +79,7 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     }
     return {
       ...column,
-      sorter: true,
+      sorter:true,
       width: width,
       // 列拖拽
       onHeaderCell: col => ({
@@ -100,10 +111,7 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
   /**
     * 行选择
     */
-  private rowSelection = {
-    selectedRowKeys: this.Store.selectedRowKeys,
-    onChange: e => this.Store.onSelectChange(e),
-  };
+  
   /**
    * 覆盖默认的 table 元素
    */
@@ -128,6 +136,7 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
    * 拖拽
    */
   private handleResize = index => (e, { size }) => {
+    this.isMove=true//拖拽时，不执行initColumns
     let column = {
       ...this.columns[index],
       width: size.width,
@@ -140,9 +149,28 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
     // console.log(this.columns);
     this.forceUpdate();
   };
+
   resize: Subscription;
   private rowDom: HTMLDivElement;
+
+  selfColumns:Subscription
+
+    //订阅
+    componentWillMount(){
+      this.selfColumns=subject.subscribe({
+        next: ()=>{
+          this.isMove=false//将initColumns暴露render下
+          this.forceUpdate()
+        }
+      });
+    }
   componentDidMount() {
+    // this.setState({
+    //   isScroll:{
+    //     x:this.rowDom.clientWidth+100
+    //   }
+    // })
+
     this.Store.onGet();
     // 窗口变化重新计算列宽度
     this.resize = Rx.Observable.fromEvent(window, "resize").debounceTime(800).subscribe(e => {
@@ -152,10 +180,17 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
   }
   componentWillUnmount() {
     this.resize.unsubscribe();
+    this.selfColumns.unsubscribe()
   }
   render() {
+    const rowSelection = {
+      selectedRowKeys: this.Store.selectedRowKeys,
+      onChange: (e)=>{this.Store.onSelectChange(e)}
+    };
     const dataSource = this.Store.dataSource;
-    this.initColumns();
+    if(!this.isMove){
+      this.initColumns();//初始化执行
+    }
     return (
       <Row ref={e => this.rowDom = ReactDOM.findDOMNode(e) as any}>
         <Divider />
@@ -165,8 +200,9 @@ export default class TableBodyComponent extends React.Component<{ Store: Store }
           dataSource={dataSource.list.slice()}
           onChange={this.onChange.bind(this)}
           columns={this.columns}
-          rowSelection={this.rowSelection}
+          rowSelection={rowSelection}
           loading={this.Store.pageState.loading}
+          scroll={{x:true}}
           pagination={
             {
               // hideOnSinglePage: true,//只有一页时是否隐藏分页器
@@ -197,14 +233,16 @@ class ActionComponent extends React.Component<{ Store: Store, data: any }, any> 
   render() {
     return (
       <>
+      <span style={{display:"inline-block"}}>
         {this.Store.pageButtons.update ? <a onClick={this.Store.onModalShow.bind(this.Store, this.props.data)} >修改</a> : null}
+        </span>
         <Divider type="vertical" />
+        <span style={{display:"inline-block"}}>
         {this.Store.pageButtons.delete ?
           <Popconfirm title="Sure to delete?" onConfirm={this.onDelete.bind(this)} >
             <a >删除</a>
           </Popconfirm> : null}
-
-
+          </span>
       </>
     );
   }

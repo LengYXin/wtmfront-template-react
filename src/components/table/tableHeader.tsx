@@ -13,6 +13,8 @@ import moment from 'moment';
 import { Props, renderItemParams } from './tableEdit';
 import { observer } from 'mobx-react';
 import { mapValues } from './tableEdit';
+import {subject} from "./tableBody"
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 export default class TableHeaderComponent extends React.Component<{ Store: Store }, any> {
@@ -154,9 +156,13 @@ class ColumnsComponent extends React.Component<{ Store: Store }, any> {
     this.checkedValues = checkedValues
   }
   onSubmit() {
+    
+
     if (this.checkedValues.length) {
       this.Store.columns = this.checkedValues;
     }
+    ////强制渲染,body页面
+    subject.next()
     this.onVisible();
   }
   render() {

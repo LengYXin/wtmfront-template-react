@@ -150,6 +150,7 @@ export default class ObservableStore {
         runInAction(() => {
             this.swaggerLoading = false;
             this.docData = data;
+            console.log(data)
         })
         return data
     }
@@ -178,7 +179,9 @@ export default class ObservableStore {
             // 分组所有 api 地址
             lodash.forEach(paths, (value, key) => {
                 // 排除的控制器
+                // console.log(wtmfront.excludeStandard.some(x => lodash.includes(key, x)))
                 if (wtmfront.excludeStandard.some(x => lodash.includes(key, x))) return
+                if(key==="/")return
                 // const detail = lodash.find(value, (o) => o.tags && o.tags.length);
                 let path: any = {};
                 // 标准接口
@@ -195,9 +198,10 @@ export default class ObservableStore {
                     });
                 } else {
                     standard = lodash.find(wtmfront.standard, (o) => {
-                        // console.log(key, o.name);
+                         //console.log(key, o.name);
                         return lodash.includes(key, o.name)
                     })
+                    //console.log(standard)
                     //  if(!standard)return;
                 }
                 // 请求类型 统一小写

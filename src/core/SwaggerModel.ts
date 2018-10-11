@@ -59,8 +59,15 @@ export default class SwaggerModel {
             Common.CustomColumnSubject.subscribe(columns => {
                 try {
                     if (columns.length <= 0) { return }
-                    // 获取 对应的 模块配置 
-                    columns = (lodash.find(columns, { entity: this.Swagger.name }) as any).columns;
+                    // 获取 对应的 模块配置
+                   // console.log(lodash.find(columns, { entity: this.Swagger.name }))
+
+                    if(!lodash.find(columns, { entity: this.Swagger.name })){
+                        columns=[]
+                    }else{
+                        columns = (lodash.find(columns, { entity: this.Swagger.name }) as any).columns;
+                    }
+                    
                     if (columns.length <= 0) { return }
                     // 重置 可用列
                     this.allColumns = this.allColumns.map(x => {

@@ -34,12 +34,19 @@
             ]
         },
         {
-            "Key": "30c4caba-4f03-4aed-9710-529fa674b90a",
-            "Name": "test",
+            "Key": "8978890e-aa5a-46cc-b48f-d00bc7c7ce7d",
+            "Name": "student",
             "Icon": "menu-fold",
-            "Path": "/test",
-            "Component": "test",
-            "Action": [],
+            "Path": "/studen",
+            "Component": "studen",
+            "Children": []
+        },
+        {
+            "Key": "a3ba7bd4-b950-4275-92c0-7107b936b32a",
+            "Name": "school",
+            "Icon": "menu-fold",
+            "Path": "/school",
+            "Component": "school",
             "Children": []
         }
     ]

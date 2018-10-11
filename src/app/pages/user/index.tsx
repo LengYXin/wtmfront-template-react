@@ -16,9 +16,9 @@ import Store from '../../../store'
 import { inject, observer } from 'mobx-react'
 import './css/Center.less'
 import InfoCard from './InfoCard'
-import Articles from './articles'
-import AppList from './Applications'
-import Project from './project'
+import Articles from './Articles'
+import Applications from './Applications'
+import Project from './Project'
 import store from 'store/index'
 
 const operationTabList = [
@@ -52,11 +52,11 @@ const TabPane = Tabs.TabPane
 export default class IApp extends React.Component<any, any> {
   store = this.props.User
   // state = {
-  //   key: 'articles',
-  //   noTitleKey: 'articles'
+  //   key: 'Articles',
+  //   noTitleKey: 'Articles'
   // }
   // contentListNoTitle = {
-  //   articles: <Articles store={this.store} />,
+  //   Articles: <Articles store={this.store} />,
   //   app: <AppList store={this.store} />,
   //   project: <Project store={this.store} />
   // }
@@ -88,7 +88,7 @@ export default class IApp extends React.Component<any, any> {
               <Articles store={this.store} />
             </TabPane>
             <TabPane tab={operationTabList[1].tab} key="2">
-              <AppList store={this.store} />
+              <Applications store={this.store} />
             </TabPane>
             <TabPane tab={operationTabList[2].tab} key="3">
               <Project store={this.store} />

@@ -82,6 +82,7 @@ export default class Store extends SwaggerModel {
    */
   @action.bound
   onSelectChange(selectedRowKeys) {
+    console.log(selectedRowKeys)
     this.selectedRowKeys = selectedRowKeys
     console.log(this.selectedRowKeys);
   }

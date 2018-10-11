@@ -9,6 +9,7 @@ import { Form, Button, Popconfirm, Divider } from 'antd';
 import DataEntry from 'components/table/dataEntry';
 import TableEdit, { renderItemParams } from 'components/table/tableEdit';
 import * as React from 'react';
+
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -19,6 +20,7 @@ const formItemLayout = {
         xs: { span: 24 },
         sm: { span: 16 },
     },
+    
 };
 /**
  * 组件继承 支持重写,
@@ -27,44 +29,52 @@ export default class EditComponent extends TableEdit {
     renderItem({ form, initialValue }: renderItemParams) {
         const { getFieldDecorator } = form;
         return <>
-            <FormItem label="公司ID" {...formItemLayout}>
+            <FormItem label="用户ID" {...formItemLayout}>
             {getFieldDecorator('id',{
-                rules: [{"required":true,"message":"Please input your undefined!"},{"min":0,"message":"min length 0!"},{"max":5,"message":"max length 5!"}],
+                rules: [{"required":true,"message":"Please input your undefined!"},{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
                 initialValue: initialValue('id',''),
             })(
-               <DataEntry {...this.props}  placeholder='公司ID'  />
+               <DataEntry {...this.props}  placeholder='用户ID'  />
             )}
         </FormItem> 
-         <FormItem label="公司名" {...formItemLayout}>
-            {getFieldDecorator('corpName',{
+         <FormItem label="公司ID" {...formItemLayout}>
+            {getFieldDecorator('corpID',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":5,"message":"max length 5!"}],
+                initialValue: initialValue('corpID',''),
+            })(
+               <DataEntry {...this.props}  common={{"address":"/common/combo","params":{"id":1}}}  placeholder='公司ID'  />
+            )}
+        </FormItem> 
+         <FormItem label="用户名" {...formItemLayout}>
+            {getFieldDecorator('userName',{
                 rules: [{"min":0,"message":"min length 0!"},{"max":50,"message":"max length 50!"}],
-                initialValue: initialValue('corpName',''),
+                initialValue: initialValue('userName',''),
             })(
-               <DataEntry {...this.props}  placeholder='公司名'  />
+               <DataEntry {...this.props}  placeholder='用户名'  />
             )}
         </FormItem> 
-         <FormItem label="管理员ID" {...formItemLayout}>
-            {getFieldDecorator('managerID',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
-                initialValue: initialValue('managerID',''),
+         <FormItem label="手机号" {...formItemLayout} style={{textAlign:"left"}}>
+            {getFieldDecorator('mobileNo',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":20,"message":"max length 20!"}],
+                initialValue: initialValue('mobileNo',''),
             })(
-               <DataEntry {...this.props}  placeholder='管理员ID'  />
+               <DataEntry {...this.props}  placeholder='手机号'  />
             )}
         </FormItem> 
-         <FormItem label="上级公司ID" {...formItemLayout}>
-            {getFieldDecorator('parentCorpID',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
-                initialValue: initialValue('parentCorpID',''),
+         <FormItem label="座机号" {...formItemLayout} style={{textAlign:"left"}}>
+            {getFieldDecorator('telNo',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":20,"message":"max length 20!"}],
+                initialValue: initialValue('telNo',''),
             })(
-               <DataEntry {...this.props}  placeholder='上级公司ID'  />
+               <DataEntry {...this.props}  placeholder='座机号'  />
             )}
         </FormItem> 
-         <FormItem label="总员工数" {...formItemLayout}>
-            {getFieldDecorator('corpEmpTotals',{
-                rules: [],
-                initialValue: initialValue('corpEmpTotals','int32'),
+         <FormItem label="邮箱" {...formItemLayout} style={{textAlign:"left"}}>
+            {getFieldDecorator('email',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":50,"message":"max length 50!"}],
+                initialValue: initialValue('email',''),
             })(
-               <DataEntry {...this.props}  format="int32"  placeholder='总员工数'  />
+               <DataEntry {...this.props}  placeholder='邮箱'  />
             )}
         </FormItem> 
          <FormItem label="使用与否" {...formItemLayout}>
@@ -72,7 +82,39 @@ export default class EditComponent extends TableEdit {
                 rules: [],
                 initialValue: initialValue('useYN','int32'),
             })(
-               <DataEntry {...this.props}  format="int32"  example={{"enum":{"0":"否","1":"是"}}}  placeholder='使用与否'  />
+               <DataEntry   {...this.props}  format="int32"  placeholder='使用与否'  />
+            )}
+        </FormItem> 
+         <FormItem label="职位ID" {...formItemLayout}>
+            {getFieldDecorator('posID',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
+                initialValue: initialValue('posID',''),
+            })(
+               <DataEntry {...this.props}  placeholder='职位ID'  />
+            )}
+        </FormItem> 
+         <FormItem label="职责ID" {...formItemLayout}>
+            {getFieldDecorator('dutyID',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
+                initialValue: initialValue('dutyID',''),
+            })(
+               <DataEntry {...this.props}  placeholder='职责ID'  />
+            )}
+        </FormItem> 
+         <FormItem label="密码" {...formItemLayout}>
+            {getFieldDecorator('password',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":100,"message":"max length 100!"}],
+                initialValue: initialValue('password',''),
+            })(
+               <DataEntry {...this.props}  placeholder='密码'  />
+            )}
+        </FormItem> 
+         <FormItem label="部门组织ID" {...formItemLayout}>
+            {getFieldDecorator('deptGroup',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
+                initialValue: initialValue('deptGroup',''),
+            })(
+               <DataEntry {...this.props}  placeholder='部门组织ID'  />
             )}
         </FormItem> 
          <FormItem label="创建用户ID" {...formItemLayout}>
@@ -83,7 +125,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='创建用户ID'  />
             )}
         </FormItem> 
-         <FormItem label="创建日期" {...formItemLayout}>
+         <FormItem label="创建日期" {...formItemLayout} >
             {getFieldDecorator('createDate',{
                 rules: [],
                 initialValue: initialValue('createDate','date-time'),
@@ -99,7 +141,7 @@ export default class EditComponent extends TableEdit {
                <DataEntry {...this.props}  placeholder='修改用户ID'  />
             )}
         </FormItem> 
-         <FormItem label="修改日期" {...formItemLayout}>
+         <FormItem label="修改日期" {...formItemLayout} >
             {getFieldDecorator('updateDate',{
                 rules: [],
                 initialValue: initialValue('updateDate','date-time'),

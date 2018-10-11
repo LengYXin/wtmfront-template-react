@@ -93,7 +93,6 @@ export default class ObservableStore {
         // 结果索引
         const responses = lodash.find(path.responses, 'schema');
         const definitions = this.analysisDefinitions(responses, true);
-
         this.Model.columns = lodash.toArray(definitions.properties);
     }
     /**
@@ -138,6 +137,7 @@ export default class ObservableStore {
         let definitions = this.definitions[key];
         if (isColumns) {
             try {
+                console.log(definitions)
                 // 匹配  AData«List«Corp»» 返回的列表数据结构
                 key = definitions.properties.data.$ref.match(/#\/definitions\/\S+\W(\w+)\W+/)[1];
                 definitions = this.definitions[key];

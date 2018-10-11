@@ -1,11 +1,67 @@
 {
-    "name": "test",
     "idKey": "id",
-    "address": "/corp/",
+    "address": "/user/",
     "columns": [
         {
             "type": "string",
-            "description": "公司名",
+            "description": "用户ID",
+            "allowEmptyValue": false,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "id"
+        },
+        {
+            "type": "string",
+            "example": {
+                "combo": 1
+            },
+            "description": "公司ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 5,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 5,
+                    "message": "max length 5!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true,
+                "common": {
+                    "address": "/common/combo",
+                    "params": {
+                        "id": 1
+                    }
+                }
+            },
+            "key": "corpID"
+        },
+        {
+            "type": "string",
+            "description": "用户名",
             "allowEmptyValue": true,
             "minLength": 0,
             "maxLength": 50,
@@ -23,77 +79,77 @@
                 "available": true,
                 "update": true
             },
-            "key": "corpName"
+            "key": "userName"
         },
         {
             "type": "string",
-            "description": "管理员ID",
+            "description": "手机号",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 10,
+            "maxLength": 20,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 10,
-                    "message": "max length 10!"
+                    "max": 20,
+                    "message": "max length 20!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "managerID"
+            "key": "mobileNo"
         },
         {
             "type": "string",
-            "description": "上级公司ID",
+            "description": "座机号",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 10,
+            "maxLength": 20,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 10,
-                    "message": "max length 10!"
+                    "max": 20,
+                    "message": "max length 20!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "parentCorpID"
+            "key": "telNo"
         },
         {
-            "type": "integer",
-            "format": "int32",
-            "description": "总员工数",
+            "type": "string",
+            "description": "邮箱",
             "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 10,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
             "attribute": {
-                "available": false,
+                "available": true,
                 "update": true
             },
-            "key": "corpEmpTotals"
+            "key": "email"
         },
         {
             "type": "integer",
             "format": "int32",
-            "example": {
-                "enum": {
-                    "0": "否",
-                    "1": "是"
-                }
-            },
             "description": "使用与否",
             "allowEmptyValue": true,
             "minimum": 0,
@@ -102,10 +158,98 @@
             "exclusiveMaximum": false,
             "rules": [],
             "attribute": {
-                "available": false,
+                "available": true,
                 "update": true
             },
             "key": "useYN"
+        },
+        {
+            "type": "string",
+            "description": "职位ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "posID"
+        },
+        {
+            "type": "string",
+            "description": "职责ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "dutyID"
+        },
+        {
+            "type": "string",
+            "description": "密码",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 100,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 100,
+                    "message": "max length 100!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "password"
+        },
+        {
+            "type": "string",
+            "description": "部门组织ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "deptGroup"
         },
         {
             "type": "string",
@@ -124,7 +268,7 @@
                 }
             ],
             "attribute": {
-                "available": false,
+                "available": true,
                 "update": true
             },
             "key": "createUser"
@@ -136,7 +280,7 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": false,
+                "available": true,
                 "update": true
             },
             "key": "createDate"
@@ -158,7 +302,7 @@
                 }
             ],
             "attribute": {
-                "available": false,
+                "available": true,
                 "update": true
             },
             "key": "updateUser"
@@ -170,50 +314,109 @@
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": false,
-                "update": true
-            },
-            "key": "updateDate"
-        },
-        {
-            "type": "string",
-            "description": "公司ID",
-            "allowEmptyValue": false,
-            "minLength": 0,
-            "maxLength": 5,
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                },
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 5,
-                    "message": "max length 5!"
-                }
-            ],
-            "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "id"
+            "key": "updateDate"
         }
     ],
     "search": [
         {
             "type": "string",
-            "description": "公司ID",
+            "format": "date-time",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDateFrom"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "createDateTo"
+        },
+        {
+            "type": "string",
+            "description": "用户ID",
             "allowEmptyValue": false,
             "minLength": 0,
-            "maxLength": 5,
+            "maxLength": 10,
             "rules": [
                 {
                     "required": true,
                     "message": "Please input your undefined!"
                 },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "id"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateDateFrom"
+        },
+        {
+            "type": "string",
+            "format": "date-time",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateDateTo"
+        },
+        {
+            "type": "string",
+            "example": {
+                "combo": 1
+            },
+            "description": "公司ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 5,
+            "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
@@ -225,13 +428,19 @@
             ],
             "attribute": {
                 "available": true,
-                "update": true
+                "update": true,
+                "common": {
+                    "address": "/common/combo",
+                    "params": {
+                        "id": 1
+                    }
+                }
             },
-            "key": "id"
+            "key": "corpID"
         },
         {
             "type": "string",
-            "description": "公司名",
+            "description": "用户名",
             "allowEmptyValue": true,
             "minLength": 0,
             "maxLength": 50,
@@ -249,77 +458,77 @@
                 "available": true,
                 "update": true
             },
-            "key": "corpName"
+            "key": "userName"
         },
         {
             "type": "string",
-            "description": "管理员ID",
+            "description": "手机号",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 10,
+            "maxLength": 20,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 10,
-                    "message": "max length 10!"
+                    "max": 20,
+                    "message": "max length 20!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "managerID"
+            "key": "mobileNo"
         },
         {
             "type": "string",
-            "description": "上级公司ID",
+            "description": "座机号",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 10,
+            "maxLength": 20,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 10,
-                    "message": "max length 10!"
+                    "max": 20,
+                    "message": "max length 20!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "parentCorpID"
+            "key": "telNo"
         },
         {
-            "type": "integer",
-            "format": "int32",
-            "description": "总员工数",
+            "type": "string",
+            "description": "邮箱",
             "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 10,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "corpEmpTotals"
+            "key": "email"
         },
         {
             "type": "integer",
             "format": "int32",
-            "example": {
-                "enum": {
-                    "0": "否",
-                    "1": "是"
-                }
-            },
             "description": "使用与否",
             "allowEmptyValue": true,
             "minimum": 0,
@@ -332,6 +541,94 @@
                 "update": true
             },
             "key": "useYN"
+        },
+        {
+            "type": "string",
+            "description": "职位ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "posID"
+        },
+        {
+            "type": "string",
+            "description": "职责ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "dutyID"
+        },
+        {
+            "type": "string",
+            "description": "密码",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 100,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 100,
+                    "message": "max length 100!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "password"
+        },
+        {
+            "type": "string",
+            "description": "部门组织ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "deptGroup"
         },
         {
             "type": "string",
@@ -366,34 +663,6 @@
                 "update": true
             },
             "key": "createDate"
-        },
-        {
-            "type": "string",
-            "example": {
-                "datetime": true
-            },
-            "description": "创建日期",
-            "allowEmptyValue": true,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "createDateStr"
-        },
-        {
-            "type": "string",
-            "example": {
-                "date": true
-            },
-            "description": "修改日期",
-            "allowEmptyValue": true,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "updateDateStr"
         },
         {
             "type": "string",
@@ -433,15 +702,40 @@
     "install": [
         {
             "type": "string",
-            "description": "公司ID",
+            "description": "用户ID",
             "allowEmptyValue": false,
             "minLength": 0,
-            "maxLength": 5,
+            "maxLength": 10,
             "rules": [
                 {
                     "required": true,
                     "message": "Please input your undefined!"
                 },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "id"
+        },
+        {
+            "type": "string",
+            "example": {
+                "combo": 1
+            },
+            "description": "公司ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 5,
+            "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
@@ -453,13 +747,19 @@
             ],
             "attribute": {
                 "available": true,
-                "update": true
+                "update": true,
+                "common": {
+                    "address": "/common/combo",
+                    "params": {
+                        "id": 1
+                    }
+                }
             },
-            "key": "id"
+            "key": "corpID"
         },
         {
             "type": "string",
-            "description": "公司名",
+            "description": "用户名",
             "allowEmptyValue": true,
             "minLength": 0,
             "maxLength": 50,
@@ -477,77 +777,77 @@
                 "available": true,
                 "update": true
             },
-            "key": "corpName"
+            "key": "userName"
         },
         {
             "type": "string",
-            "description": "管理员ID",
+            "description": "手机号",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 10,
+            "maxLength": 20,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 10,
-                    "message": "max length 10!"
+                    "max": 20,
+                    "message": "max length 20!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "managerID"
+            "key": "mobileNo"
         },
         {
             "type": "string",
-            "description": "上级公司ID",
+            "description": "座机号",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 10,
+            "maxLength": 20,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 10,
-                    "message": "max length 10!"
+                    "max": 20,
+                    "message": "max length 20!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "parentCorpID"
+            "key": "telNo"
         },
         {
-            "type": "integer",
-            "format": "int32",
-            "description": "总员工数",
+            "type": "string",
+            "description": "邮箱",
             "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 10,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "corpEmpTotals"
+            "key": "email"
         },
         {
             "type": "integer",
             "format": "int32",
-            "example": {
-                "enum": {
-                    "0": "否",
-                    "1": "是"
-                }
-            },
             "description": "使用与否",
             "allowEmptyValue": true,
             "minimum": 0,
@@ -560,6 +860,94 @@
                 "update": true
             },
             "key": "useYN"
+        },
+        {
+            "type": "string",
+            "description": "职位ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "posID"
+        },
+        {
+            "type": "string",
+            "description": "职责ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "dutyID"
+        },
+        {
+            "type": "string",
+            "description": "密码",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 100,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 100,
+                    "message": "max length 100!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "password"
+        },
+        {
+            "type": "string",
+            "description": "部门组织ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "deptGroup"
         },
         {
             "type": "string",
@@ -633,15 +1021,40 @@
     "update": [
         {
             "type": "string",
-            "description": "公司ID",
+            "description": "用户ID",
             "allowEmptyValue": false,
             "minLength": 0,
-            "maxLength": 5,
+            "maxLength": 10,
             "rules": [
                 {
                     "required": true,
                     "message": "Please input your undefined!"
                 },
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "id"
+        },
+        {
+            "type": "string",
+            "example": {
+                "combo": 1
+            },
+            "description": "公司ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 5,
+            "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
@@ -653,13 +1066,19 @@
             ],
             "attribute": {
                 "available": true,
-                "update": true
+                "update": true,
+                "common": {
+                    "address": "/common/combo",
+                    "params": {
+                        "id": 1
+                    }
+                }
             },
-            "key": "id"
+            "key": "corpID"
         },
         {
             "type": "string",
-            "description": "公司名",
+            "description": "用户名",
             "allowEmptyValue": true,
             "minLength": 0,
             "maxLength": 50,
@@ -677,77 +1096,77 @@
                 "available": true,
                 "update": true
             },
-            "key": "corpName"
+            "key": "userName"
         },
         {
             "type": "string",
-            "description": "管理员ID",
+            "description": "手机号",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 10,
+            "maxLength": 20,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 10,
-                    "message": "max length 10!"
+                    "max": 20,
+                    "message": "max length 20!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "managerID"
+            "key": "mobileNo"
         },
         {
             "type": "string",
-            "description": "上级公司ID",
+            "description": "座机号",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 10,
+            "maxLength": 20,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 10,
-                    "message": "max length 10!"
+                    "max": 20,
+                    "message": "max length 20!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "parentCorpID"
+            "key": "telNo"
         },
         {
-            "type": "integer",
-            "format": "int32",
-            "description": "总员工数",
+            "type": "string",
+            "description": "邮箱",
             "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 10,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
+            "minLength": 0,
+            "maxLength": 50,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 50,
+                    "message": "max length 50!"
+                }
+            ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "corpEmpTotals"
+            "key": "email"
         },
         {
             "type": "integer",
             "format": "int32",
-            "example": {
-                "enum": {
-                    "0": "否",
-                    "1": "是"
-                }
-            },
             "description": "使用与否",
             "allowEmptyValue": true,
             "minimum": 0,
@@ -760,6 +1179,94 @@
                 "update": true
             },
             "key": "useYN"
+        },
+        {
+            "type": "string",
+            "description": "职位ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "posID"
+        },
+        {
+            "type": "string",
+            "description": "职责ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "dutyID"
+        },
+        {
+            "type": "string",
+            "description": "密码",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 100,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 100,
+                    "message": "max length 100!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "password"
+        },
+        {
+            "type": "string",
+            "description": "部门组织ID",
+            "allowEmptyValue": true,
+            "minLength": 0,
+            "maxLength": 10,
+            "rules": [
+                {
+                    "min": 0,
+                    "message": "min length 0!"
+                },
+                {
+                    "max": 10,
+                    "message": "max length 10!"
+                }
+            ],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "deptGroup"
         },
         {
             "type": "string",
@@ -832,9 +1339,9 @@
     ],
     "pageButtons": {
         "install": true,
-        "update": true,
-        "delete": true,
+        "update": false,
+        "delete": false,
         "import": true,
-        "export": true
+        "export": false
     }
 }
