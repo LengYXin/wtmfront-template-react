@@ -1,9 +1,9 @@
 import { action, observable, runInAction, toJS } from "mobx";
 import { HttpBasics } from "core/HttpBasics";
 import { message } from "antd";
-import storeBasice from 'core/storeBasice';
+import StoreBasice from 'core/StoreBasice';
 import Swagger from '../pageConfig.json';
-export class Store extends storeBasice {
+export class Store extends StoreBasice {
     constructor() {
         super({
             // api 地址前缀

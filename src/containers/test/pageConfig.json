@@ -1,57 +1,11 @@
 {
+    "name": "test",
     "idKey": "id",
-    "address": "/baseProductinfo/",
+    "address": "/corp/",
     "columns": [
         {
-            "type": "integer",
-            "format": "int64",
-            "description": "产品ID",
-            "allowEmptyValue": false,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productId"
-        },
-        {
             "type": "string",
-            "description": "商品编号",
-            "allowEmptyValue": false,
-            "minLength": 0,
-            "maxLength": 50,
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                },
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 50,
-                    "message": "max length 50!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productCode"
-        },
-        {
-            "type": "string",
-            "description": "IIPC商品编号",
+            "description": "公司名",
             "allowEmptyValue": true,
             "minLength": 0,
             "maxLength": 50,
@@ -69,578 +23,192 @@
                 "available": true,
                 "update": true
             },
-            "key": "iIPCProductCode"
+            "key": "corpName"
         },
         {
             "type": "string",
-            "description": "产品名称",
+            "description": "管理员ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 21845,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 21845,
-                    "message": "max length 21845!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "productName"
-        },
-        {
-            "type": "number",
-            "description": "体积",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "volume"
-        },
-        {
-            "type": "number",
-            "description": "重量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "weight"
-        },
-        {
-            "type": "number",
-            "description": "公路标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "roadTabNum"
-        },
-        {
-            "type": "number",
-            "description": "铁路标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "trainTabNum"
-        },
-        {
-            "type": "number",
-            "description": "航空标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "airTabNum"
+            "key": "managerID"
         },
         {
             "type": "string",
-            "description": "单位",
+            "description": "上级公司ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "unit"
-        },
-        {
-            "type": "number",
-            "description": "包装乘数",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "packingMulti"
-        },
-        {
-            "type": "number",
-            "description": "包装除数",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "packingDivisor"
+            "key": "parentCorpID"
         },
         {
             "type": "integer",
             "format": "int32",
-            "description": "产品组",
+            "description": "总员工数",
             "allowEmptyValue": true,
             "minimum": 0,
-            "maximum": 11,
+            "maximum": 10,
             "exclusiveMinimum": false,
             "exclusiveMaximum": false,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
-            "key": "productGroupID"
+            "key": "corpEmpTotals"
         },
         {
             "type": "integer",
             "format": "int32",
-            "description": "是否实物发货",
+            "example": {
+                "enum": {
+                    "0": "否",
+                    "1": "是"
+                }
+            },
+            "description": "使用与否",
             "allowEmptyValue": true,
             "minimum": 0,
-            "maximum": 11,
+            "maximum": 2,
             "exclusiveMinimum": false,
             "exclusiveMaximum": false,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
-            "key": "isPracticality"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 4,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "mustScan"
+            "key": "useYN"
         },
         {
             "type": "string",
-            "description": "需要扫描",
+            "description": "创建用户ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 715827882,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 715827882,
-                    "message": "max length 715827882!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
-            "key": "remark"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "是否可用",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "enable"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序号",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "orderNo"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "创建人ID",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "createID"
-        },
-        {
-            "type": "string",
-            "description": "创建人",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 50,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 50,
-                    "message": "max length 50!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "creator"
+            "key": "createUser"
         },
         {
             "type": "string",
             "format": "date-time",
-            "description": "创建时间",
+            "description": "创建日期",
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
             "key": "createDate"
         },
         {
-            "type": "integer",
-            "format": "int32",
-            "description": "修改人ID",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "modifyID"
-        },
-        {
             "type": "string",
-            "description": "修改人",
+            "description": "修改用户ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
-            "key": "modifier"
+            "key": "updateUser"
         },
         {
             "type": "string",
             "format": "date-time",
-            "description": "修改时间",
+            "description": "修改日期",
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
-                "available": true,
+                "available": false,
                 "update": true
             },
-            "key": "modifyDate"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productBigTypeID"
+            "key": "updateDate"
         },
         {
             "type": "string",
-            "description": "大类名称",
-            "allowEmptyValue": true,
+            "description": "公司ID",
+            "allowEmptyValue": false,
             "minLength": 0,
-            "maxLength": 30,
+            "maxLength": 5,
             "rules": [
+                {
+                    "required": true,
+                    "message": "Please input your undefined!"
+                },
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 30,
-                    "message": "max length 30!"
+                    "max": 5,
+                    "message": "max length 5!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "productBigName"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "storageId"
-        },
-        {
-            "type": "string",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "flag"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "isX86"
-        },
-        {
-            "type": "string",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "syncflag"
-        },
-        {
-            "type": "string",
-            "description": "捕获变动数据标识",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "tranTMSFlag"
+            "key": "id"
         }
     ],
     "search": [
         {
             "type": "string",
-            "format": "date-time",
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "createDateFrom"
-        },
-        {
-            "type": "string",
-            "format": "date-time",
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "createDateTo"
-        },
-        {
-            "type": "string",
-            "format": "date-time",
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "modifyDateFrom"
-        },
-        {
-            "type": "string",
-            "format": "date-time",
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "modifyDateTo"
-        },
-        {
-            "type": "integer",
-            "format": "int64",
-            "description": "产品ID",
-            "allowEmptyValue": false,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productId"
-        },
-        {
-            "type": "string",
-            "description": "商品编号",
+            "description": "公司ID",
             "allowEmptyValue": false,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 5,
             "rules": [
                 {
                     "required": true,
@@ -651,19 +219,19 @@
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 5,
+                    "message": "max length 5!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "productCode"
+            "key": "id"
         },
         {
             "type": "string",
-            "description": "IIPC商品编号",
+            "description": "公司名",
             "allowEmptyValue": true,
             "minLength": 0,
             "maxLength": 50,
@@ -681,164 +249,59 @@
                 "available": true,
                 "update": true
             },
-            "key": "iIPCProductCode"
+            "key": "corpName"
         },
         {
             "type": "string",
-            "description": "产品名称",
+            "description": "管理员ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 21845,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 21845,
-                    "message": "max length 21845!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "productName"
-        },
-        {
-            "type": "number",
-            "description": "体积",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "volume"
-        },
-        {
-            "type": "number",
-            "description": "重量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "weight"
-        },
-        {
-            "type": "number",
-            "description": "公路标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "roadTabNum"
-        },
-        {
-            "type": "number",
-            "description": "铁路标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "trainTabNum"
-        },
-        {
-            "type": "number",
-            "description": "航空标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "airTabNum"
+            "key": "managerID"
         },
         {
             "type": "string",
-            "description": "单位",
+            "description": "上级公司ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "unit"
-        },
-        {
-            "type": "number",
-            "description": "包装乘数",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "packingMulti"
-        },
-        {
-            "type": "number",
-            "description": "包装除数",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "packingDivisor"
+            "key": "parentCorpID"
         },
         {
             "type": "integer",
             "format": "int32",
-            "description": "产品组",
+            "description": "总员工数",
             "allowEmptyValue": true,
             "minimum": 0,
-            "maximum": 11,
+            "maximum": 10,
             "exclusiveMinimum": false,
             "exclusiveMaximum": false,
             "rules": [],
@@ -846,15 +309,21 @@
                 "available": true,
                 "update": true
             },
-            "key": "productGroupID"
+            "key": "corpEmpTotals"
         },
         {
             "type": "integer",
             "format": "int32",
-            "description": "是否实物发货",
+            "example": {
+                "enum": {
+                    "0": "否",
+                    "1": "是"
+                }
+            },
+            "description": "使用与否",
             "allowEmptyValue": true,
             "minimum": 0,
-            "maximum": 11,
+            "maximum": 2,
             "exclusiveMinimum": false,
             "exclusiveMaximum": false,
             "rules": [],
@@ -862,119 +331,34 @@
                 "available": true,
                 "update": true
             },
-            "key": "isPracticality"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 4,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "mustScan"
+            "key": "useYN"
         },
         {
             "type": "string",
-            "description": "需要扫描",
+            "description": "创建用户ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 715827882,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 715827882,
-                    "message": "max length 715827882!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "remark"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "是否可用",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "enable"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序号",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "orderNo"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "创建人ID",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "createID"
-        },
-        {
-            "type": "string",
-            "description": "创建人",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 50,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 50,
-                    "message": "max length 50!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "creator"
+            "key": "createUser"
         },
         {
             "type": "string",
             "format": "date-time",
-            "description": "创建时间",
+            "description": "创建日期",
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
@@ -984,215 +368,75 @@
             "key": "createDate"
         },
         {
-            "type": "integer",
-            "format": "int32",
-            "description": "修改人ID",
+            "type": "string",
+            "example": {
+                "datetime": true
+            },
+            "description": "创建日期",
             "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
             "rules": [],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "modifyID"
+            "key": "createDateStr"
         },
         {
             "type": "string",
-            "description": "修改人",
+            "example": {
+                "date": true
+            },
+            "description": "修改日期",
+            "allowEmptyValue": true,
+            "rules": [],
+            "attribute": {
+                "available": true,
+                "update": true
+            },
+            "key": "updateDateStr"
+        },
+        {
+            "type": "string",
+            "description": "修改用户ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "modifier"
+            "key": "updateUser"
         },
         {
             "type": "string",
             "format": "date-time",
-            "description": "修改时间",
+            "description": "修改日期",
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "modifyDate"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productBigTypeID"
-        },
-        {
-            "type": "string",
-            "description": "大类名称",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 30,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 30,
-                    "message": "max length 30!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productBigName"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "storageId"
-        },
-        {
-            "type": "string",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "flag"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "isX86"
-        },
-        {
-            "type": "string",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "syncflag"
-        },
-        {
-            "type": "string",
-            "description": "捕获变动数据标识",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "tranTMSFlag"
+            "key": "updateDate"
         }
     ],
     "install": [
         {
-            "type": "integer",
-            "format": "int64",
-            "description": "产品ID",
-            "allowEmptyValue": false,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productId"
-        },
-        {
             "type": "string",
-            "description": "商品编号",
+            "description": "公司ID",
             "allowEmptyValue": false,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 5,
             "rules": [
                 {
                     "required": true,
@@ -1203,19 +447,19 @@
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 5,
+                    "message": "max length 5!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "productCode"
+            "key": "id"
         },
         {
             "type": "string",
-            "description": "IIPC商品编号",
+            "description": "公司名",
             "allowEmptyValue": true,
             "minLength": 0,
             "maxLength": 50,
@@ -1233,164 +477,59 @@
                 "available": true,
                 "update": true
             },
-            "key": "iIPCProductCode"
+            "key": "corpName"
         },
         {
             "type": "string",
-            "description": "产品名称",
+            "description": "管理员ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 21845,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 21845,
-                    "message": "max length 21845!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "productName"
-        },
-        {
-            "type": "number",
-            "description": "体积",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "volume"
-        },
-        {
-            "type": "number",
-            "description": "重量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "weight"
-        },
-        {
-            "type": "number",
-            "description": "公路标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "roadTabNum"
-        },
-        {
-            "type": "number",
-            "description": "铁路标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "trainTabNum"
-        },
-        {
-            "type": "number",
-            "description": "航空标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "airTabNum"
+            "key": "managerID"
         },
         {
             "type": "string",
-            "description": "单位",
+            "description": "上级公司ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "unit"
-        },
-        {
-            "type": "number",
-            "description": "包装乘数",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "packingMulti"
-        },
-        {
-            "type": "number",
-            "description": "包装除数",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "packingDivisor"
+            "key": "parentCorpID"
         },
         {
             "type": "integer",
             "format": "int32",
-            "description": "产品组",
+            "description": "总员工数",
             "allowEmptyValue": true,
             "minimum": 0,
-            "maximum": 11,
+            "maximum": 10,
             "exclusiveMinimum": false,
             "exclusiveMaximum": false,
             "rules": [],
@@ -1398,15 +537,21 @@
                 "available": true,
                 "update": true
             },
-            "key": "productGroupID"
+            "key": "corpEmpTotals"
         },
         {
             "type": "integer",
             "format": "int32",
-            "description": "是否实物发货",
+            "example": {
+                "enum": {
+                    "0": "否",
+                    "1": "是"
+                }
+            },
+            "description": "使用与否",
             "allowEmptyValue": true,
             "minimum": 0,
-            "maximum": 11,
+            "maximum": 2,
             "exclusiveMinimum": false,
             "exclusiveMaximum": false,
             "rules": [],
@@ -1414,119 +559,34 @@
                 "available": true,
                 "update": true
             },
-            "key": "isPracticality"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 4,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "mustScan"
+            "key": "useYN"
         },
         {
             "type": "string",
-            "description": "需要扫描",
+            "description": "创建用户ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 715827882,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 715827882,
-                    "message": "max length 715827882!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "remark"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "是否可用",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "enable"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序号",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "orderNo"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "创建人ID",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "createID"
-        },
-        {
-            "type": "string",
-            "description": "创建人",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 50,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 50,
-                    "message": "max length 50!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "creator"
+            "key": "createUser"
         },
         {
             "type": "string",
             "format": "date-time",
-            "description": "创建时间",
+            "description": "创建日期",
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
@@ -1536,215 +596,47 @@
             "key": "createDate"
         },
         {
-            "type": "integer",
-            "format": "int32",
-            "description": "修改人ID",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "modifyID"
-        },
-        {
             "type": "string",
-            "description": "修改人",
+            "description": "修改用户ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "modifier"
+            "key": "updateUser"
         },
         {
             "type": "string",
             "format": "date-time",
-            "description": "修改时间",
+            "description": "修改日期",
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "modifyDate"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productBigTypeID"
-        },
-        {
-            "type": "string",
-            "description": "大类名称",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 30,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 30,
-                    "message": "max length 30!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productBigName"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "storageId"
-        },
-        {
-            "type": "string",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "flag"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "isX86"
-        },
-        {
-            "type": "string",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "syncflag"
-        },
-        {
-            "type": "string",
-            "description": "捕获变动数据标识",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "tranTMSFlag"
+            "key": "updateDate"
         }
     ],
     "update": [
         {
-            "type": "integer",
-            "format": "int64",
-            "description": "产品ID",
-            "allowEmptyValue": false,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [
-                {
-                    "required": true,
-                    "message": "Please input your undefined!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productId"
-        },
-        {
             "type": "string",
-            "description": "商品编号",
+            "description": "公司ID",
             "allowEmptyValue": false,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 5,
             "rules": [
                 {
                     "required": true,
@@ -1755,19 +647,19 @@
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 5,
+                    "message": "max length 5!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "productCode"
+            "key": "id"
         },
         {
             "type": "string",
-            "description": "IIPC商品编号",
+            "description": "公司名",
             "allowEmptyValue": true,
             "minLength": 0,
             "maxLength": 50,
@@ -1785,164 +677,59 @@
                 "available": true,
                 "update": true
             },
-            "key": "iIPCProductCode"
+            "key": "corpName"
         },
         {
             "type": "string",
-            "description": "产品名称",
+            "description": "管理员ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 21845,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 21845,
-                    "message": "max length 21845!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "productName"
-        },
-        {
-            "type": "number",
-            "description": "体积",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "volume"
-        },
-        {
-            "type": "number",
-            "description": "重量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "weight"
-        },
-        {
-            "type": "number",
-            "description": "公路标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "roadTabNum"
-        },
-        {
-            "type": "number",
-            "description": "铁路标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "trainTabNum"
-        },
-        {
-            "type": "number",
-            "description": "航空标签数量",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "airTabNum"
+            "key": "managerID"
         },
         {
             "type": "string",
-            "description": "单位",
+            "description": "上级公司ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "unit"
-        },
-        {
-            "type": "number",
-            "description": "包装乘数",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "packingMulti"
-        },
-        {
-            "type": "number",
-            "description": "包装除数",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 20,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "packingDivisor"
+            "key": "parentCorpID"
         },
         {
             "type": "integer",
             "format": "int32",
-            "description": "产品组",
+            "description": "总员工数",
             "allowEmptyValue": true,
             "minimum": 0,
-            "maximum": 11,
+            "maximum": 10,
             "exclusiveMinimum": false,
             "exclusiveMaximum": false,
             "rules": [],
@@ -1950,15 +737,21 @@
                 "available": true,
                 "update": true
             },
-            "key": "productGroupID"
+            "key": "corpEmpTotals"
         },
         {
             "type": "integer",
             "format": "int32",
-            "description": "是否实物发货",
+            "example": {
+                "enum": {
+                    "0": "否",
+                    "1": "是"
+                }
+            },
+            "description": "使用与否",
             "allowEmptyValue": true,
             "minimum": 0,
-            "maximum": 11,
+            "maximum": 2,
             "exclusiveMinimum": false,
             "exclusiveMaximum": false,
             "rules": [],
@@ -1966,119 +759,34 @@
                 "available": true,
                 "update": true
             },
-            "key": "isPracticality"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 4,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "mustScan"
+            "key": "useYN"
         },
         {
             "type": "string",
-            "description": "需要扫描",
+            "description": "创建用户ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 715827882,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 715827882,
-                    "message": "max length 715827882!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "remark"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "是否可用",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "enable"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序号",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "orderNo"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "description": "创建人ID",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "createID"
-        },
-        {
-            "type": "string",
-            "description": "创建人",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 50,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 50,
-                    "message": "max length 50!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "creator"
+            "key": "createUser"
         },
         {
             "type": "string",
             "format": "date-time",
-            "description": "创建时间",
+            "description": "创建日期",
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
@@ -2088,185 +796,38 @@
             "key": "createDate"
         },
         {
-            "type": "integer",
-            "format": "int32",
-            "description": "修改人ID",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "modifyID"
-        },
-        {
             "type": "string",
-            "description": "修改人",
+            "description": "修改用户ID",
             "allowEmptyValue": true,
             "minLength": 0,
-            "maxLength": 50,
+            "maxLength": 10,
             "rules": [
                 {
                     "min": 0,
                     "message": "min length 0!"
                 },
                 {
-                    "max": 50,
-                    "message": "max length 50!"
+                    "max": 10,
+                    "message": "max length 10!"
                 }
             ],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "modifier"
+            "key": "updateUser"
         },
         {
             "type": "string",
             "format": "date-time",
-            "description": "修改时间",
+            "description": "修改日期",
             "allowEmptyValue": true,
             "rules": [],
             "attribute": {
                 "available": true,
                 "update": true
             },
-            "key": "modifyDate"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productBigTypeID"
-        },
-        {
-            "type": "string",
-            "description": "大类名称",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 30,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 30,
-                    "message": "max length 30!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "productBigName"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "storageId"
-        },
-        {
-            "type": "string",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "flag"
-        },
-        {
-            "type": "integer",
-            "format": "int32",
-            "allowEmptyValue": true,
-            "minimum": 0,
-            "maximum": 11,
-            "exclusiveMinimum": false,
-            "exclusiveMaximum": false,
-            "rules": [],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "isX86"
-        },
-        {
-            "type": "string",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "syncflag"
-        },
-        {
-            "type": "string",
-            "description": "捕获变动数据标识",
-            "allowEmptyValue": true,
-            "minLength": 0,
-            "maxLength": 1,
-            "rules": [
-                {
-                    "min": 0,
-                    "message": "min length 0!"
-                },
-                {
-                    "max": 1,
-                    "message": "max length 1!"
-                }
-            ],
-            "attribute": {
-                "available": true,
-                "update": true
-            },
-            "key": "tranTMSFlag"
+            "key": "updateDate"
         }
     ],
     "pageButtons": {
@@ -2274,7 +835,6 @@
         "update": true,
         "delete": true,
         "import": true,
-        "export": true,
-        "columns": true
+        "export": true
     }
 }

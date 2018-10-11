@@ -29,7 +29,7 @@ class Center extends React.Component<any,any> {
       </Menu>
     );
     const CardInfo = ({ activeUser, newUser }) => (
-      <div className="ant-user-body-cardInfo">
+      <div className="cardInfo">
         <div>
           <p>活跃用户</p>
           <p>{activeUser}</p>

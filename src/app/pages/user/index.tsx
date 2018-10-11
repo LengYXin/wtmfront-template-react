@@ -15,7 +15,7 @@ import {
 import Store from '../../../store'
 import { inject, observer } from 'mobx-react'
 import './css/Center.less'
-import InfoCard from './infoCard'
+import InfoCard from './InfoCard'
 import Articles from './articles'
 import AppList from './Applications'
 import Project from './project'
@@ -83,7 +83,7 @@ export default class IApp extends React.Component<any, any> {
             >
               {this.contentListNoTitle[this.state.noTitleKey]}
             </Card> */}
-          <Tabs defaultActiveKey="1" className="app-user -tabsCard">
+          <Tabs defaultActiveKey="1" className="tabsCard">
             <TabPane tab={operationTabList[0].tab} key="1">
               <Articles store={this.store} />
             </TabPane>

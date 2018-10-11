@@ -41,9 +41,7 @@ export default class App extends React.Component<any, any> {
                             onChange={this.handleChange.bind(this)}
                         >
                             {swaggerDoc.docData.common.map((x, i) => {
-                                return <Option key={x.path.key} value={x.path.key}>
-                                {x.path.key}
-                                </Option>
+                                return <Option key={x.key} value={x.key}>{x.key}</Option>
                             })}
                         </Select>
                     </Col>

@@ -37,7 +37,7 @@ class Center extends React.Component<any,any> {
     return <>
       <List
         size="large"
-        className="ant-list-articleList"
+        className="articleList"
         rowKey="id"
         itemLayout="vertical"
         dataSource={lists}

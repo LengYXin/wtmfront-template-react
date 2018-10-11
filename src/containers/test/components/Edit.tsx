@@ -27,252 +27,84 @@ export default class EditComponent extends TableEdit {
     renderItem({ form, initialValue }: renderItemParams) {
         const { getFieldDecorator } = form;
         return <>
-            <FormItem label="产品ID" {...formItemLayout}>
-            {getFieldDecorator('productId',{
-                rules: [{"required":true,"message":"Please input your undefined!"}],
-                initialValue: initialValue('productId','int64'),
+            <FormItem label="公司ID" {...formItemLayout}>
+            {getFieldDecorator('id',{
+                rules: [{"required":true,"message":"Please input your undefined!"},{"min":0,"message":"min length 0!"},{"max":5,"message":"max length 5!"}],
+                initialValue: initialValue('id',''),
             })(
-               <DataEntry {...this.props}  format="int64"  placeholder='产品ID'  />
+               <DataEntry {...this.props}  placeholder='公司ID'  />
             )}
         </FormItem> 
-         <FormItem label="商品编号" {...formItemLayout}>
-            {getFieldDecorator('productCode',{
-                rules: [{"required":true,"message":"Please input your undefined!"},{"min":0,"message":"min length 0!"},{"max":50,"message":"max length 50!"}],
-                initialValue: initialValue('productCode',''),
-            })(
-               <DataEntry {...this.props}  placeholder='商品编号'  />
-            )}
-        </FormItem> 
-         <FormItem label="IIPC商品编号" {...formItemLayout}>
-            {getFieldDecorator('iIPCProductCode',{
+         <FormItem label="公司名" {...formItemLayout}>
+            {getFieldDecorator('corpName',{
                 rules: [{"min":0,"message":"min length 0!"},{"max":50,"message":"max length 50!"}],
-                initialValue: initialValue('iIPCProductCode',''),
+                initialValue: initialValue('corpName',''),
             })(
-               <DataEntry {...this.props}  placeholder='IIPC商品编号'  />
+               <DataEntry {...this.props}  placeholder='公司名'  />
             )}
         </FormItem> 
-         <FormItem label="产品名称" {...formItemLayout}>
-            {getFieldDecorator('productName',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":21845,"message":"max length 21845!"}],
-                initialValue: initialValue('productName',''),
+         <FormItem label="管理员ID" {...formItemLayout}>
+            {getFieldDecorator('managerID',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
+                initialValue: initialValue('managerID',''),
             })(
-               <DataEntry {...this.props}  placeholder='产品名称'  />
+               <DataEntry {...this.props}  placeholder='管理员ID'  />
             )}
         </FormItem> 
-         <FormItem label="体积" {...formItemLayout}>
-            {getFieldDecorator('volume',{
+         <FormItem label="上级公司ID" {...formItemLayout}>
+            {getFieldDecorator('parentCorpID',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
+                initialValue: initialValue('parentCorpID',''),
+            })(
+               <DataEntry {...this.props}  placeholder='上级公司ID'  />
+            )}
+        </FormItem> 
+         <FormItem label="总员工数" {...formItemLayout}>
+            {getFieldDecorator('corpEmpTotals',{
                 rules: [],
-                initialValue: initialValue('volume',''),
+                initialValue: initialValue('corpEmpTotals','int32'),
             })(
-               <DataEntry {...this.props}  placeholder='体积'  />
+               <DataEntry {...this.props}  format="int32"  placeholder='总员工数'  />
             )}
         </FormItem> 
-         <FormItem label="重量" {...formItemLayout}>
-            {getFieldDecorator('weight',{
+         <FormItem label="使用与否" {...formItemLayout}>
+            {getFieldDecorator('useYN',{
                 rules: [],
-                initialValue: initialValue('weight',''),
+                initialValue: initialValue('useYN','int32'),
             })(
-               <DataEntry {...this.props}  placeholder='重量'  />
+               <DataEntry {...this.props}  format="int32"  example={{"enum":{"0":"否","1":"是"}}}  placeholder='使用与否'  />
             )}
         </FormItem> 
-         <FormItem label="公路标签数量" {...formItemLayout}>
-            {getFieldDecorator('roadTabNum',{
-                rules: [],
-                initialValue: initialValue('roadTabNum',''),
+         <FormItem label="创建用户ID" {...formItemLayout}>
+            {getFieldDecorator('createUser',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
+                initialValue: initialValue('createUser',''),
             })(
-               <DataEntry {...this.props}  placeholder='公路标签数量'  />
+               <DataEntry {...this.props}  placeholder='创建用户ID'  />
             )}
         </FormItem> 
-         <FormItem label="铁路标签数量" {...formItemLayout}>
-            {getFieldDecorator('trainTabNum',{
-                rules: [],
-                initialValue: initialValue('trainTabNum',''),
-            })(
-               <DataEntry {...this.props}  placeholder='铁路标签数量'  />
-            )}
-        </FormItem> 
-         <FormItem label="航空标签数量" {...formItemLayout}>
-            {getFieldDecorator('airTabNum',{
-                rules: [],
-                initialValue: initialValue('airTabNum',''),
-            })(
-               <DataEntry {...this.props}  placeholder='航空标签数量'  />
-            )}
-        </FormItem> 
-         <FormItem label="单位" {...formItemLayout}>
-            {getFieldDecorator('unit',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":50,"message":"max length 50!"}],
-                initialValue: initialValue('unit',''),
-            })(
-               <DataEntry {...this.props}  placeholder='单位'  />
-            )}
-        </FormItem> 
-         <FormItem label="包装乘数" {...formItemLayout}>
-            {getFieldDecorator('packingMulti',{
-                rules: [],
-                initialValue: initialValue('packingMulti',''),
-            })(
-               <DataEntry {...this.props}  placeholder='包装乘数'  />
-            )}
-        </FormItem> 
-         <FormItem label="包装除数" {...formItemLayout}>
-            {getFieldDecorator('packingDivisor',{
-                rules: [],
-                initialValue: initialValue('packingDivisor',''),
-            })(
-               <DataEntry {...this.props}  placeholder='包装除数'  />
-            )}
-        </FormItem> 
-         <FormItem label="产品组" {...formItemLayout}>
-            {getFieldDecorator('productGroupID',{
-                rules: [],
-                initialValue: initialValue('productGroupID','int32'),
-            })(
-               <DataEntry {...this.props}  format="int32"  placeholder='产品组'  />
-            )}
-        </FormItem> 
-         <FormItem label="是否实物发货" {...formItemLayout}>
-            {getFieldDecorator('isPracticality',{
-                rules: [],
-                initialValue: initialValue('isPracticality','int32'),
-            })(
-               <DataEntry {...this.props}  format="int32"  placeholder='是否实物发货'  />
-            )}
-        </FormItem> 
-         <FormItem label="未配置说明" {...formItemLayout}>
-            {getFieldDecorator('mustScan',{
-                rules: [],
-                initialValue: initialValue('mustScan','int32'),
-            })(
-               <DataEntry {...this.props}  format="int32"  />
-            )}
-        </FormItem> 
-         <FormItem label="需要扫描" {...formItemLayout}>
-            {getFieldDecorator('remark',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":715827882,"message":"max length 715827882!"}],
-                initialValue: initialValue('remark',''),
-            })(
-               <DataEntry {...this.props}  placeholder='需要扫描'  />
-            )}
-        </FormItem> 
-         <FormItem label="是否可用" {...formItemLayout}>
-            {getFieldDecorator('enable',{
-                rules: [],
-                initialValue: initialValue('enable','int32'),
-            })(
-               <DataEntry {...this.props}  format="int32"  placeholder='是否可用'  />
-            )}
-        </FormItem> 
-         <FormItem label="排序号" {...formItemLayout}>
-            {getFieldDecorator('orderNo',{
-                rules: [],
-                initialValue: initialValue('orderNo','int32'),
-            })(
-               <DataEntry {...this.props}  format="int32"  placeholder='排序号'  />
-            )}
-        </FormItem> 
-         <FormItem label="创建人ID" {...formItemLayout}>
-            {getFieldDecorator('createID',{
-                rules: [],
-                initialValue: initialValue('createID','int32'),
-            })(
-               <DataEntry {...this.props}  format="int32"  placeholder='创建人ID'  />
-            )}
-        </FormItem> 
-         <FormItem label="创建人" {...formItemLayout}>
-            {getFieldDecorator('creator',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":50,"message":"max length 50!"}],
-                initialValue: initialValue('creator',''),
-            })(
-               <DataEntry {...this.props}  placeholder='创建人'  />
-            )}
-        </FormItem> 
-         <FormItem label="创建时间" {...formItemLayout}>
+         <FormItem label="创建日期" {...formItemLayout}>
             {getFieldDecorator('createDate',{
                 rules: [],
                 initialValue: initialValue('createDate','date-time'),
             })(
-               <DataEntry {...this.props}  format="date-time"  placeholder='创建时间'  />
+               <DataEntry {...this.props}  format="date-time"  placeholder='创建日期'  />
             )}
         </FormItem> 
-         <FormItem label="修改人ID" {...formItemLayout}>
-            {getFieldDecorator('modifyID',{
+         <FormItem label="修改用户ID" {...formItemLayout}>
+            {getFieldDecorator('updateUser',{
+                rules: [{"min":0,"message":"min length 0!"},{"max":10,"message":"max length 10!"}],
+                initialValue: initialValue('updateUser',''),
+            })(
+               <DataEntry {...this.props}  placeholder='修改用户ID'  />
+            )}
+        </FormItem> 
+         <FormItem label="修改日期" {...formItemLayout}>
+            {getFieldDecorator('updateDate',{
                 rules: [],
-                initialValue: initialValue('modifyID','int32'),
+                initialValue: initialValue('updateDate','date-time'),
             })(
-               <DataEntry {...this.props}  format="int32"  placeholder='修改人ID'  />
-            )}
-        </FormItem> 
-         <FormItem label="修改人" {...formItemLayout}>
-            {getFieldDecorator('modifier',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":50,"message":"max length 50!"}],
-                initialValue: initialValue('modifier',''),
-            })(
-               <DataEntry {...this.props}  placeholder='修改人'  />
-            )}
-        </FormItem> 
-         <FormItem label="修改时间" {...formItemLayout}>
-            {getFieldDecorator('modifyDate',{
-                rules: [],
-                initialValue: initialValue('modifyDate','date-time'),
-            })(
-               <DataEntry {...this.props}  format="date-time"  placeholder='修改时间'  />
-            )}
-        </FormItem> 
-         <FormItem label="未配置说明" {...formItemLayout}>
-            {getFieldDecorator('productBigTypeID',{
-                rules: [],
-                initialValue: initialValue('productBigTypeID','int32'),
-            })(
-               <DataEntry {...this.props}  format="int32"  />
-            )}
-        </FormItem> 
-         <FormItem label="大类名称" {...formItemLayout}>
-            {getFieldDecorator('productBigName',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":30,"message":"max length 30!"}],
-                initialValue: initialValue('productBigName',''),
-            })(
-               <DataEntry {...this.props}  placeholder='大类名称'  />
-            )}
-        </FormItem> 
-         <FormItem label="未配置说明" {...formItemLayout}>
-            {getFieldDecorator('storageId',{
-                rules: [],
-                initialValue: initialValue('storageId','int32'),
-            })(
-               <DataEntry {...this.props}  format="int32"  />
-            )}
-        </FormItem> 
-         <FormItem label="未配置说明" {...formItemLayout}>
-            {getFieldDecorator('flag',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":1,"message":"max length 1!"}],
-                initialValue: initialValue('flag',''),
-            })(
-               <DataEntry {...this.props}  />
-            )}
-        </FormItem> 
-         <FormItem label="未配置说明" {...formItemLayout}>
-            {getFieldDecorator('isX86',{
-                rules: [],
-                initialValue: initialValue('isX86','int32'),
-            })(
-               <DataEntry {...this.props}  format="int32"  />
-            )}
-        </FormItem> 
-         <FormItem label="未配置说明" {...formItemLayout}>
-            {getFieldDecorator('syncflag',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":1,"message":"max length 1!"}],
-                initialValue: initialValue('syncflag',''),
-            })(
-               <DataEntry {...this.props}  />
-            )}
-        </FormItem> 
-         <FormItem label="捕获变动数据标识" {...formItemLayout}>
-            {getFieldDecorator('tranTMSFlag',{
-                rules: [{"min":0,"message":"min length 0!"},{"max":1,"message":"max length 1!"}],
-                initialValue: initialValue('tranTMSFlag',''),
-            })(
-               <DataEntry {...this.props}  placeholder='捕获变动数据标识'  />
+               <DataEntry {...this.props}  format="date-time"  placeholder='修改日期'  />
             )}
         </FormItem> 
         </>

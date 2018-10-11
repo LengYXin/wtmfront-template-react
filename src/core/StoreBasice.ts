@@ -6,17 +6,15 @@
  * @desc [description]
  */
 import { message } from 'antd';
-import { action, computed, observable, runInAction} from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import NProgress from 'nprogress';
 import wtmfront from 'wtmfront.json';
 import Common from './Common';
 import { HttpBasics } from './HttpBasics';
 import SwaggerModel from "./SwaggerModel";
 export default class Store extends SwaggerModel {
-   constructor(public StoreConfig) {
+  constructor(public StoreConfig) {
     super();
-    //获取对应模块的columns
-    this.getColumns()
   }
   /** 公共数据类 */
   Common = Common
@@ -34,8 +32,7 @@ export default class Store extends SwaggerModel {
     update: true,
     delete: true,
     import: true,
-    export: true,
-    columns:true
+    export: true
   }
   /** 搜索数据 */
   searchParams: any = {
@@ -55,49 +52,20 @@ export default class Store extends SwaggerModel {
   @observable details: any = {}
   /** 页面动作 */
   @observable pageState = {
-    visibleEdit: false,//编辑显示 抽屉的显示隐藏
+    visibleEdit: false,//编辑显示
     visiblePort: false,//导入显示
     loading: false,//数据加载
     loadingEdit: false,//数据提交
-    isUpdate: false,//编辑状态  判断是增加还是修改
-    isColumns:false//自定义columns状态
+    isUpdate: false//编辑状态
   }
-  /** 勾选的columns */
-  @observable columnsSelect={
-      columns:[],
-      entity:""
-    }
-
-  @action.bound
-   async getColumns(){
-    let result:any[] = await new HttpBasics().create(wtmfront["publicColumns"]["get"]).toPromise()
-    let model=this.StoreConfig.address.match(/\/(\w+)\//)[1]
-     result=result.filter((item)=>item.entity===model)
-     if(result.length===0){
-       result=[
-         {
-           columns:[],
-           entity:model
-         }
-       ]
-     }
-     runInAction(() => {
-      this.columnsSelect = result[0] 
-    this.onPageState("loading", false)
-
-    })
-    return result[0]
-    }
-
-
   /**
-   *  修改页面动作状态 抽屉的显示隐藏
+   *  修改页面动作状态
    * @param key 
    * @param value 
    */
   @action.bound
   onPageState(
-    key: "visibleEdit" | "visiblePort" | "loading" | "loadingEdit" | "isUpdate"|"isColumns",
+    key: "visibleEdit" | "visiblePort" | "loading" | "loadingEdit" | "isUpdate",
     value?: boolean) {
     const prevVal = this.pageState[key];
     if (prevVal == value) {
@@ -124,24 +92,10 @@ export default class Store extends SwaggerModel {
    * @param details 详情 有唯一 key 判定为修改
    */
   async onModalShow(details = {}) {
-  //  if (details[this.IdKey] == null) {
-    if(JSON.stringify(details)==="{}"){
-      //增加
+    if (details[this.IdKey] == null) {
       this.onPageState("isUpdate", false)
-      this.onPageState("isColumns", false)
-    }else if(details["columns"]==="columns"){
-      //自定义列表
-      this.onPageState("isColumns", true)
-      this.onPageState("isUpdate", false)
-      let columns = await this.onGetColumns()//勾选的列
-     runInAction(() => {
-      this.columnsSelect=columns
-    })
-    }
-     else {
-       //修改
+    } else {
       this.onPageState("isUpdate", true)
-      this.onPageState("isColumns", false)
       details = await this.onGetDetails(details)
     }
     runInAction(() => {
@@ -149,40 +103,6 @@ export default class Store extends SwaggerModel {
     })
     this.onPageState("visibleEdit", true)
   }
-
-/**
-   * 加载columns列表项
-   */
-  async onGetColumns() {
-    this.onPageState("loadingEdit", true)
-    let result=this.getColumns()
-    this.onPageState("loadingEdit", false)
-    return result
-  }
-/**设置columns列表项
- * columns:勾选的字段数组
- */
-  @action.bound
-  async setColumns(columns){
-    let model=this.StoreConfig.address.match(/\/(\w+)\//)[1]
-    let columnsObj={
-      columns,
-      entity:model
-    }
-  //this.columnsSelect[0].columns=columns;
-    this.onPageState("loadingEdit", true)
-     this.onPageState("loading", true)
-    const result = await new HttpBasics().create(wtmfront["publicColumns"]["set"],columnsObj).toPromise()
-   // console.log(this.columnsSelect)
-    if(result===1){
-      //重新获取一次
-      this.getColumns()
-      this.onPageState("isColumns", false)
-      this.onPageState("visibleEdit", false)
-    }
-    this.onPageState("loadingEdit", false)
-  }
-
 
   /**
    * 加载数据 列表
@@ -228,7 +148,6 @@ export default class Store extends SwaggerModel {
    * @param params 数据实体
    */
   async onGetDetails(params) {
-    console.log(params)
     this.onPageState("loadingEdit", true)
     const result = await this.Http.create(wtmfront.standard.details, params).toPromise()
     this.onPageState("loadingEdit", false)

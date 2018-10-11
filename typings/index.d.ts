@@ -11,14 +11,13 @@ interface IPageButton {
     /** 导入按钮 */
     import: boolean,
     /** 导出按钮 */
-    export: boolean,
-    /** 自定义列表 */
-    columns:boolean
+    export: boolean
 }
 /**
  * Swagger 解析格式
  */
 interface ISwaggerModel {
+    name: string,       //名称
     idKey?: string,    //唯一标识
     address?: string,    //地址控制器
     columns?: any[],    //teble 列

@@ -33,317 +33,110 @@ export default class HeaderComponent extends TableHeader {
         const { getFieldDecorator } = form;
         return <>
                 <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('createDateFrom',{
-                    initialValue: initialValue('createDateFrom','date-time'),
+                <FormItem label="公司ID" {...formItemLayout}>
+                {getFieldDecorator('id',{
+                    initialValue: initialValue('id',''),
                 })(
-                    <DataEntry {...this.props}  format="date-time"  />
+                    <DataEntry {...this.props}  placeholder='公司ID'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('createDateTo',{
-                    initialValue: initialValue('createDateTo','date-time'),
+                <FormItem label="公司名" {...formItemLayout}>
+                {getFieldDecorator('corpName',{
+                    initialValue: initialValue('corpName',''),
                 })(
-                    <DataEntry {...this.props}  format="date-time"  />
+                    <DataEntry {...this.props}  placeholder='公司名'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('modifyDateFrom',{
-                    initialValue: initialValue('modifyDateFrom','date-time'),
+                <FormItem label="管理员ID" {...formItemLayout}>
+                {getFieldDecorator('managerID',{
+                    initialValue: initialValue('managerID',''),
                 })(
-                    <DataEntry {...this.props}  format="date-time"  />
+                    <DataEntry {...this.props}  placeholder='管理员ID'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('modifyDateTo',{
-                    initialValue: initialValue('modifyDateTo','date-time'),
+                <FormItem label="上级公司ID" {...formItemLayout}>
+                {getFieldDecorator('parentCorpID',{
+                    initialValue: initialValue('parentCorpID',''),
                 })(
-                    <DataEntry {...this.props}  format="date-time"  />
+                    <DataEntry {...this.props}  placeholder='上级公司ID'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="产品ID" {...formItemLayout}>
-                {getFieldDecorator('productId',{
-                    initialValue: initialValue('productId','int64'),
+                <FormItem label="总员工数" {...formItemLayout}>
+                {getFieldDecorator('corpEmpTotals',{
+                    initialValue: initialValue('corpEmpTotals','int32'),
                 })(
-                    <DataEntry {...this.props}  format="int64"  placeholder='产品ID'  />
+                    <DataEntry {...this.props}  format="int32"  placeholder='总员工数'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="商品编号" {...formItemLayout}>
-                {getFieldDecorator('productCode',{
-                    initialValue: initialValue('productCode',''),
+                <FormItem label="使用与否" {...formItemLayout}>
+                {getFieldDecorator('useYN',{
+                    initialValue: initialValue('useYN','int32'),
                 })(
-                    <DataEntry {...this.props}  placeholder='商品编号'  />
+                    <DataEntry {...this.props}  format="int32"  example={{"enum":{"0":"否","1":"是"}}}  placeholder='使用与否'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="IIPC商品编号" {...formItemLayout}>
-                {getFieldDecorator('iIPCProductCode',{
-                    initialValue: initialValue('iIPCProductCode',''),
+                <FormItem label="创建用户ID" {...formItemLayout}>
+                {getFieldDecorator('createUser',{
+                    initialValue: initialValue('createUser',''),
                 })(
-                    <DataEntry {...this.props}  placeholder='IIPC商品编号'  />
+                    <DataEntry {...this.props}  placeholder='创建用户ID'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="产品名称" {...formItemLayout}>
-                {getFieldDecorator('productName',{
-                    initialValue: initialValue('productName',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='产品名称'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="体积" {...formItemLayout}>
-                {getFieldDecorator('volume',{
-                    initialValue: initialValue('volume',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='体积'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="重量" {...formItemLayout}>
-                {getFieldDecorator('weight',{
-                    initialValue: initialValue('weight',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='重量'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="公路标签数量" {...formItemLayout}>
-                {getFieldDecorator('roadTabNum',{
-                    initialValue: initialValue('roadTabNum',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='公路标签数量'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="铁路标签数量" {...formItemLayout}>
-                {getFieldDecorator('trainTabNum',{
-                    initialValue: initialValue('trainTabNum',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='铁路标签数量'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="航空标签数量" {...formItemLayout}>
-                {getFieldDecorator('airTabNum',{
-                    initialValue: initialValue('airTabNum',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='航空标签数量'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="单位" {...formItemLayout}>
-                {getFieldDecorator('unit',{
-                    initialValue: initialValue('unit',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='单位'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="包装乘数" {...formItemLayout}>
-                {getFieldDecorator('packingMulti',{
-                    initialValue: initialValue('packingMulti',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='包装乘数'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="包装除数" {...formItemLayout}>
-                {getFieldDecorator('packingDivisor',{
-                    initialValue: initialValue('packingDivisor',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='包装除数'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="产品组" {...formItemLayout}>
-                {getFieldDecorator('productGroupID',{
-                    initialValue: initialValue('productGroupID','int32'),
-                })(
-                    <DataEntry {...this.props}  format="int32"  placeholder='产品组'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="是否实物发货" {...formItemLayout}>
-                {getFieldDecorator('isPracticality',{
-                    initialValue: initialValue('isPracticality','int32'),
-                })(
-                    <DataEntry {...this.props}  format="int32"  placeholder='是否实物发货'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('mustScan',{
-                    initialValue: initialValue('mustScan','int32'),
-                })(
-                    <DataEntry {...this.props}  format="int32"  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="需要扫描" {...formItemLayout}>
-                {getFieldDecorator('remark',{
-                    initialValue: initialValue('remark',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='需要扫描'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="是否可用" {...formItemLayout}>
-                {getFieldDecorator('enable',{
-                    initialValue: initialValue('enable','int32'),
-                })(
-                    <DataEntry {...this.props}  format="int32"  placeholder='是否可用'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="排序号" {...formItemLayout}>
-                {getFieldDecorator('orderNo',{
-                    initialValue: initialValue('orderNo','int32'),
-                })(
-                    <DataEntry {...this.props}  format="int32"  placeholder='排序号'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="创建人ID" {...formItemLayout}>
-                {getFieldDecorator('createID',{
-                    initialValue: initialValue('createID','int32'),
-                })(
-                    <DataEntry {...this.props}  format="int32"  placeholder='创建人ID'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="创建人" {...formItemLayout}>
-                {getFieldDecorator('creator',{
-                    initialValue: initialValue('creator',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='创建人'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="创建时间" {...formItemLayout}>
+                <FormItem label="创建日期" {...formItemLayout}>
                 {getFieldDecorator('createDate',{
                     initialValue: initialValue('createDate','date-time'),
                 })(
-                    <DataEntry {...this.props}  format="date-time"  placeholder='创建时间'  />
+                    <DataEntry {...this.props}  format="date-time"  placeholder='创建日期'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="修改人ID" {...formItemLayout}>
-                {getFieldDecorator('modifyID',{
-                    initialValue: initialValue('modifyID','int32'),
+                <FormItem label="创建日期" {...formItemLayout}>
+                {getFieldDecorator('createDateStr',{
+                    initialValue: initialValue('createDateStr',''),
                 })(
-                    <DataEntry {...this.props}  format="int32"  placeholder='修改人ID'  />
+                    <DataEntry {...this.props}  example={{"datetime":true}}  placeholder='创建日期'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="修改人" {...formItemLayout}>
-                {getFieldDecorator('modifier',{
-                    initialValue: initialValue('modifier',''),
+                <FormItem label="修改日期" {...formItemLayout}>
+                {getFieldDecorator('updateDateStr',{
+                    initialValue: initialValue('updateDateStr',''),
                 })(
-                    <DataEntry {...this.props}  placeholder='修改人'  />
+                    <DataEntry {...this.props}  example={{"date":true}}  placeholder='修改日期'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="修改时间" {...formItemLayout}>
-                {getFieldDecorator('modifyDate',{
-                    initialValue: initialValue('modifyDate','date-time'),
+                <FormItem label="修改用户ID" {...formItemLayout}>
+                {getFieldDecorator('updateUser',{
+                    initialValue: initialValue('updateUser',''),
                 })(
-                    <DataEntry {...this.props}  format="date-time"  placeholder='修改时间'  />
+                    <DataEntry {...this.props}  placeholder='修改用户ID'  />
                 )}
                 </FormItem>
             </Col> 
              <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('productBigTypeID',{
-                    initialValue: initialValue('productBigTypeID','int32'),
+                <FormItem label="修改日期" {...formItemLayout}>
+                {getFieldDecorator('updateDate',{
+                    initialValue: initialValue('updateDate','date-time'),
                 })(
-                    <DataEntry {...this.props}  format="int32"  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="大类名称" {...formItemLayout}>
-                {getFieldDecorator('productBigName',{
-                    initialValue: initialValue('productBigName',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='大类名称'  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('storageId',{
-                    initialValue: initialValue('storageId','int32'),
-                })(
-                    <DataEntry {...this.props}  format="int32"  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('flag',{
-                    initialValue: initialValue('flag',''),
-                })(
-                    <DataEntry {...this.props}  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('isX86',{
-                    initialValue: initialValue('isX86','int32'),
-                })(
-                    <DataEntry {...this.props}  format="int32"  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="未配置说明" {...formItemLayout}>
-                {getFieldDecorator('syncflag',{
-                    initialValue: initialValue('syncflag',''),
-                })(
-                    <DataEntry {...this.props}  />
-                )}
-                </FormItem>
-            </Col> 
-             <Col {...colLayout} >
-                <FormItem label="捕获变动数据标识" {...formItemLayout}>
-                {getFieldDecorator('tranTMSFlag',{
-                    initialValue: initialValue('tranTMSFlag',''),
-                })(
-                    <DataEntry {...this.props}  placeholder='捕获变动数据标识'  />
+                    <DataEntry {...this.props}  format="date-time"  placeholder='修改日期'  />
                 )}
                 </FormItem>
             </Col> 

@@ -7,7 +7,7 @@ export class Store extends storeBasice {
     constructor() {
         super({
             // api 地址前缀
-            address: '/baseProductinfo/'
+            address: '/corp/'
         });
     }
     /** swagger 解析数据结构 */ 
@@ -19,8 +19,7 @@ export class Store extends storeBasice {
     "update": true,
     "delete": true,
     "import": true,
-    "export": true,
-    "columns": true
+    "export": true
 }
 }
 export default new Store();
