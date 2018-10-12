@@ -1,30 +1,50 @@
 /**
  * 页面按钮
  */
-interface IPageButton {
+interface IActions {
     /** 添加按钮 */
-    install: boolean,
+    install: boolean;
     /** 添加修改 */
-    update: boolean,
+    update: boolean;
     /** 删除按钮 */
-    delete: boolean,
+    delete: boolean;
     /** 导入按钮 */
-    import: boolean,
+    import: boolean;
     /** 导出按钮 */
-    export: boolean,
+    export: boolean;
     [key: string]: boolean
 }
 /**
  * Swagger 解析格式
  */
 interface ISwaggerModel {
-    idKey?: string,    //唯一标识
-    address?: string,    //地址控制器
-    columns?: any[],    //teble 列
-    search?: any[],     //搜索条件
-    install?: any[],    //添加字段
-    update?: any[],      //修改字段
-    pageButtons?: IPageButton
+    /** 模型唯一key */
+    key?: string;
+    /** 模型名称 swagger */
+    name?: string;
+    /** 控制器备注 */
+    description?: string;
+    /** 组件名称 编辑输入 */
+    componentName?: string;
+    /** 菜单名称 */
+    menuName?: string;
+    /** 模板 */
+    template?: string;
+    /** 操作权限 */
+    actions?: IActions
+    /** 数据 id 唯一标识  */
+    idKey?: string;
+    /** 地址前缀 */
+    address?: string;
+    /** teble 列 属性 */
+    columns?: any[];
+    /** 搜索条件 */
+    search?: any[];
+    /** 数据插入属性 */
+    install?: any[];
+    /** 数据修改属性 */
+    update?: any[];
+
 }
 /**
  * 公共属性
@@ -40,9 +60,9 @@ interface ICommon {
  */
 interface IAttribute {
     // 可用
-    available?: boolean,
+    available?: boolean;
     // 可编辑
-    update?: boolean,
+    update?: boolean;
     // 公共属性
     common?: ICommon
 }
@@ -54,16 +74,11 @@ declare var PRODUCTION: boolean;
  * API地址
  */
 declare var APIADDRESS: string;
-declare module "*.png" {
-    const value: any;
-    export = value;
-}
-declare module "*.svg" {
-    const value: any;
-    export = value;
-}
-declare module "*.json" {
-    const value: any;
-    export default value;
-}
+declare module "*.png";
+declare module "*.gif";
+declare module "*.jpg";
+declare module "*.jpeg";
+declare module "*.svg";
+declare module "*.css";
+declare module "*.json";
 declare var VConsole: any;

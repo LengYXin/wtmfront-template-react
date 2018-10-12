@@ -5,14 +5,15 @@
  * @modify date 2018-09-10 04:47:37
  * @desc [description]
  */
-import { Button, Col, Icon, List, Row, Switch, Divider } from 'antd'
-// import Sortable from '../../../../components/sortable/index'
-import { action, toJS } from 'mobx';
-import { observer, inject } from 'mobx-react'
-import * as React from 'react'
-import Store from '../../../store'
+import { Button, Col, Divider, Icon, List, Row, Switch } from 'antd';
+import { action } from 'mobx';
+import { observer } from 'mobx-react';
+import * as React from 'react';
+import Source from '../../../components/drop/source';
+import Store from '../../store';
 const { swaggerDoc, decompose } = Store
 const ColSpan = {
+  key: 6,
   name: 6,
   available: 2,
   update: 2,
@@ -41,7 +42,6 @@ any
     Store.decompose.onExchangeModel(this.props.type, dragIndex, hoverIndex)
   }
   dataSource() {
-    console.log(Store.decompose.Model)
     return Store.decompose.Model[this.props.type].slice()
   }
   /**
@@ -57,7 +57,7 @@ any
             {item.example.combo}
           </span>
           <Divider type="vertical" />
-          <Button icon="edit" onClick={() => decompose.onVisible()} />
+          <Button icon="edit" onClick={() => { }} />
         </>
       )
     }
@@ -111,35 +111,34 @@ any
       )
     }
     return (
-      <>
-        <Row type="flex" justify="center" align="top" gutter={gutter}>
-          <Col span={ColSpan.name}>名称</Col>
-          <Col span={ColSpan.available}>可用</Col>
-          {this.props.type == 'install' ? (
-            <Col span={ColSpan.update}>可编辑</Col>
-          ) : null}
-          {this.props.type != 'columns' ? (
-            <Col span={ColSpan.bind}>关联模型</Col>
-          ) : null}
-        </Row>
-
+      <div style={{ textAlign: "left" }}>
+        <List.Item>
+          <Row type="flex" align="top" gutter={gutter} style={{ width: '100%', paddingLeft: 10 }}>
+            <Col span={ColSpan.key}>Key</Col>
+            <Col span={ColSpan.name}>描述</Col>
+            <Col span={ColSpan.available}>可用</Col>
+            {this.props.type == 'install' ? (
+              <Col span={ColSpan.update}>可编辑</Col>
+            ) : null}
+            {this.props.type != 'columns' ? (
+              <Col span={ColSpan.bind}>关联模型</Col>
+            ) : null}
+          </Row>
+        </List.Item>
         {this.dataSource().map((item, index) => (
-          // <Sortable
-          //   type="Sortable"
-          //   key={item.key}
-          //   index={index}
-          //   moveCard={this.moveCard.bind(this)}
-          // >
+          <Source
+            type="Sortable"
+            key={item.key}
+            index={index}
+            moveCard={this.moveCard.bind(this)}
+          >
             <List.Item>
-              <Row
-                type="flex"
-                justify="center"
-                align="top"
-                gutter={gutter}
-                style={{ width: '100%' }}
-              >
+              <Row type="flex" align="top" gutter={gutter} style={{ width: '100%', paddingLeft: 10 }}>
+                <Col span={ColSpan.key}>
+                  {item.key}
+                </Col>
                 <Col span={ColSpan.name}>
-                  {item.description} （{item.key}）
+                  {item.description}
                 </Col>
                 <Col span={ColSpan.available}>
                   <Switch
@@ -148,7 +147,8 @@ any
                     }}
                     checkedChildren={<Icon type="check" />}
                     unCheckedChildren={<Icon type="cross" />}
-                    defaultChecked={item.attribute.available}
+                    // defaultChecked={item.attribute.available}
+                    checked={item.attribute.available}
                     disabled={
                       this.props.type == 'install' && !item.allowEmptyValue
                     }
@@ -171,9 +171,9 @@ any
                 ) : null}
               </Row>
             </List.Item>
-         
+          </Source>
         ))}
-      </>
+      </div>
     )
   }
 }

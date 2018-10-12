@@ -16,7 +16,7 @@ import Store from './store';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend'
 const TabPane = Tabs.TabPane;
-@DragDropContext(HTML5Backend)
+// @DragDropContext(HTML5Backend)
 export default class IApp extends React.Component<any, any> {
     componentDidMount() {
         Store.swaggerDoc.init();

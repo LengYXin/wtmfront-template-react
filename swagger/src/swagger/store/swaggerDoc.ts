@@ -16,14 +16,10 @@ class ObservableStore {
      * 构造
      */
     constructor() {
-        // notification.config({
-        //     duration: 2,
-        //     top: 60
-        // })
-        if (!PRODUCTION) {
-            // this.init();
-        }
+
     }
+    /** swagger 返回 数据 */
+    SwaggerDocJson = {};
     /**当前进度 */
     @observable StepsCurrent = 0;
     /**是否连接脚手架 */
@@ -53,7 +49,9 @@ class ObservableStore {
         // 公共接口
         common: [],
         // 模型列表
-        definitions: {}
+        definitions: {},
+        // 错误列表
+        error: []
     };
     /**
      * 公共接口
@@ -159,6 +157,7 @@ class ObservableStore {
             });
             return this.docData
         }
+        this.SwaggerDocJson = docs;
         let { tags, definitions, paths } = docs;
         let format = {
             // 模型控制器
@@ -166,11 +165,13 @@ class ObservableStore {
             // 公共控制器
             common: [],
             // 模型列表
-            definitions: { ...definitions }
+            definitions: { ...definitions },
+            error: []
         };
-        try {
-            // 分组所有 api 地址
-            lodash.forEach(paths, (value, key) => {
+
+        // 分组所有 api 地址
+        lodash.forEach(paths, (value, key) => {
+            try {
                 // 排除的控制器
                 if (wtmfront.excludeStandard.some(x => lodash.includes(key, x))) return
                 // const detail = lodash.find(value, (o) => o.tags && o.tags.length);
@@ -188,11 +189,20 @@ class ObservableStore {
                         path: value
                     });
                 } else {
+                    // 匹配当前接口是否符合 配置要求
                     standard = lodash.find(wtmfront.standard, (o) => {
                         // console.log(key, o.name);
                         return lodash.includes(key, o.name)
                     })
                     //  if(!standard)return;
+                }
+                // 解析出错 数据
+                if (typeof standard == "undefined") {
+                    format.error.push({
+                        key,
+                        value
+                    })
+                    return console.warn("匹配失败", key);
                 }
                 // 请求类型 统一小写
                 const typeKey = lodash.toLower(standard.type);
@@ -234,17 +244,18 @@ class ObservableStore {
                         format.tags.push(tag);
                     }
                 }
-            });
+            } catch (error) {
+                console.error(key, error);
+                notification['error']({
+                    message: `解析Swagger文档失败 Molde:${key}`,
+                    description: error.message,
+                });
+            }
+        });
 
-            format.tags = format.tags.filter(x => !lodash.isNil(x.paths))
-        } catch (error) {
-            console.log(error);
-            notification['error']({
-                message: '解析Swagger文档失败',
-                description: error.message,
-            });
-        }
-        // console.log(format)
+        format.tags = format.tags.filter(x => !lodash.isNil(x.paths))
+
+        console.log(format)
         return format;
     }
     /**

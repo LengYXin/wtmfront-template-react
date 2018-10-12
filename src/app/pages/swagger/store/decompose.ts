@@ -28,7 +28,7 @@ export default class ObservableStore {
         // edit: {},    //编辑字段
         install: [],    //添加字段
         update: [],    //修改字段
-        pageButtons: {
+        actions: {
             install: true,
             update: true,
             delete: true,
@@ -43,7 +43,7 @@ export default class ObservableStore {
     };
     /** 功能改变 */
     @action.bound changeButton(attr, flag: boolean) {
-        this.Model.pageButtons[attr] = flag
+        this.Model.actions[attr] = flag
         console.log(this.Model)
     }
     /** swaggerDoc */

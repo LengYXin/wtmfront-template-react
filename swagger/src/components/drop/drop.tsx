@@ -1,17 +1,18 @@
-import * as React from 'react'
-import { DropTarget, ConnectDropTarget, DropTargetMonitor } from 'react-dnd'
-
+/**
+ * @author 冷 (https://github.com/LengYXin)
+ * @email lengyingxin8966@gmail.com
+ * @create date 2018-10-12 22:22:52
+ * @modify date 2018-10-12 22:22:52
+ * @desc [description]
+*/
+import * as React from 'react';
+import { ConnectDropTarget, DropTarget, DropTargetMonitor } from 'react-dnd';
 const style: React.CSSProperties = {
-	height: '12rem',
-	width: '12rem',
-	marginRight: '1.5rem',
-	marginBottom: '1.5rem',
-	color: 'white',
 	padding: '1rem',
 	textAlign: 'center',
 	fontSize: '1rem',
 	lineHeight: 'normal',
-	float: 'left',
+	height: "100%"
 }
 
 const dustbinTarget = {
@@ -23,7 +24,6 @@ const dustbinTarget = {
 export interface DustbinProps {
 	accepts: string[]
 	canDrop?: boolean
-	lastDroppedItem?: any
 	isOver?: boolean
 	connectDropTarget?: ConnectDropTarget
 	onDrop: (item: any) => void
@@ -38,37 +38,30 @@ export interface DustbinProps {
 		canDrop: monitor.canDrop(),
 	}),
 )
-export default class Dustbin extends React.Component<DustbinProps> {
+export default class extends React.Component<DustbinProps> {
 	public render() {
 		const {
 			accepts,
 			isOver,
 			canDrop,
 			connectDropTarget,
-			lastDroppedItem,
 		} = this.props
 		const isActive = isOver && canDrop
 
-		let backgroundColor = '#222'
+		let backgroundColor = ''
 		if (isActive) {
-			backgroundColor = 'darkgreen'
+			backgroundColor = '#e6f7ff'
 		} else if (canDrop) {
-			backgroundColor = 'darkkhaki'
-		}
-
+			backgroundColor = '#e6e6e6'
+		} 
 		return (
 			connectDropTarget &&
 			connectDropTarget(
 				<div style={{ ...style, backgroundColor }}>
-					{isActive
-						? 'Release to drop'
-						: `This dustbin accepts: ${accepts.join(', ')}`}
-
-					{lastDroppedItem && (
-						<p>Last dropped: {JSON.stringify(lastDroppedItem)}</p>
-					)}
+					{this.props.children}
 				</div>,
 			)
 		)
 	}
 }
+

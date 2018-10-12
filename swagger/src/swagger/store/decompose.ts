@@ -11,6 +11,29 @@ import { action, toJS, observable } from 'mobx';
 import wtmfront from 'wtmfront.json';
 import update from 'immutability-helper';
 import swaggerDoc from './swaggerDoc';
+const initData: ISwaggerModel = {
+    key: null,
+    name: null,
+    componentName: null,
+    menuName: null,
+    description: null,
+    template: "default",
+    actions: {
+        install: true,
+        update: true,
+        delete: true,
+        import: true,
+        export: true
+    },
+    idKey: "id",    //唯一标识
+    address: null,    //地址控制器
+    columns: [],    //teble 列
+    search: [],     //搜索条件
+    // edit: {},    //编辑字段
+    install: [],    //添加字段
+    update: [],    //修改字段
+
+}
 class ObservableStore {
     /**
      * 构造
@@ -18,65 +41,107 @@ class ObservableStore {
     constructor() {
 
     }
-    ModelMap = new Map<string, any>();
-    @observable visible = false;
-    @observable Model: ISwaggerModel = {
-        idKey: "id",    //唯一标识
-        address: "",    //地址控制器
-        columns: [],    //teble 列
-        search: [],     //搜索条件
-        // edit: {},    //编辑字段
-        install: [],    //添加字段
-        update: [],    //修改字段
-        pageButtons: {
-            install: true,
-            update: true,
-            delete: true,
-            import: true,
-            export: true
-        }   //功能按钮
+    GUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+            let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
-    /** 选择的 tag */
-    @observable selectTag = {
-        description: "",
-        name: "",
-        paths: []
+    // 已解析模型
+    ModelMap = new Map<string, any>();
+    @observable ModelJSON = {};
+    @observable visible = {
+        ModelJSON: false
     };
+    /** 当前编辑模型 */
+    @observable Model: ISwaggerModel = lodash.cloneDeep(initData);
+    /** 就绪待生成模型 */
+    @observable readyModel: ISwaggerModel[] = [];
+    /** 选择的 tag  swagger 原始 格式数据*/
+    @observable selectTag = {
+        description: "",//备注
+        name: "",//控制器
+        paths: []//控制器下地址
+    };
+    /** json */
+    @action.bound
+    onShowModelJSON(value) {
+        console.info("ShowModelJSON", toJS(value));
+        this.ModelJSON = JSON.stringify(value, null, 4);
+        this.onVisible("ModelJSON", true);
+    }
     /** 功能改变 */
     @action.bound
     changeButton(attr, flag: boolean) {
-        this.Model.pageButtons[attr] = flag
-        console.log(this.Model)
+        this.Model.actions[attr] = flag
     }
+    /** 重置数据 模型 */
     @action.bound
     onReset() {
-        this.Model = {
-            idKey: "id",    //唯一标识
-            address: "",    //地址控制器
-            columns: [],    //teble 列
-            search: [],     //搜索条件
-            // edit: {},    //编辑字段
-            install: [],    //添加字段
-            update: [],    //修改字段
-            pageButtons: {
-                install: true,
-                update: true,
-                delete: true,
-                import: true,
-                export: true
-            }   //功能按钮
-        };
+        this.Model = lodash.cloneDeep(initData);
         this.selectTag = {
             description: "",
             name: "",
             paths: []
         };
     }
+    @action.bound
+    onSetModel(Model) {
+        this.Model = Model;
+    }
+    /** 保存模型 */
+    @action.bound
+    onSaveInfo(info) {
+        this.Model.componentName = info.componentName;
+        this.Model.template = info.template;
+        this.Model.menuName = info.menuName;
+    }
+    /** 清空 */
+    @action.bound
+    onEmpty() {
+        this.readyModel = [];
+    }
+    /** 删除 */
+    @action.bound
+    onDelete(index) {
+        this.readyModel.splice(index, 1);
+    }
+    /** 保存模型 */
+    @action.bound
+    onSave() {
+        let res = false;
+        if (lodash.isNil(this.Model.key)) {
+            const index = lodash.findIndex(this.readyModel, x => x.componentName == this.Model.componentName);
+            if (index == -1) {
+                res = true;
+                this.Model.key = this.GUID();
+                this.readyModel.push(this.Model);
+            } else {
+                notification.error({
+                    key: "decompose",
+                    message: `组件 ${this.Model.componentName} 已经存在`,
+                    description: '',
+                })
+            }
+        } else {
+            const index = lodash.findIndex(this.readyModel, x => x.key == this.Model.key);
+            this.readyModel.splice(index, 1, this.Model);
+            res = true;
+        }
+        if (res) {
+            notification.success({
+                key: "decompose",
+                message: `组件 ${this.Model.componentName} 已保存`,
+                description: '',
+            })
+            this.onReset();
+        }
+    }
     /** swaggerDoc */
     definitions = null;// toJS(this.swaggerDoc.docData.definitions);
     @action.bound
-    onVisible() {
-        this.visible = !this.visible;
+    onVisible(key: "ModelJSON", value = !this.visible[key]) {
+        this.visible[key] = value;
     }
     /**
      * 解析 tag
@@ -101,7 +166,9 @@ class ObservableStore {
         console.log("--------------------------", this);
         return this.Model;
     }
-    onTest(tag){
+    @action.bound
+    onAnalysisTag(tag) {
+        console.log(toJS(tag));
         if (!this.definitions) {
             this.definitions = toJS(swaggerDoc.docData.definitions);
         }
@@ -109,14 +176,17 @@ class ObservableStore {
         if (this.ModelMap.has(selectTag.name)) {
             this.Model = this.ModelMap.get(selectTag.name);
         } else {
+            this.Model = lodash.cloneDeep(initData);
             this.analysisAddress();
             this.analysisColumns();
             this.analysisSearch();
             this.analysisEdit();
+            this.Model.name = this.selectTag.name;
+            this.Model.description = this.selectTag.description;
             this.ModelMap.set(selectTag.name, toJS(this.Model));
         }
         // console.timeEnd();
-        console.log("--------------------------", this);
+        console.log("--------------------------", toJS(this.Model));
         return this.Model;
     }
     /**
@@ -186,6 +256,7 @@ class ObservableStore {
                 definitions = this.definitions[key];
             } catch (error) {
                 notification['error']({
+                    key: "decompose",
                     message: '无法获取列表数据结构  解析失败',
                     description: '',
                 });

@@ -14,9 +14,10 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { notification } from 'antd';
 import Swagger from './swagger';
+import "./style.less";
 notification.config({
   duration: 3,
-  top: 60
+  top: 60 
 });
 ReactDOM.render(<Swagger />,
   document.getElementById('root'));

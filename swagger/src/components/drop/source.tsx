@@ -62,17 +62,21 @@ const cardTarget = {
 
 export interface CardProps {
     index: number
+    type: string
     isDragging?: boolean
     connectDragSource?: ConnectDragSource
     connectDropTarget?: ConnectDropTarget
     moveCard: (dragIndex: number, hoverIndex: number) => void
 }
 
-@DropTarget("Sortable", cardTarget, (connect: DropTargetConnector) => ({
-    connectDropTarget: connect.dropTarget(),
-}))
+@DropTarget(
+    (props: CardProps) => props.type,
+    cardTarget, (connect: DropTargetConnector) => ({
+        connectDropTarget: connect.dropTarget(),
+    })
+)
 @DragSource(
-    "Sortable",
+    (props: CardProps) => props.type,
     cardSource,
     (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
         connectDragSource: connect.dragSource(),
@@ -86,7 +90,7 @@ export default class Card extends React.Component<CardProps> {
             connectDragSource,
             connectDropTarget,
         } = this.props
-        const opacity = isDragging ? 0 : 1
+        const opacity = isDragging ? 0.6 : 1
 
         return (
             connectDragSource &&

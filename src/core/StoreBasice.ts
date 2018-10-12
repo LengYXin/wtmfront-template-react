@@ -27,7 +27,7 @@ export default class Store extends SwaggerModel {
   /** 日期时间格式 */
   dateTimeFormat = 'YYYY-MM-DD HH:mm:ss'
   /** 按钮功能 */
-  pageButtons: IPageButton = {
+  pageButtons: IActions = {
     install: true,
     update: true,
     delete: true,
