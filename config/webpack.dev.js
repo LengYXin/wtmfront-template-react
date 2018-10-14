@@ -5,7 +5,7 @@ const basicConfig = require("./basics.confit");
 class test {
     apply(compiler) {
         // console.log("----------------------------", compiler);
-        console.log("----------------------------", compiler);
+        // console.log("----------------------------", compiler);
         compiler.plugin('done', (stats) => {
            
         });
