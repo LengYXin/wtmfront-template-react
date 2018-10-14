@@ -7,14 +7,12 @@
 */
 import { Tabs } from 'antd';
 import * as React from 'react';
-// import Create from './components/create';
-import Create from './create/index';
 import Info from './components/info';
 import List from './components/list';
-import "./style.less";
+// import Create from './components/create';
+import Create from './create/index';
 import Store from './store';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend'
+import "./style.less";
 const TabPane = Tabs.TabPane;
 // @DragDropContext(HTML5Backend)
 export default class IApp extends React.Component<any, any> {

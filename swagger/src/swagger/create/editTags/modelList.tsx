@@ -13,11 +13,12 @@ import Source from '../../../components/drop/source';
 import Store from '../../store';
 const { swaggerDoc, decompose } = Store
 const ColSpan = {
-  key: 6,
-  name: 6,
+  key: 5,
+  name: 5,
+  type: 6,
   available: 2,
   update: 2,
-  bind: 5
+  bind: 2
 }
 
 let gutter = 14
@@ -116,12 +117,13 @@ any
           <Row type="flex" align="top" gutter={gutter} style={{ width: '100%', paddingLeft: 10 }}>
             <Col span={ColSpan.key}>Key</Col>
             <Col span={ColSpan.name}>描述</Col>
-            <Col span={ColSpan.available}>可用</Col>
-            {this.props.type == 'install' ? (
-              <Col span={ColSpan.update}>可编辑</Col>
-            ) : null}
+            <Col span={ColSpan.type}>数据类型</Col>
+            <Col span={ColSpan.available}>启用</Col>
+            {/* {this.props.type == 'install' ? (
+              <Col span={ColSpan.update}>编辑</Col>
+            ) : null} */}
             {this.props.type != 'columns' ? (
-              <Col span={ColSpan.bind}>关联模型</Col>
+              <Col span={ColSpan.bind}>编辑属性</Col>
             ) : null}
           </Row>
         </List.Item>
@@ -140,6 +142,9 @@ any
                 <Col span={ColSpan.name}>
                   {item.description}
                 </Col>
+                <Col span={ColSpan.type}>
+                  {item.type} | {item.format}
+                </Col>
                 <Col span={ColSpan.available}>
                   <Switch
                     onChange={e => {
@@ -154,7 +159,7 @@ any
                     }
                   />
                 </Col>
-                {this.props.type == 'install' ? (
+                {/* {this.props.type == 'install' ? (
                   <Col span={ColSpan.update}>
                     <Switch
                       onChange={e => {
@@ -165,7 +170,7 @@ any
                       defaultChecked={item.attribute.update}
                     />
                   </Col>
-                ) : null}
+                ) : null} */}
                 {this.props.type != 'columns' ? (
                   <Col span={ColSpan.bind}>{this.renderExample(item)}</Col>
                 ) : null}

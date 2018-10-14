@@ -28,8 +28,8 @@ export default class App extends React.Component<any, any> {
                 title="绑定模型"
                 destroyOnClose={true}
                 closable={false}
-                onClose={() => decompose.onVisible()}
-                visible={decompose.visible}
+                onClose={() => decompose.onVisible("ModelJSON")}
+                visible={decompose.visible.ModelJSON}
             >
                 <Row type="flex" justify="center" align="middle">
                     <Col span={3} style={{ height: 32, lineHeight: "32px" }} >选择接口：</Col>
@@ -117,11 +117,11 @@ export default class App extends React.Component<any, any> {
                         style={{
                             marginRight: 8,
                         }}
-                        onClick={() => decompose.onVisible()}
+                        onClick={() => decompose.onVisible("ModelJSON")}
                     >
                         Cancel
             </Button>
-                    <Button onClick={() => decompose.onVisible()} type="primary">Submit</Button>
+                    <Button onClick={() => decompose.onVisible("ModelJSON")} type="primary">Submit</Button>
                 </div>
             </Drawer>
         );

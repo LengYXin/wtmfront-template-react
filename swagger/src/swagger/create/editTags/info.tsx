@@ -58,6 +58,13 @@ class App extends React.Component<any, any> {
                         <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="菜单名称" />
                     )}
                 </FormItem>
+                <FormItem label="菜单Icon" extra="菜单图标">
+                    {getFieldDecorator('icon', {
+                        initialValue: Model.icon || 'menu-fold',
+                    })(
+                        <Input prefix={<Icon type={Model.icon || 'menu-fold'} style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="菜单Icon" />
+                    )}
+                </FormItem>
                 <FormItem label="模板" extra="渲染模板（自定义模板）">
                     {getFieldDecorator('template', {
                         initialValue: Model.template,

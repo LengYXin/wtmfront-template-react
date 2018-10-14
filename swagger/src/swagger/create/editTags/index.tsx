@@ -47,6 +47,7 @@ class ModelBody extends React.Component<any, any> {
   onSave() {
     this.infoForm.validateFields((err, values) => {
       if (!err) {
+        console.log(values);
         values.menuName = values.menuName || values.componentName;
         decompose.onSaveInfo(values);
         decompose.onSave()

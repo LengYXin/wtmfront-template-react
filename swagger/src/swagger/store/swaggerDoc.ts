@@ -98,7 +98,7 @@ class ObservableStore {
      * @param param 
      */
     async create(param?) {
-        const data = await Http.post("/server/create", { ...this.createParam, ...param }).map(this.map).toPromise();
+        const data = await Http.post("/server/create", param).map(this.map).toPromise();
         if (data) {
             decompose.onReset();
             this.StepsCurrent = 0;

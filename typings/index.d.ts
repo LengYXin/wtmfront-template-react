@@ -26,6 +26,8 @@ interface ISwaggerModel {
     description?: string;
     /** 组件名称 编辑输入 */
     componentName?: string;
+    /** 组件icon */
+    icon?: string;
     /** 菜单名称 */
     menuName?: string;
     /** 模板 */

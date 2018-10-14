@@ -57,7 +57,7 @@ any
             {item.example.combo}
           </span>
           <Divider type="vertical" />
-          <Button icon="edit" onClick={() => decompose.onVisible()} />
+          <Button icon="edit" onClick={() => decompose.onVisible("ModelJSON")} />
         </>
       )
     }

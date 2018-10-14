@@ -16,6 +16,7 @@ const initData: ISwaggerModel = {
     name: null,
     componentName: null,
     menuName: null,
+    icon: null,
     description: null,
     template: "default",
     actions: {
@@ -95,6 +96,7 @@ class ObservableStore {
         this.Model.componentName = info.componentName;
         this.Model.template = info.template;
         this.Model.menuName = info.menuName;
+        this.Model.icon = info.icon;
     }
     /** 清空 */
     @action.bound

@@ -28,7 +28,9 @@ export default class IApp extends React.Component<any, any> {
               <Icon type="delete" theme="outlined" style={{ cursor: "pointer" }} title="清空" />
             </Popconfirm>
           </div>
-          <Button disabled={length <= 0} block onClick={() => { }} icon="save">生成组件</Button>
+          <Button disabled={length <= 0} block onClick={() => {
+            swaggerDoc.create(decompose.readyModel)
+          }} icon="save">生成组件</Button>
         </ div>}
         // footer={<div>
 
