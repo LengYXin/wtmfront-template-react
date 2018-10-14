@@ -27,33 +27,6 @@
                     "Children": []
                 }
             ]
-        },
-        {
-            "Key": "7f60ae82-4062-4a42-a201-98f2be75d294",
-            "Name": "test",
-            "Icon": "menu-fold",
-            "Path": "/test",
-            "Component": "test",
-            "Action": [],
-            "Children": []
-        },
-        {
-            "Key": "e0c5b751-15d2-495c-9547-75df09ba781e",
-            "Name": "test",
-            "Icon": "menu-fold",
-            "Path": "/testa",
-            "Component": "testa",
-            "Action": [],
-            "Children": []
-        },
-        {
-            "Key": "6c9f2836-31da-4dd1-9c11-d4d6033767ca",
-            "Name": "test",
-            "Icon": "menu-fold",
-            "Path": "/testaa",
-            "Component": "testaa",
-            "Action": [],
-            "Children": []
         }
     ]
 }
