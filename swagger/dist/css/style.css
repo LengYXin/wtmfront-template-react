@@ -1,3 +1,69 @@
+.swagger-create {
+  margin-top: 10px;
+  min-height: 50vh;
+}
+.swagger-create .swagger-create-SourceTags .ant-tabs {
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+}
+.swagger-create .swagger-create-SourceTags .ant-list-bordered {
+  border: none;
+}
+.swagger-create .swagger-create-SourceTags > div {
+  height: 100%;
+}
+.swagger-create .swagger-create-EditTags > div {
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  height: 100%;
+  color: #000;
+}
+.swagger-create .swagger-create-ReadyTags > div {
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  height: 100%;
+}
+.swagger-create [draggable] {
+  border: 1px dashed gray;
+  cursor: move;
+  opacity: 1;
+  margin-bottom: 5px;
+}
+.swagger-create [draggable]:first-child {
+  margin-top: 5px;
+}
+.swagger-create .ant-spin-container {
+  padding: 0 5px;
+}
+.swagger-create .ant-list-item-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 5px;
+}
+.swagger-create .ant-list-bordered .ant-list-item {
+  padding: 10px;
+}
+.swagger-create .ant-list-item-action {
+  margin: 0;
+}
+pre > code {
+  -moz-osx-font-smoothing: initial;
+  -webkit-font-smoothing: initial;
+  background-color: #f8f8f8;
+  border-radius: 2px;
+  color: #525252;
+  display: block;
+  font-family: Roboto Mono, Monaco, courier, monospace;
+  font-size: 0.8rem;
+  line-height: inherit;
+  margin: 0 2px;
+  max-width: inherit;
+  overflow: inherit;
+  padding: 2.2em 5px;
+  white-space: inherit;
+}
+
 .sam-container-manage {
   height: 100vh;
   padding: 20px;
@@ -31,14 +97,185 @@
   border-radius: 100%;
 }
 
-.drag-btn {
-  font-family: PingFangSC;
-  position: fixed;
-  z-index: 999;
-  bottom: 30px;
-  right: 23px;
-  width: 57px;
-  height: 57px;
+body {
+  background-color: #f0f2f5;
+}
+#root {
+  background-image: url(/assets/svg/background.svg);
+  background-repeat: no-repeat;
+  background-position: center 110px;
+  background-size: 100%;
+}
+#root .app-loadable-loading {
+  height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+     -moz-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+     -moz-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#root .app-loadable-loading > div {
+  width: 200px;
+  height: 200px;
+  background-image: url(/assets/svg/loading.svg);
+  background-repeat: no-repeat;
+  background-position: center ;
+  background-size: 100%;
+}
+::-webkit-scrollbar-track-piece {
+  width: 6px;
+  background-color: #bfbfbf;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7b7b7b;
+  cursor: pointer;
+}
+/* 过度动画 */
+.fade-enter {
+  opacity: 0;
+  -webkit-animation-duration: 0.2s;
+     -moz-animation-duration: 0.2s;
+          animation-duration: 0.2s;
+  -webkit-animation-fill-mode: both;
+     -moz-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+     -moz-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+          animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  -webkit-animation-play-state: paused;
+     -moz-animation-play-state: paused;
+          animation-play-state: paused;
+}
+.fade-appear {
+  opacity: 0;
+  -webkit-animation-duration: 0.2s;
+     -moz-animation-duration: 0.2s;
+          animation-duration: 0.2s;
+  -webkit-animation-fill-mode: both;
+     -moz-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+     -moz-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+          animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  -webkit-animation-play-state: paused;
+     -moz-animation-play-state: paused;
+          animation-play-state: paused;
+}
+.fade-leave {
+  -webkit-animation-duration: 0.2s;
+     -moz-animation-duration: 0.2s;
+          animation-duration: 0.2s;
+  -webkit-animation-fill-mode: both;
+     -moz-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+     -moz-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+          animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  -webkit-animation-play-state: paused;
+     -moz-animation-play-state: paused;
+          animation-play-state: paused;
+}
+.fade-enter.fade-enter-active {
+  -webkit-animation-name: fadeIn;
+     -moz-animation-name: fadeIn;
+          animation-name: fadeIn;
+  -webkit-animation-play-state: running;
+     -moz-animation-play-state: running;
+          animation-play-state: running;
+}
+.fade-appear.fade-appear-active {
+  -webkit-animation-name: fadeIn;
+     -moz-animation-name: fadeIn;
+          animation-name: fadeIn;
+  -webkit-animation-play-state: running;
+     -moz-animation-play-state: running;
+          animation-play-state: running;
+}
+.fade-leave.fade-leave-active {
+  -webkit-animation-name: fadeOut;
+     -moz-animation-name: fadeOut;
+          animation-name: fadeOut;
+  -webkit-animation-play-state: running;
+     -moz-animation-play-state: running;
+          animation-play-state: running;
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.ant-table .react-resizable {
+  position: relative;
+}
+.ant-table .react-resizable-handle {
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  bottom: 0;
+  right: -5px;
+  cursor: col-resize;
 }
 
 

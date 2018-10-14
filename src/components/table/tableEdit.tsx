@@ -32,15 +32,15 @@ export default class TableEditComponent extends React.Component<{ Store: Store }
    */
   renderButtons(): JSX.Element | JSX.Element[] {
     const button = [];
-    const { pageButtons, selectedRowKeys } = this.Store;
+    const { Actions, selectedRowKeys } = this.Store;
     const deletelength = selectedRowKeys.length;
-    if (pageButtons.install) {
+    if (Actions.install) {
       button.push(<Button icon="folder-add" onClick={this.Store.onModalShow.bind(this.Store, {})}>添加</Button>)
     }
-    if (pageButtons.import) {
+    if (Actions.import) {
       button.push(<Button icon="cloud-download" onClick={() => { this.Store.onPageState("visiblePort", true) }}>  导入 / 导出 </Button>)
     }
-    if (pageButtons.delete) {
+    if (Actions.delete) {
       button.push(
         <Popconfirm placement="right" title={`Sure to delete ? length : (${deletelength}) `} onConfirm={this.onDelete.bind(this)} okText="Yes" cancelText="No">
           <Button icon="delete" disabled={deletelength < 1}>

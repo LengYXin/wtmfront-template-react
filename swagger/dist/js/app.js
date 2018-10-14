@@ -433,10 +433,21 @@ webpackContext.id = "../node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "../src/components/dragBtn/index.tsx":
-/*!*******************************************!*\
-  !*** ../src/components/dragBtn/index.tsx ***!
-  \*******************************************/
+/***/ "../wtmfront.json":
+/*!************************!*\
+  !*** ../wtmfront.json ***!
+  \************************/
+/*! exports provided: type, frame, registerHelper, template, subMenu, containers, api, swaggerDoc, standard, publicStandard, excludeStandard, default */
+/***/ (function(module) {
+
+module.exports = {"type":"typescript","frame":"react","registerHelper":"wtmfront/registerHelper","template":"wtmfront/template","subMenu":"src/app/subMenu.json","containers":"src/containers","api":"http://10.99.246.52:8010","swaggerDoc":"http://localhost:8765/api-docs","standard":{"search":{"name":"search","type":"Post"},"details":{"name":"get/{id}","type":"Get"},"install":{"name":"add","type":"Post"},"update":{"name":"edit","type":"Post"},"delete":{"name":"delete","type":"Post"},"import":{"name":"import","type":"Post"},"export":{"name":"export","type":"Post"},"template":{"name":"template","type":"Post"}},"publicStandard":["common"],"excludeStandard":["rabbitmq"]};
+
+/***/ }),
+
+/***/ "./src/components/drop/drag.tsx":
+/*!**************************************!*\
+  !*** ./src/components/drop/drag.tsx ***!
+  \**************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -444,13 +455,8 @@ webpackContext.id = "../node_modules/moment/locale sync recursive ^\\.\\/.*$";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "../node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var rc_animate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rc-animate */ "../node_modules/rc-animate/es/Animate.js");
-/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.less */ "../src/components/dragBtn/style.less");
-/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_less__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_dnd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dnd */ "../node_modules/react-dnd/lib/index.js");
+/* harmony import */ var react_dnd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dnd__WEBPACK_IMPORTED_MODULE_1__);
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -464,128 +470,172 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 /**
  * @author 冷 (https://github.com/LengYXin)
  * @email lengyingxin8966@gmail.com
- * @create date 2018-09-12 18:54:27
- * @modify date 2018-09-12 18:54:27
+ * @create date 2018-10-12 22:22:47
+ * @modify date 2018-10-12 22:22:47
  * @desc [description]
 */
 
 
-
-
-
-var DragBtn = /** @class */ (function (_super) {
-    __extends(DragBtn, _super);
-    function DragBtn() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {
-            // 防止首次渲染 定位到 坐标 0，0
-            renStyle: false,
-            style: { left: 0, top: 0 }
+var style = {
+    border: '1px dashed gray',
+    cursor: 'move',
+};
+var boxSource = {
+    beginDrag: function (props) {
+        return {
+            model: props.model,
+            type: props.type
         };
-        _this.scrollY = 0;
-        return _this;
+    },
+};
+var default_1 = /** @class */ (function (_super) {
+    __extends(default_1, _super);
+    function default_1() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    DragBtn.prototype.componentDidMount = function () {
-        // 提取 保存的位置或者 默认位置信息 
-        var style = (localStorage.getItem("dragBtnStyle") && JSON.parse(localStorage.getItem("dragBtnStyle"))) || { left: this.btnDom.offsetLeft, top: this.btnDom.offsetTop };
-        this.setState({
-            renStyle: true,
-            style: style
-        });
-    };
-    // 点击事件
-    DragBtn.prototype.onClick = function () {
-    };
-    // 点击
-    DragBtn.prototype.onTouchStart = function (e) {
-        e.stopPropagation();
-        var touche = this.toucheStart = e.touches[0];
-        // this.scrollY = window.scrollY;
-        // document.body.style.overflow = "hidden";
-        // document.body.style.position = "fixed";
-        // document.body.style.top = -this.scrollY + "px";
-    };
-    // 移动
-    DragBtn.prototype.onTouchMove = function (e) {
-        e.stopPropagation();
-        var touche = this.toucheMove = e.touches[0];
-        var clientX = this.toucheStart.clientX - touche.clientX;
-        var clientY = this.toucheStart.clientY - touche.clientY;
-        this.btnDom.style.transform = "translate(" + -clientX + "px," + -clientY + "px)";
-    };
-    // 停止
-    DragBtn.prototype.onTouchEnd = function (e) {
-        var _this = this;
-        e.stopPropagation();
-        if (!this.toucheMove) {
-            this.props.Team.home.updateAddButtonOnTouchEnd();
-            document.body.removeAttribute("style");
-            window.scrollTo(0, this.scrollY);
-            return;
+    default_1.prototype.render = function () {
+        var _a = this.props, model = _a.model, isDropped = _a.isDropped, isDragging = _a.isDragging, connectDragSource = _a.connectDragSource;
+        var opacity = isDragging ? 0.8 : 1;
+        var backgroundColor = '';
+        if (isDragging) {
+            backgroundColor = '#e6f7ff';
         }
-        // 最大 移动范围
-        var offsetHeight = document.body.offsetHeight - 57;
-        var offsetWidth = document.body.offsetWidth - 57;
-        var clientX = this.toucheStart.clientX - this.toucheMove.clientX;
-        var clientY = this.toucheStart.clientY - this.toucheMove.clientY;
-        var left = this.state.style.left - clientX;
-        var top = this.state.style.top - clientY;
-        //  判断 是否移除屏幕 移除 回位
-        if (left <= 0) {
-            left = 0;
-        }
-        if (left >= offsetWidth) {
-            left = offsetWidth;
-        }
-        if (top <= 0) {
-            top = 0;
-        }
-        if (top >= offsetHeight) {
-            top = offsetHeight;
-        }
-        this.setState({
-            style: { left: left, top: top }
-        }, function () {
-            //  保存位置信息
-            localStorage.setItem("AddButtonStyle", JSON.stringify(_this.state.style));
-            _this.toucheMove = null;
-            _this.toucheStart = null;
-        });
-        this.btnDom.style.transform = "";
-        document.body.removeAttribute("style");
-        // window.scrollTo(0, this.scrollY);
+        return (connectDragSource &&
+            connectDragSource(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { style: __assign({}, style, { opacity: opacity, backgroundColor: backgroundColor }) }, this.props.children)));
     };
-    DragBtn.prototype.render = function () {
-        var _this = this;
-        return react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.createPortal(react__WEBPACK_IMPORTED_MODULE_0__["createElement"](rc_animate__WEBPACK_IMPORTED_MODULE_3__["default"], { transitionName: "fade", transitionAppear: true, component: "" },
-            react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null,
-                react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { className: "drag-btn", onTouchStart: this.onTouchStart.bind(this), onTouchMove: this.onTouchMove.bind(this), onTouchEnd: this.onTouchEnd.bind(this), ref: function (e) { return _this.btnDom = e; } }, this.props.children))), document.body);
-    };
-    return DragBtn;
+    default_1 = __decorate([
+        Object(react_dnd__WEBPACK_IMPORTED_MODULE_1__["DragSource"])(function (props) { return props.type; }, boxSource, function (connect, monitor) { return ({
+            connectDragSource: connect.dragSource(),
+            isDragging: monitor.isDragging(),
+        }); })
+    ], default_1);
+    return default_1;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]));
-/* harmony default export */ __webpack_exports__["default"] = (DragBtn);
+/* harmony default export */ __webpack_exports__["default"] = (default_1);
 
 
 /***/ }),
 
-/***/ "../src/components/dragBtn/style.less":
-/*!********************************************!*\
-  !*** ../src/components/dragBtn/style.less ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/components/drop/drop.tsx":
+/*!**************************************!*\
+  !*** ./src/components/drop/drop.tsx ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// extracted by mini-css-extract-plugin
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dnd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dnd */ "../node_modules/react-dnd/lib/index.js");
+/* harmony import */ var react_dnd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dnd__WEBPACK_IMPORTED_MODULE_1__);
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+/**
+ * @author 冷 (https://github.com/LengYXin)
+ * @email lengyingxin8966@gmail.com
+ * @create date 2018-10-12 22:22:52
+ * @modify date 2018-10-12 22:22:52
+ * @desc [description]
+*/
+
+
+var style = {
+    padding: '1rem',
+    textAlign: 'center',
+    fontSize: '1rem',
+    lineHeight: 'normal',
+    height: "100%"
+};
+var dustbinTarget = {
+    drop: function (props, monitor) {
+        props.onDrop(monitor.getItem());
+    },
+};
+var default_1 = /** @class */ (function (_super) {
+    __extends(default_1, _super);
+    function default_1() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    default_1.prototype.render = function () {
+        var _a = this.props, accepts = _a.accepts, isOver = _a.isOver, canDrop = _a.canDrop, connectDropTarget = _a.connectDropTarget;
+        var isActive = isOver && canDrop;
+        var backgroundColor = '';
+        if (isActive) {
+            backgroundColor = '#e6f7ff';
+        }
+        else if (canDrop) {
+            backgroundColor = '#e6e6e6';
+        }
+        return (connectDropTarget &&
+            connectDropTarget(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { style: __assign({}, style, { backgroundColor: backgroundColor }) }, this.props.children)));
+    };
+    default_1 = __decorate([
+        Object(react_dnd__WEBPACK_IMPORTED_MODULE_1__["DropTarget"])(function (props) { return props.accepts; }, dustbinTarget, function (connect, monitor) { return ({
+            connectDropTarget: connect.dropTarget(),
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }); })
+    ], default_1);
+    return default_1;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (default_1);
+
 
 /***/ }),
 
-/***/ "../src/components/sortable/index.tsx":
-/*!********************************************!*\
-  !*** ../src/components/sortable/index.tsx ***!
-  \********************************************/
+/***/ "./src/components/drop/source.tsx":
+/*!****************************************!*\
+  !*** ./src/components/drop/source.tsx ***!
+  \****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -682,16 +732,16 @@ var Card = /** @class */ (function (_super) {
     }
     Card.prototype.render = function () {
         var _a = this.props, isDragging = _a.isDragging, connectDragSource = _a.connectDragSource, connectDropTarget = _a.connectDropTarget;
-        var opacity = isDragging ? 0 : 1;
+        var opacity = isDragging ? 0.6 : 1;
         return (connectDragSource &&
             connectDropTarget &&
             connectDragSource(connectDropTarget(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { style: __assign({}, style, { opacity: opacity }) }, this.props.children))));
     };
     Card = __decorate([
-        Object(react_dnd__WEBPACK_IMPORTED_MODULE_2__["DropTarget"])("Sortable", cardTarget, function (connect) { return ({
+        Object(react_dnd__WEBPACK_IMPORTED_MODULE_2__["DropTarget"])(function (props) { return props.type; }, cardTarget, function (connect) { return ({
             connectDropTarget: connect.dropTarget(),
         }); }),
-        Object(react_dnd__WEBPACK_IMPORTED_MODULE_2__["DragSource"])("Sortable", cardSource, function (connect, monitor) { return ({
+        Object(react_dnd__WEBPACK_IMPORTED_MODULE_2__["DragSource"])(function (props) { return props.type; }, cardSource, function (connect, monitor) { return ({
             connectDragSource: connect.dragSource(),
             isDragging: monitor.isDragging(),
         }); })
@@ -700,17 +750,6 @@ var Card = /** @class */ (function (_super) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]));
 /* harmony default export */ __webpack_exports__["default"] = (Card);
 
-
-/***/ }),
-
-/***/ "../wtmfront.json":
-/*!************************!*\
-  !*** ../wtmfront.json ***!
-  \************************/
-/*! exports provided: type, frame, registerHelper, template, subMenu, containers, api, swaggerDoc, standard, publicStandard, excludeStandard, default */
-/***/ (function(module) {
-
-module.exports = {"type":"typescript","frame":"react","registerHelper":"wtmfront/registerHelper","template":"wtmfront/template","subMenu":"src/app/subMenu.json","containers":"src/containers","api":"http://10.99.246.52:8010","swaggerDoc":"http://localhost:8765/api-docs","standard":{"search":{"name":"search","type":"Post"},"details":{"name":"get/{id}","type":"Get"},"install":{"name":"add","type":"Post"},"update":{"name":"edit","type":"Post"},"delete":{"name":"delete","type":"Post"},"import":{"name":"import","type":"Post"},"export":{"name":"export","type":"Post"},"template":{"name":"template","type":"Post"}},"publicStandard":["common"],"excludeStandard":["rabbitmq"]};
 
 /***/ }),
 
@@ -732,6 +771,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var antd_lib_notification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/notification */ "../node_modules/antd/lib/notification/index.js");
 /* harmony import */ var antd_lib_notification__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_notification__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _swagger__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./swagger */ "./src/swagger/index.tsx");
+/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.less */ "./src/style.less");
+/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_less__WEBPACK_IMPORTED_MODULE_5__);
 /**
  * @author 冷 (https://github.com/LengYXin)
  * @email lengyingxin8966@gmail.com
@@ -748,6 +789,7 @@ __webpack_require__(/*! nprogress/nprogress.css */ "../node_modules/nprogress/np
 
 
 
+
 antd_lib_notification__WEBPACK_IMPORTED_MODULE_3___default.a.config({
     duration: 3,
     top: 60
@@ -757,792 +799,14 @@ react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_
 
 /***/ }),
 
-/***/ "./src/swagger/components/create.tsx":
-/*!*******************************************!*\
-  !*** ./src/swagger/components/create.tsx ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var ant_design_pro_lib_Result__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ant-design-pro/lib/Result */ "../node_modules/ant-design-pro/lib/Result/index.js");
-/* harmony import */ var ant_design_pro_lib_Result__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(ant_design_pro_lib_Result__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var antd_lib_steps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/steps */ "../node_modules/antd/lib/steps/index.js");
-/* harmony import */ var antd_lib_steps__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_steps__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store */ "./src/swagger/store/index.ts");
-/* harmony import */ var _create_createModel__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./create/createModel */ "./src/swagger/components/create/createModel.tsx");
-/* harmony import */ var _create_createName__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./create/createName */ "./src/swagger/components/create/createName.tsx");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-/**
- * @author 冷 (https://github.com/LengYXin)
- * @email lengyingxin8966@gmail.com
- * @create date 2018-09-10 05:09:15
- * @modify date 2018-09-10 05:09:15
- * @desc [description]
-*/
-
-
-
-
-
-
-
-
-var Step = antd_lib_steps__WEBPACK_IMPORTED_MODULE_2___default.a.Step;
-var App = /** @class */ (function (_super) {
-    __extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (react__WEBPACK_IMPORTED_MODULE_4__["createElement"](react__WEBPACK_IMPORTED_MODULE_4__["Fragment"], null,
-            react__WEBPACK_IMPORTED_MODULE_4__["createElement"](StepsComponent, null),
-            react__WEBPACK_IMPORTED_MODULE_4__["createElement"](ContentComponent, null)));
-    };
-    return App;
-}(react__WEBPACK_IMPORTED_MODULE_4__["Component"]));
-/* harmony default export */ __webpack_exports__["default"] = (App);
-var StepsComponent = /** @class */ (function (_super) {
-    __extends(StepsComponent, _super);
-    function StepsComponent() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.steps = [{
-                title: 'Name',
-            }, {
-                title: 'Model',
-            }, {
-                title: 'Success',
-            }];
-        return _this;
-    }
-    StepsComponent.prototype.render = function () {
-        var StepsCurrent = this.props.swaggerDoc.StepsCurrent;
-        return (react__WEBPACK_IMPORTED_MODULE_4__["createElement"](antd_lib_steps__WEBPACK_IMPORTED_MODULE_2___default.a, { current: StepsCurrent }, this.steps.map(function (item) { return react__WEBPACK_IMPORTED_MODULE_4__["createElement"](Step, { key: item.title, title: item.title }); })));
-    };
-    StepsComponent = __decorate([
-        Object(mobx_react__WEBPACK_IMPORTED_MODULE_3__["inject"])(function () { return _store__WEBPACK_IMPORTED_MODULE_5__["default"]; }),
-        mobx_react__WEBPACK_IMPORTED_MODULE_3__["observer"]
-    ], StepsComponent);
-    return StepsComponent;
-}(react__WEBPACK_IMPORTED_MODULE_4__["Component"]));
-var ContentComponent = /** @class */ (function (_super) {
-    __extends(ContentComponent, _super);
-    function ContentComponent() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ContentComponent.prototype.next = function () {
-        this.props.swaggerDoc.updateStepsCurrent(1);
-    };
-    ContentComponent.prototype.prev = function () {
-        this.props.swaggerDoc.updateStepsCurrent(-2);
-    };
-    ContentComponent.prototype.render = function () {
-        var StepsCurrent = this.props.swaggerDoc.StepsCurrent;
-        switch (StepsCurrent) {
-            case 0:
-                return (react__WEBPACK_IMPORTED_MODULE_4__["createElement"](_create_createName__WEBPACK_IMPORTED_MODULE_7__["default"], null));
-                break;
-            case 1:
-                return (react__WEBPACK_IMPORTED_MODULE_4__["createElement"](_create_createModel__WEBPACK_IMPORTED_MODULE_6__["default"], null));
-                break;
-            case 2:
-                return (react__WEBPACK_IMPORTED_MODULE_4__["createElement"](ant_design_pro_lib_Result__WEBPACK_IMPORTED_MODULE_0___default.a, { type: _store__WEBPACK_IMPORTED_MODULE_5__["default"].swaggerDoc.createState ? "success" : "error", title: _store__WEBPACK_IMPORTED_MODULE_5__["default"].swaggerDoc.createState ? "提交成功" : "提交失败", description: "\u7EC4\u4EF6\u521B\u5EFA\u6210\u529F\uFF0C\u7B49\u5F85\u7F16\u8BD1~\u3002", 
-                    // extra={extra}
-                    actions: react__WEBPACK_IMPORTED_MODULE_4__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_1___default.a, { type: "primary", onClick: this.prev.bind(this) }, "\u7EE7\u7EED\u6DFB\u52A0") }));
-                break;
-        }
-    };
-    ContentComponent = __decorate([
-        Object(mobx_react__WEBPACK_IMPORTED_MODULE_3__["inject"])(function () { return _store__WEBPACK_IMPORTED_MODULE_5__["default"]; }),
-        mobx_react__WEBPACK_IMPORTED_MODULE_3__["observer"]
-    ], ContentComponent);
-    return ContentComponent;
-}(react__WEBPACK_IMPORTED_MODULE_4__["Component"]));
-
-
-/***/ }),
-
-/***/ "./src/swagger/components/create/components/bindModel.tsx":
-/*!****************************************************************!*\
-  !*** ./src/swagger/components/create/components/bindModel.tsx ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/col */ "../node_modules/antd/lib/col/index.js");
-/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_col__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var antd_lib_drawer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/drawer */ "../node_modules/antd/lib/drawer/index.js");
-/* harmony import */ var antd_lib_drawer__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_drawer__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/list */ "../node_modules/antd/lib/list/index.js");
-/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_list__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var antd_lib_radio__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! antd/lib/radio */ "../node_modules/antd/lib/radio/index.js");
-/* harmony import */ var antd_lib_radio__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(antd_lib_radio__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! antd/lib/row */ "../node_modules/antd/lib/row/index.js");
-/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(antd_lib_row__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var antd_lib_select__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! antd/lib/select */ "../node_modules/antd/lib/select/index.js");
-/* harmony import */ var antd_lib_select__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(antd_lib_select__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var antd_lib_tabs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! antd/lib/tabs */ "../node_modules/antd/lib/tabs/index.js");
-/* harmony import */ var antd_lib_tabs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(antd_lib_tabs__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../store */ "./src/swagger/store/index.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-
-
-
-
-
-var TabPane = antd_lib_tabs__WEBPACK_IMPORTED_MODULE_7___default.a.TabPane;
-var swaggerDoc = _store__WEBPACK_IMPORTED_MODULE_10__["default"].swaggerDoc, decompose = _store__WEBPACK_IMPORTED_MODULE_10__["default"].decompose;
-var Option = antd_lib_select__WEBPACK_IMPORTED_MODULE_6___default.a.Option;
-var RadioGroup = antd_lib_radio__WEBPACK_IMPORTED_MODULE_4___default.a.Group;
-var App = /** @class */ (function (_super) {
-    __extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.handleChange = function (value) {
-        console.log(value);
-    };
-    App.prototype.render = function () {
-        return (react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_drawer__WEBPACK_IMPORTED_MODULE_2___default.a, { width: 640, placement: "right", title: "\u7ED1\u5B9A\u6A21\u578B", destroyOnClose: true, closable: false, onClose: function () { return decompose.onVisible(); }, visible: decompose.visible },
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "flex", justify: "center", align: "middle" },
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: 3, style: { height: 32, lineHeight: "32px" } }, "\u9009\u62E9\u63A5\u53E3\uFF1A"),
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: 18 },
-                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_select__WEBPACK_IMPORTED_MODULE_6___default.a, { placeholder: '\u9009\u62E9\u63A5\u53E3', defaultValue: decompose.common, style: { width: '100%' }, onChange: this.handleChange.bind(this) }, swaggerDoc.docData.common.map(function (x, i) {
-                        return react__WEBPACK_IMPORTED_MODULE_9__["createElement"](Option, { key: x.key, value: x.key }, x.key);
-                    })))),
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"]("div", { style: {
-                    position: 'absolute',
-                    bottom: 0,
-                    width: '100%',
-                    borderTop: '1px solid #e8e8e8',
-                    padding: '10px 16px',
-                    textAlign: 'right',
-                    left: 0,
-                    background: '#fff',
-                    borderRadius: '0 0 4px 4px',
-                } },
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default.a, { style: {
-                        marginRight: 8,
-                    }, onClick: function () { return decompose.onVisible(); } }, "Cancel"),
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default.a, { onClick: function () { return decompose.onVisible(); }, type: "primary" }, "Submit"))));
-    };
-    App = __decorate([
-        mobx_react__WEBPACK_IMPORTED_MODULE_8__["observer"]
-    ], App);
-    return App;
-}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]));
-/* harmony default export */ __webpack_exports__["default"] = (App);
-
-
-/***/ }),
-
-/***/ "./src/swagger/components/create/components/modelList.tsx":
-/*!****************************************************************!*\
-  !*** ./src/swagger/components/create/components/modelList.tsx ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/col */ "../node_modules/antd/lib/col/index.js");
-/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_col__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/icon */ "../node_modules/antd/lib/icon/index.js");
-/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_icon__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/list */ "../node_modules/antd/lib/list/index.js");
-/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_list__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! antd/lib/row */ "../node_modules/antd/lib/row/index.js");
-/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(antd_lib_row__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var antd_lib_switch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! antd/lib/switch */ "../node_modules/antd/lib/switch/index.js");
-/* harmony import */ var antd_lib_switch__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(antd_lib_switch__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! antd/lib/divider */ "../node_modules/antd/lib/divider/index.js");
-/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(antd_lib_divider__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var components_sortable_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! components/sortable/index */ "../src/components/sortable/index.tsx");
-/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! mobx */ "../node_modules/mobx/lib/mobx.module.js");
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../store */ "./src/swagger/store/index.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-var swaggerDoc = _store__WEBPACK_IMPORTED_MODULE_11__["default"].swaggerDoc, decompose = _store__WEBPACK_IMPORTED_MODULE_11__["default"].decompose;
-var ColSpan = {
-    name: 6,
-    available: 2,
-    update: 2,
-    bind: 5
-};
-var gutter = 14;
-// @DragDropContext(HTML5Backend)
-// @inject(()=>Store)
-var App = /** @class */ (function (_super) {
-    __extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.onChange = function (e, data, type) {
-        if (type === void 0) { type = 'install'; }
-        if (type == 'install') {
-            data.attribute.available = e;
-        }
-        else {
-            data.attribute.update = e;
-        }
-        // ModelStore.lists.table.splice(lodash.findIndex(ModelStore.lists.table, x => x.key == data.key), 1, data)
-    };
-    App.prototype.moveCard = function (dragIndex, hoverIndex) {
-        // console.log(dragIndex, hoverIndex);
-        _store__WEBPACK_IMPORTED_MODULE_11__["default"].decompose.onExchangeModel(this.props.type, dragIndex, hoverIndex);
-    };
-    App.prototype.dataSource = function () {
-        console.log(_store__WEBPACK_IMPORTED_MODULE_11__["default"].decompose.Model);
-        return _store__WEBPACK_IMPORTED_MODULE_11__["default"].decompose.Model[this.props.type].slice();
-    };
-    /**
-     * 关联
-     */
-    App.prototype.renderExample = function (item) {
-        // console.log(item)
-        if (item.example && item.example.combo) {
-            return (react__WEBPACK_IMPORTED_MODULE_10__["createElement"](react__WEBPACK_IMPORTED_MODULE_10__["Fragment"], null,
-                react__WEBPACK_IMPORTED_MODULE_10__["createElement"]("span", null,
-                    "combo\uFF1A",
-                    item.example.combo),
-                react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_divider__WEBPACK_IMPORTED_MODULE_6___default.a, { type: "vertical" }),
-                react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default.a, { icon: "edit", onClick: function () { return decompose.onVisible(); } })));
-        }
-        return null;
-    };
-    App.prototype.render = function () {
-        var _this = this;
-        if (this.props.type === 'btn') {
-            console.log(decompose);
-            var buttonShow_1 = decompose.Model.pageButtons;
-            var data = Object.keys(buttonShow_1);
-            return (react__WEBPACK_IMPORTED_MODULE_10__["createElement"](react__WEBPACK_IMPORTED_MODULE_10__["Fragment"], null,
-                react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_4___default.a, { type: "flex", justify: "center", align: "top", gutter: gutter },
-                    react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.name }, "\u540D\u79F0"),
-                    react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.available }, "\u53EF\u7528")),
-                react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_3___default.a, { bordered: true, dataSource: data, renderItem: function (item) { return (react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_3___default.a.Item, { style: { width: '100%', } },
-                        react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_4___default.a, { type: "flex", justify: "center", align: "top", gutter: gutter, style: { width: '100%' } },
-                            react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.name }, item),
-                            react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.available },
-                                react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_switch__WEBPACK_IMPORTED_MODULE_5___default.a, { onChange: function (flag) {
-                                        //拿到对应的索引
-                                        //  let index=data.indexOf(item)
-                                        // let attr=Object.keys(toJS(item))[0]
-                                        //改变它的属性值
-                                        decompose.changeButton(item, flag);
-                                    }, checkedChildren: react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "check" }), unCheckedChildren: react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "cross" }), defaultChecked: buttonShow_1[item] }))))); } })));
-        }
-        return (react__WEBPACK_IMPORTED_MODULE_10__["createElement"](react__WEBPACK_IMPORTED_MODULE_10__["Fragment"], null,
-            react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_4___default.a, { type: "flex", justify: "center", align: "top", gutter: gutter },
-                react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.name }, "\u540D\u79F0"),
-                react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.available }, "\u53EF\u7528"),
-                this.props.type == 'install' ? (react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.update }, "\u53EF\u7F16\u8F91")) : null,
-                this.props.type != 'columns' ? (react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.bind }, "\u5173\u8054\u6A21\u578B")) : null),
-            this.dataSource().map(function (item, index) { return (react__WEBPACK_IMPORTED_MODULE_10__["createElement"](components_sortable_index__WEBPACK_IMPORTED_MODULE_7__["default"], { key: item.key, index: index, moveCard: _this.moveCard.bind(_this) },
-                react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_3___default.a.Item, null,
-                    react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_4___default.a, { type: "flex", justify: "center", align: "top", gutter: gutter, style: { width: '100%' } },
-                        react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.name },
-                            item.description,
-                            " \uFF08",
-                            item.key,
-                            "\uFF09"),
-                        react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.available },
-                            react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_switch__WEBPACK_IMPORTED_MODULE_5___default.a, { onChange: function (e) {
-                                    _this.onChange(e, item);
-                                }, checkedChildren: react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "check" }), unCheckedChildren: react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "cross" }), defaultChecked: item.attribute.available, disabled: _this.props.type == 'install' && !item.allowEmptyValue })),
-                        _this.props.type == 'install' ? (react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.update },
-                            react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_switch__WEBPACK_IMPORTED_MODULE_5___default.a, { onChange: function (e) {
-                                    _this.onChange(e, item, 'update');
-                                }, checkedChildren: react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "check" }), unCheckedChildren: react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "cross" }), defaultChecked: item.attribute.update }))) : null,
-                        _this.props.type != 'columns' ? (react__WEBPACK_IMPORTED_MODULE_10__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.bind }, _this.renderExample(item))) : null)))); })));
-    };
-    __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_8__["action"].bound
-    ], App.prototype, "onChange", null);
-    App = __decorate([
-        mobx_react__WEBPACK_IMPORTED_MODULE_9__["observer"]
-    ], App);
-    return App;
-}(react__WEBPACK_IMPORTED_MODULE_10__["Component"]));
-/* harmony default export */ __webpack_exports__["default"] = (App);
-
-
-/***/ }),
-
-/***/ "./src/swagger/components/create/createModel.tsx":
-/*!*******************************************************!*\
-  !*** ./src/swagger/components/create/createModel.tsx ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var antd_lib_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/select */ "../node_modules/antd/lib/select/index.js");
-/* harmony import */ var antd_lib_select__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_select__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/tabs */ "../node_modules/antd/lib/tabs/index.js");
-/* harmony import */ var antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var antd_lib_message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/message */ "../node_modules/antd/lib/message/index.js");
-/* harmony import */ var antd_lib_message__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_message__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var antd_lib_spin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! antd/lib/spin */ "../node_modules/antd/lib/spin/index.js");
-/* harmony import */ var antd_lib_spin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(antd_lib_spin__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! antd/lib/divider */ "../node_modules/antd/lib/divider/index.js");
-/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(antd_lib_divider__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var antd_lib_table__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! antd/lib/table */ "../node_modules/antd/lib/table/index.js");
-/* harmony import */ var antd_lib_table__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(antd_lib_table__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! mobx */ "../node_modules/mobx/lib/mobx.module.js");
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../store */ "./src/swagger/store/index.ts");
-/* harmony import */ var _components_bindModel__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/bindModel */ "./src/swagger/components/create/components/bindModel.tsx");
-/* harmony import */ var _components_modelList__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/modelList */ "./src/swagger/components/create/components/modelList.tsx");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-var TabPane = antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2___default.a.TabPane;
-var swaggerDoc = _store__WEBPACK_IMPORTED_MODULE_10__["default"].swaggerDoc, decompose = _store__WEBPACK_IMPORTED_MODULE_10__["default"].decompose;
-var Option = antd_lib_select__WEBPACK_IMPORTED_MODULE_1___default.a.Option;
-// class ObservableStore {
-//     @observable Model = {
-//         tagsMap: [],
-//         definitions: {}
-//     };
-//     models = {
-//         // 唯一标识
-//         IdKey: "id",
-//         url: {
-//             get: "",
-//             post: "",
-//             put: "",
-//             delete: "",
-//             details: ""
-//         },
-//         table: [],
-//         search: [],
-//         edit: [],
-//     }
-//     @observable lists = {
-//         table: [],
-//         search: [],
-//         edit: [],
-//     }
-//     @observable isSelectModel = false;
-//     /**
-//       * 获取model
-//       */
-//     async getModel() {
-//         const data = await Store.swaggerDoc.getModel();
-//         console.log(data);
-//         runInAction(() => {
-//             // this.Model = data;
-//         })
-//     }
-//     @action.bound
-//     selectModel(index) {
-//         // tab 对应的 api 配置
-//         const tagsMap: any = toJS(this.Model.tagsMap[index]);
-//         const value = lodash.find(tagsMap.value);
-//         const getConfig = value['get'];
-//         const postConfig = value['post'];
-//         try {
-//             const table = getConfig['model']['properties'];
-//             const search = getConfig['parameters'];
-//             const edit = postConfig['model']['properties'];
-//             const lists = {
-//                 table: [],
-//                 search: [],
-//                 edit: [],
-//             }
-//             lodash.forIn(table, (value, key) => {
-//                 value.key = key;
-//                 value.show = true;
-//                 value.title = value.description;
-//                 value.dataIndex = value.key;
-//                 lists.table.push(value);
-//             });
-//             lodash.forIn(search, (value, key) => {
-//                 value.key = value.name;
-//                 value.show = true;
-//                 lists.search.push(value);
-//             });
-//             lodash.forIn(edit, (value, key) => {
-//                 value.key = key;
-//                 value.show = true;
-//                 lists.edit.push(value);
-//             });
-//             this.lists = lists;
-//             const apiName = lodash.findKey(tagsMap.value);
-//             const detailsName = lodash.findLastKey(tagsMap.value);
-//             ModelStore.models.url = {
-//                 get: apiName,
-//                 post: apiName,
-//                 put: apiName,
-//                 delete: apiName + "/",
-//                 details: apiName + "/"
-//             }
-//             //  /user/{id}  详情 ID 参数名称
-//             ModelStore.models.IdKey = /(.*\/){(\w*)}/.exec(detailsName)[2];
-//             this.isSelectModel = true;
-//         } catch (error) {
-//             console.error(error);
-//         }
-//     }
-//     @action.bound
-//     async Submit() {
-//         if (this.isSelectModel) {
-//             const model = this.dataFormat();
-//             Store.swaggerDoc.updateCPmodel(model);
-//             console.log(model);
-//             // await Store.Model.create();
-//             Store.swaggerDoc.updateStepsCurrent(1);
-//             this.isSelectModel = false;
-//             this.lists = {
-//                 table: [],
-//                 search: [],
-//                 edit: [],
-//             }
-//         } else {
-//             message.warn("请选择 Model")
-//         }
-//     }
-//     dataFormat() {
-//         const model = Object.assign(ModelStore.models, toJS(ModelStore.lists));
-//         model.edit = model.edit.filter(x => x.show).map(x => {
-//             const rules = [];
-//             // 添加验证
-//             if (!x.allowEmptyValue) {
-//                 rules.push({ required: true, message: `Please input your ${x.key}!` });
-//             }
-//             if (typeof x.minLength != 'undefined') {
-//                 rules.push({ min: x.minLength, message: `min length ${x.minLength}!` });
-//             }
-//             if (typeof x.maxLength != 'undefined') {
-//                 rules.push({ max: x.maxLength, message: `max length ${x.maxLength}!` });
-//             }
-//             return {
-//                 key: x.key,
-//                 show: x.show,
-//                 description: x.description,
-//                 rules: rules,
-//                 ...x
-//             }
-//         });
-//         model.search = model.search.filter(x => x.show);
-//         model.table = model.table.filter(x => x.show);
-//         return model;
-//     }
-// }
-// const ModelStore = new ObservableStore();
-var App = /** @class */ (function (_super) {
-    __extends(App, _super);
-    function App(props) {
-        var _this = _super.call(this, props) || this;
-        console.log(swaggerDoc);
-        return _this;
-        // ModelStore.getModel();
-    }
-    App.prototype.handleSubmit = function () {
-        // ModelStore.Submit();
-        // decompose.onAnalysis()
-        if (decompose.Model.columns.length > 0) {
-            swaggerDoc.create({ model: decompose.Model });
-        }
-        else {
-            antd_lib_message__WEBPACK_IMPORTED_MODULE_3___default.a.warn("请选择模型");
-        }
-    };
-    App.prototype.prev = function () {
-        swaggerDoc.updateStepsCurrent(-1);
-    };
-    App.prototype.render = function () {
-        return react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_spin__WEBPACK_IMPORTED_MODULE_4___default.a, { spinning: swaggerDoc.swaggerLoading },
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](ModelSelect, null),
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](ModelBody, null),
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](_components_bindModel__WEBPACK_IMPORTED_MODULE_11__["default"], null),
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"]("div", { style: { textAlign: "right" } },
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default.a, { onClick: this.prev.bind(this) }, "\u4E0A\u4E00\u6B65"),
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_divider__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "vertical" }),
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default.a, { onClick: this.handleSubmit.bind(this) }, "\u63D0\u4EA4")));
-    };
-    App = __decorate([
-        mobx_react__WEBPACK_IMPORTED_MODULE_8__["observer"]
-    ], App);
-    return App;
-}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]));
-/* harmony default export */ __webpack_exports__["default"] = (App);
-/**
- * model选择
- */
-var ModelSelect = /** @class */ (function (_super) {
-    __extends(ModelSelect, _super);
-    function ModelSelect() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    /**
-     * 切换 mode
-     * @param
-     */
-    ModelSelect.prototype.handleChange = function (index) {
-        decompose.onAnalysis(index);
-    };
-    ModelSelect.prototype.render = function () {
-        return (react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_select__WEBPACK_IMPORTED_MODULE_1___default.a, { placeholder: '\u9009\u62E9\u6A21\u578B', style: { width: '100%' }, onChange: this.handleChange.bind(this) }, swaggerDoc.docData.tags.map(function (x, i) {
-            return react__WEBPACK_IMPORTED_MODULE_9__["createElement"](Option, { key: i, value: i }, x.name);
-        })));
-    };
-    __decorate([
-        mobx__WEBPACK_IMPORTED_MODULE_7__["action"].bound
-    ], ModelSelect.prototype, "handleChange", null);
-    ModelSelect = __decorate([
-        mobx_react__WEBPACK_IMPORTED_MODULE_8__["observer"]
-    ], ModelSelect);
-    return ModelSelect;
-}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]));
-var ModelBody = /** @class */ (function (_super) {
-    __extends(ModelBody, _super);
-    function ModelBody() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ModelBody.prototype.render = function () {
-        return (react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2___default.a, { defaultActiveKey: "1" },
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](TabPane, { tab: "Table", key: "1" },
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](_components_modelList__WEBPACK_IMPORTED_MODULE_12__["default"], { type: "columns" })),
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](TabPane, { tab: "Search", key: "2" },
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](_components_modelList__WEBPACK_IMPORTED_MODULE_12__["default"], { type: "search" })),
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](TabPane, { tab: "Add", key: "3" },
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](_components_modelList__WEBPACK_IMPORTED_MODULE_12__["default"], { type: "install" })),
-            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](TabPane, { tab: "button", key: "4" },
-                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](_components_modelList__WEBPACK_IMPORTED_MODULE_12__["default"], { type: "btn" }))));
-    };
-    ModelBody = __decorate([
-        mobx_react__WEBPACK_IMPORTED_MODULE_8__["observer"]
-    ], ModelBody);
-    return ModelBody;
-}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]));
-
-
-/***/ }),
-
-/***/ "./src/swagger/components/create/createName.tsx":
-/*!******************************************************!*\
-  !*** ./src/swagger/components/create/createName.tsx ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
-/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var antd_lib_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/form */ "../node_modules/antd/lib/form/index.js");
-/* harmony import */ var antd_lib_form__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_form__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/icon */ "../node_modules/antd/lib/icon/index.js");
-/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_icon__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var antd_lib_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/input */ "../node_modules/antd/lib/input/index.js");
-/* harmony import */ var antd_lib_input__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_input__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var antd_lib_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! antd/lib/select */ "../node_modules/antd/lib/select/index.js");
-/* harmony import */ var antd_lib_select__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(antd_lib_select__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../store */ "./src/swagger/store/index.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-
-
-var FormItem = antd_lib_form__WEBPACK_IMPORTED_MODULE_1___default.a.Item;
-var Option = antd_lib_select__WEBPACK_IMPORTED_MODULE_4___default.a.Option;
-var App = /** @class */ (function (_super) {
-    __extends(App, _super);
-    function App() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.handleSubmit = function (e) {
-            e.preventDefault();
-            _this.props.form.validateFields(function (err, values) {
-                if (!err) {
-                    _this.props.swaggerDoc.updateCPContainers(values);
-                    _this.props.swaggerDoc.updateStepsCurrent(1);
-                }
-            });
-        };
-        return _this;
-    }
-    App.prototype.render = function () {
-        var containers = this.props.swaggerDoc.createParam.containers;
-        var project = this.props.swaggerDoc.project;
-        var getFieldDecorator = this.props.form.getFieldDecorator;
-        return (react__WEBPACK_IMPORTED_MODULE_6__["createElement"](antd_lib_form__WEBPACK_IMPORTED_MODULE_1___default.a, { onSubmit: this.handleSubmit, style: { width: 500, margin: "auto" } },
-            react__WEBPACK_IMPORTED_MODULE_6__["createElement"](FormItem, { label: "\u7EC4\u4EF6\u540D\u79F0", extra: "\u5168\u82F1\u6587\u4E0D\u5305\u542B\u7A7A\u683C\u7B49\u7279\u6B8A\u5B57\u7B26" }, getFieldDecorator('containersName', {
-                initialValue: containers.containersName || 'test',
-                rules: [
-                    { required: true, message: '组件名称必填!' },
-                    { pattern: /^[a-zA-Z]+$/, message: '组件名称必须是全英文!' }
-                ],
-            })(react__WEBPACK_IMPORTED_MODULE_6__["createElement"](antd_lib_input__WEBPACK_IMPORTED_MODULE_3___default.a, { prefix: react__WEBPACK_IMPORTED_MODULE_6__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "user", style: { color: 'rgba(0,0,0,.25)' } }), placeholder: "containersName" }))),
-            react__WEBPACK_IMPORTED_MODULE_6__["createElement"](FormItem, { label: "\u83DC\u5355\u540D\u79F0", extra: "\u7F6E\u7A7A\u5C06\u4F7F\u7528\u7EC4\u4EF6\u540D\u79F0" }, getFieldDecorator('menuName', {
-                initialValue: containers.menuName || 'test',
-            })(react__WEBPACK_IMPORTED_MODULE_6__["createElement"](antd_lib_input__WEBPACK_IMPORTED_MODULE_3___default.a, { prefix: react__WEBPACK_IMPORTED_MODULE_6__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "lock", style: { color: 'rgba(0,0,0,.25)' } }), placeholder: "menuName" }))),
-            react__WEBPACK_IMPORTED_MODULE_6__["createElement"](FormItem, { label: "\u6A21\u677F", extra: "\u6E32\u67D3\u6A21\u677F\uFF08\u5185\u7F6E&\u81EA\u5B9A\u4E49\u6A21\u677F\uFF09" }, getFieldDecorator('template', {
-                initialValue: containers.template || 'default',
-            })(react__WEBPACK_IMPORTED_MODULE_6__["createElement"](antd_lib_select__WEBPACK_IMPORTED_MODULE_4___default.a, { style: { width: "100%" } }, project.templates.map(function (x, i) {
-                return react__WEBPACK_IMPORTED_MODULE_6__["createElement"](Option, { key: i, value: x }, x);
-            })))),
-            react__WEBPACK_IMPORTED_MODULE_6__["createElement"](FormItem, { style: { textAlign: "right" } },
-                react__WEBPACK_IMPORTED_MODULE_6__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default.a, { htmlType: "submit", className: "login-form-button" }, "\u4E0B\u4E00\u6B65"))));
-    };
-    App = __decorate([
-        Object(mobx_react__WEBPACK_IMPORTED_MODULE_5__["inject"])(function () { return _store__WEBPACK_IMPORTED_MODULE_7__["default"]; }),
-        mobx_react__WEBPACK_IMPORTED_MODULE_5__["observer"]
-    ], App);
-    return App;
-}(react__WEBPACK_IMPORTED_MODULE_6__["Component"]));
-var WrappedHorizontalLoginForm = antd_lib_form__WEBPACK_IMPORTED_MODULE_1___default.a.create()(App);
-/* harmony default export */ __webpack_exports__["default"] = (WrappedHorizontalLoginForm);
-
+/***/ "./src/style.less":
+/*!************************!*\
+  !*** ./src/style.less ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -1701,31 +965,30 @@ var App = /** @class */ (function (_super) {
 
 /***/ }),
 
-/***/ "./src/swagger/entrance.tsx":
-/*!**********************************!*\
-  !*** ./src/swagger/entrance.tsx ***!
-  \**********************************/
-/*! exports provided: Entrance */
+/***/ "./src/swagger/create/editTags/index.tsx":
+/*!***********************************************!*\
+  !*** ./src/swagger/create/editTags/index.tsx ***!
+  \***********************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Entrance", function() { return Entrance; });
-/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/icon */ "../node_modules/antd/lib/icon/index.js");
-/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_icon__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./src/swagger/store/index.ts");
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "../node_modules/react-router-dom/es/index.js");
-/* harmony import */ var components_dragBtn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! components/dragBtn */ "../src/components/dragBtn/index.tsx");
-/**
- * @author 冷 (https://github.com/LengYXin)
- * @email lengyingxin8966@gmail.com
- * @create date 2018-09-10 05:01:28
- * @modify date 2018-09-10 05:01:28
- * @desc [description]
-*/
+/* harmony import */ var antd_lib_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/alert */ "../node_modules/antd/lib/alert/index.js");
+/* harmony import */ var antd_lib_alert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_alert__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
+/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/divider */ "../node_modules/antd/lib/divider/index.js");
+/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_divider__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var antd_lib_tabs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/tabs */ "../node_modules/antd/lib/tabs/index.js");
+/* harmony import */ var antd_lib_tabs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_tabs__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _components_drop_drop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../components/drop/drop */ "./src/components/drop/drop.tsx");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../store */ "./src/swagger/store/index.ts");
+/* harmony import */ var _info__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./info */ "./src/swagger/create/editTags/info.tsx");
+/* harmony import */ var _modelList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modelList */ "./src/swagger/create/editTags/modelList.tsx");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -1751,31 +1014,777 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-var Entrance = /** @class */ (function (_super) {
-    __extends(Entrance, _super);
-    function Entrance() {
+
+
+
+
+var swaggerDoc = _store__WEBPACK_IMPORTED_MODULE_7__["default"].swaggerDoc, decompose = _store__WEBPACK_IMPORTED_MODULE_7__["default"].decompose;
+var TabPane = antd_lib_tabs__WEBPACK_IMPORTED_MODULE_3___default.a.TabPane;
+var IApp = /** @class */ (function (_super) {
+    __extends(IApp, _super);
+    function IApp() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Entrance.prototype.componentDidMount = function () {
-        if (true) {
-            _store__WEBPACK_IMPORTED_MODULE_2__["default"].swaggerDoc.init();
+    IApp.prototype.handleDrop = function (item) {
+        // 首次编辑
+        if (item.type == "sourceTags") {
+            decompose.onAnalysisTag(item.model);
+        }
+        else {
+            // 以编辑修改
+            decompose.onSetModel(item.model);
         }
     };
-    Entrance.prototype.render = function () {
-        if (window.location.pathname != "/swaggerAnalysis" && _store__WEBPACK_IMPORTED_MODULE_2__["default"].swaggerDoc.startFrame) {
-            return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"](components_dragBtn__WEBPACK_IMPORTED_MODULE_5__["default"], null,
-                react__WEBPACK_IMPORTED_MODULE_1__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], { to: "/swaggerAnalysis", target: "_blank", className: "sam-entrance-btn", title: "\u6DFB\u52A0\u7EC4\u4EF6" },
-                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_0___default.a, { type: "plus-circle-o" }))));
+    IApp.prototype.render = function () {
+        var _this = this;
+        return (react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null,
+            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_components_drop_drop__WEBPACK_IMPORTED_MODULE_6__["default"], { accepts: ["sourceTags", "readyTags"], onDrop: function (item) { return _this.handleDrop(item); } },
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"](ModelBody, { key: decompose.Model.name + decompose.Model.key }))));
+    };
+    IApp = __decorate([
+        mobx_react__WEBPACK_IMPORTED_MODULE_4__["observer"]
+    ], IApp);
+    return IApp;
+}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (IApp);
+var ModelBody = /** @class */ (function (_super) {
+    __extends(ModelBody, _super);
+    function ModelBody() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {
+            activeKey: "1"
+        };
+        _this.infoForm = null;
+        return _this;
+    }
+    ModelBody.prototype.onSave = function () {
+        var _this = this;
+        this.infoForm.validateFields(function (err, values) {
+            if (!err) {
+                console.log(values);
+                values.menuName = values.menuName || values.componentName;
+                decompose.onSaveInfo(values);
+                decompose.onSave();
+            }
+            else {
+                _this.setState({ activeKey: "1" });
+            }
+        });
+    };
+    ModelBody.prototype.onInfoSubmit = function () {
+    };
+    ModelBody.prototype.render = function () {
+        var _this = this;
+        if (!decompose.Model.address) {
+            return react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_alert__WEBPACK_IMPORTED_MODULE_0___default.a, { message: "", description: "\u62D6\u62FD\u5DE6\u4FA7\u7684\u6570\u636E\u6A21\u578B\u5230\u4E2D\u95F4\u7684\u7F16\u8F91\u533A\u57DF", type: "info" });
+        }
+        return (react__WEBPACK_IMPORTED_MODULE_5__["createElement"](react__WEBPACK_IMPORTED_MODULE_5__["Fragment"], null,
+            react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null,
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("span", { style: { color: "#cf1322", fontWeight: 600 } },
+                    decompose.Model.name,
+                    "  "),
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_divider__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "vertical" }),
+                "  ",
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_1___default.a, { icon: "save", onClick: this.onSave.bind(this) }, "\u4FDD\u5B58")),
+            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_tabs__WEBPACK_IMPORTED_MODULE_3___default.a
+            // defaultActiveKey="1"
+            , { 
+                // defaultActiveKey="1"
+                activeKey: this.state.activeKey, onChange: function (activeKey) { return _this.setState({ activeKey: activeKey }); } },
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"](TabPane, { tab: "\u57FA\u7840\u914D\u7F6E", key: "1" },
+                    react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_info__WEBPACK_IMPORTED_MODULE_8__["default"], { onSubmit: this.onInfoSubmit.bind(this), onForm: function (e) { return _this.infoForm = e; } })),
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"](TabPane, { tab: "\u6A21\u578B\u914D\u7F6E", key: "2" },
+                    react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_tabs__WEBPACK_IMPORTED_MODULE_3___default.a, { defaultActiveKey: "1" },
+                        react__WEBPACK_IMPORTED_MODULE_5__["createElement"](TabPane, { tab: "\u6570\u636E", key: "1" },
+                            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_modelList__WEBPACK_IMPORTED_MODULE_9__["default"], { type: "columns" })),
+                        react__WEBPACK_IMPORTED_MODULE_5__["createElement"](TabPane, { tab: "\u641C\u7D22\u6761\u4EF6", key: "2" },
+                            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_modelList__WEBPACK_IMPORTED_MODULE_9__["default"], { type: "search" })),
+                        react__WEBPACK_IMPORTED_MODULE_5__["createElement"](TabPane, { tab: "\u6DFB\u52A0&\u4FEE\u6539", key: "3" },
+                            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_modelList__WEBPACK_IMPORTED_MODULE_9__["default"], { type: "install" })),
+                        react__WEBPACK_IMPORTED_MODULE_5__["createElement"](TabPane, { tab: "\u64CD\u4F5C\u6743\u9650", key: "4" },
+                            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_modelList__WEBPACK_IMPORTED_MODULE_9__["default"], { type: "btn" })))))));
+    };
+    ModelBody = __decorate([
+        mobx_react__WEBPACK_IMPORTED_MODULE_4__["observer"]
+    ], ModelBody);
+    return ModelBody;
+}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]));
+
+
+/***/ }),
+
+/***/ "./src/swagger/create/editTags/info.tsx":
+/*!**********************************************!*\
+  !*** ./src/swagger/create/editTags/info.tsx ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var antd_lib_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/form */ "../node_modules/antd/lib/form/index.js");
+/* harmony import */ var antd_lib_form__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_form__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/icon */ "../node_modules/antd/lib/icon/index.js");
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_icon__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var antd_lib_input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/input */ "../node_modules/antd/lib/input/index.js");
+/* harmony import */ var antd_lib_input__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_input__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var antd_lib_select__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/select */ "../node_modules/antd/lib/select/index.js");
+/* harmony import */ var antd_lib_select__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_select__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../store */ "./src/swagger/store/index.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+var FormItem = antd_lib_form__WEBPACK_IMPORTED_MODULE_0___default.a.Item;
+var Option = antd_lib_select__WEBPACK_IMPORTED_MODULE_3___default.a.Option;
+var App = /** @class */ (function (_super) {
+    __extends(App, _super);
+    function App() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    App.prototype.componentDidMount = function () {
+        this.props.onForm && this.props.onForm(this.props.form);
+    };
+    // handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     this.props.form.validateFields((err, values) => {
+    //         if (!err) {
+    //             // this.props.swaggerDoc.updateCPContainers(values);
+    //             values.menuName = values.menuName || values.componentName;
+    //             this.props.decompose.onSaveInfo(values);
+    //             this.props.onSubmit && this.props.onSubmit(values);
+    //         }
+    //     });
+    // }
+    App.prototype.onSubmit = function (e) {
+        e.preventDefault();
+    };
+    App.prototype.render = function () {
+        // const { containers } = this.props.swaggerDoc.createParam
+        var Model = this.props.decompose.Model;
+        var project = this.props.swaggerDoc.project;
+        var getFieldDecorator = this.props.form.getFieldDecorator;
+        return (react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_form__WEBPACK_IMPORTED_MODULE_0___default.a, { style: { margin: "auto", textAlign: "left" } },
+            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](FormItem, { label: "\u7EC4\u4EF6\u540D\u79F0", extra: "\u5168\u82F1\u6587\u4E0D\u5305\u542B\u7A7A\u683C\u7B49\u7279\u6B8A\u5B57\u7B26" }, getFieldDecorator('componentName', {
+                initialValue: Model.componentName,
+                rules: [
+                    { required: true, message: '组件名称必填!' },
+                    { pattern: /^[a-zA-Z]+$/, message: '组件名称必须是全英文!' }
+                ],
+            })(react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_input__WEBPACK_IMPORTED_MODULE_2___default.a, { prefix: react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_1___default.a, { type: "user", style: { color: 'rgba(0,0,0,.25)' } }), placeholder: "\u7EC4\u4EF6\u540D\u79F0" }))),
+            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](FormItem, { label: "\u83DC\u5355\u540D\u79F0", extra: "\u7F6E\u7A7A\u5C06\u4F7F\u7528\u7EC4\u4EF6\u540D\u79F0" }, getFieldDecorator('menuName', {
+                initialValue: Model.menuName,
+            })(react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_input__WEBPACK_IMPORTED_MODULE_2___default.a, { prefix: react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_1___default.a, { type: "lock", style: { color: 'rgba(0,0,0,.25)' } }), placeholder: "\u83DC\u5355\u540D\u79F0" }))),
+            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](FormItem, { label: "\u83DC\u5355Icon", extra: "\u83DC\u5355\u56FE\u6807" }, getFieldDecorator('icon', {
+                initialValue: Model.icon || 'menu-fold',
+            })(react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_input__WEBPACK_IMPORTED_MODULE_2___default.a, { prefix: react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_1___default.a, { type: Model.icon || 'menu-fold', style: { color: 'rgba(0,0,0,.25)' } }), placeholder: "\u83DC\u5355Icon" }))),
+            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](FormItem, { label: "\u6A21\u677F", extra: "\u6E32\u67D3\u6A21\u677F\uFF08\u81EA\u5B9A\u4E49\u6A21\u677F\uFF09" }, getFieldDecorator('template', {
+                initialValue: Model.template,
+            })(react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_select__WEBPACK_IMPORTED_MODULE_3___default.a, { style: { width: "100%" }, placeholder: "\u9009\u62E9\u6A21\u677F" }, project.templates.map(function (x, i) {
+                return react__WEBPACK_IMPORTED_MODULE_5__["createElement"](Option, { key: i, value: x }, x);
+            }))))));
+    };
+    App = __decorate([
+        Object(mobx_react__WEBPACK_IMPORTED_MODULE_4__["inject"])(function () { return _store__WEBPACK_IMPORTED_MODULE_6__["default"]; }),
+        mobx_react__WEBPACK_IMPORTED_MODULE_4__["observer"]
+    ], App);
+    return App;
+}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]));
+var WrappedHorizontalLoginForm = antd_lib_form__WEBPACK_IMPORTED_MODULE_0___default.a.create()(App);
+/* harmony default export */ __webpack_exports__["default"] = (WrappedHorizontalLoginForm);
+
+
+/***/ }),
+
+/***/ "./src/swagger/create/editTags/modelList.tsx":
+/*!***************************************************!*\
+  !*** ./src/swagger/create/editTags/modelList.tsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
+/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/col */ "../node_modules/antd/lib/col/index.js");
+/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_col__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/divider */ "../node_modules/antd/lib/divider/index.js");
+/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_divider__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/icon */ "../node_modules/antd/lib/icon/index.js");
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_icon__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! antd/lib/list */ "../node_modules/antd/lib/list/index.js");
+/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(antd_lib_list__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! antd/lib/row */ "../node_modules/antd/lib/row/index.js");
+/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(antd_lib_row__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var antd_lib_switch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! antd/lib/switch */ "../node_modules/antd/lib/switch/index.js");
+/* harmony import */ var antd_lib_switch__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(antd_lib_switch__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! mobx */ "../node_modules/mobx/lib/mobx.module.js");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _components_drop_source__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../components/drop/source */ "./src/components/drop/source.tsx");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../store */ "./src/swagger/store/index.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+var swaggerDoc = _store__WEBPACK_IMPORTED_MODULE_11__["default"].swaggerDoc, decompose = _store__WEBPACK_IMPORTED_MODULE_11__["default"].decompose;
+var ColSpan = {
+    key: 5,
+    name: 5,
+    type: 6,
+    available: 2,
+    update: 2,
+    bind: 2
+};
+var gutter = 14;
+// @DragDropContext(HTML5Backend)
+// @inject(()=>Store)
+var App = /** @class */ (function (_super) {
+    __extends(App, _super);
+    function App() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    App.prototype.onChange = function (e, data, type) {
+        if (type === void 0) { type = 'install'; }
+        if (type == 'install') {
+            data.attribute.available = e;
+        }
+        else {
+            data.attribute.update = e;
+        }
+        // ModelStore.lists.table.splice(lodash.findIndex(ModelStore.lists.table, x => x.key == data.key), 1, data)
+    };
+    App.prototype.moveCard = function (dragIndex, hoverIndex) {
+        // console.log(dragIndex, hoverIndex);
+        _store__WEBPACK_IMPORTED_MODULE_11__["default"].decompose.onExchangeModel(this.props.type, dragIndex, hoverIndex);
+    };
+    App.prototype.dataSource = function () {
+        return _store__WEBPACK_IMPORTED_MODULE_11__["default"].decompose.Model[this.props.type].slice();
+    };
+    /**
+     * 关联
+     */
+    App.prototype.renderExample = function (item) {
+        // console.log(item)
+        if (item.example && item.example.combo) {
+            return (react__WEBPACK_IMPORTED_MODULE_9__["createElement"](react__WEBPACK_IMPORTED_MODULE_9__["Fragment"], null,
+                react__WEBPACK_IMPORTED_MODULE_9__["createElement"]("span", null,
+                    "combo\uFF1A",
+                    item.example.combo),
+                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_divider__WEBPACK_IMPORTED_MODULE_2___default.a, { type: "vertical" }),
+                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_0___default.a, { icon: "edit", onClick: function () { } })));
         }
         return null;
     };
-    Entrance = __decorate([
-        mobx_react__WEBPACK_IMPORTED_MODULE_3__["observer"]
-    ], Entrance);
-    return Entrance;
-}(react__WEBPACK_IMPORTED_MODULE_1__["Component"]));
+    App.prototype.render = function () {
+        var _this = this;
+        if (this.props.type === 'btn') {
+            var buttonShow_1 = decompose.Model.actions;
+            var data = Object.keys(buttonShow_1);
+            return (react__WEBPACK_IMPORTED_MODULE_9__["createElement"](react__WEBPACK_IMPORTED_MODULE_9__["Fragment"], null,
+                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "flex", justify: "center", align: "top", gutter: gutter },
+                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.name }, "\u540D\u79F0"),
+                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.available }, "\u53EF\u7528")),
+                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_4___default.a, { bordered: true, dataSource: data, renderItem: function (item) { return (react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_4___default.a.Item, { style: { width: '100%', } },
+                        react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "flex", justify: "center", align: "top", gutter: gutter, style: { width: '100%' } },
+                            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.name }, item),
+                            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.available },
+                                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_switch__WEBPACK_IMPORTED_MODULE_6___default.a, { onChange: function (flag) {
+                                        //拿到对应的索引
+                                        //  let index=data.indexOf(item)
+                                        // let attr=Object.keys(toJS(item))[0]
+                                        //改变它的属性值
+                                        decompose.changeButton(item, flag);
+                                    }, checkedChildren: react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_3___default.a, { type: "check" }), unCheckedChildren: react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_3___default.a, { type: "cross" }), defaultChecked: buttonShow_1[item] }))))); } })));
+        }
+        return (react__WEBPACK_IMPORTED_MODULE_9__["createElement"]("div", { style: { textAlign: "left" } },
+            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_4___default.a.Item, null,
+                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "flex", align: "top", gutter: gutter, style: { width: '100%', paddingLeft: 10 } },
+                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.key }, "Key"),
+                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.name }, "\u63CF\u8FF0"),
+                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.type }, "\u6570\u636E\u7C7B\u578B"),
+                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.available }, "\u542F\u7528"),
+                    this.props.type != 'columns' ? (react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.bind }, "\u7F16\u8F91\u5C5E\u6027")) : null)),
+            this.dataSource().map(function (item, index) { return (react__WEBPACK_IMPORTED_MODULE_9__["createElement"](_components_drop_source__WEBPACK_IMPORTED_MODULE_10__["default"], { type: "Sortable", key: item.key, index: index, moveCard: _this.moveCard.bind(_this) },
+                react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_4___default.a.Item, null,
+                    react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "flex", align: "top", gutter: gutter, style: { width: '100%', paddingLeft: 10 } },
+                        react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.key }, item.key),
+                        react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.name }, item.description),
+                        react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.type },
+                            item.type,
+                            " | ",
+                            item.format),
+                        react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.available },
+                            react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_switch__WEBPACK_IMPORTED_MODULE_6___default.a, { onChange: function (e) {
+                                    _this.onChange(e, item);
+                                }, checkedChildren: react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_3___default.a, { type: "check" }), unCheckedChildren: react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_3___default.a, { type: "cross" }), 
+                                // defaultChecked={item.attribute.available}
+                                checked: item.attribute.available, disabled: _this.props.type == 'install' && !item.allowEmptyValue })),
+                        _this.props.type != 'columns' ? (react__WEBPACK_IMPORTED_MODULE_9__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: ColSpan.bind }, _this.renderExample(item))) : null)))); })));
+    };
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_7__["action"].bound
+    ], App.prototype, "onChange", null);
+    App = __decorate([
+        mobx_react__WEBPACK_IMPORTED_MODULE_8__["observer"]
+    ], App);
+    return App;
+}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (App);
 
 
+/***/ }),
+
+/***/ "./src/swagger/create/index.tsx":
+/*!**************************************!*\
+  !*** ./src/swagger/create/index.tsx ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var antd_lib_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/alert */ "../node_modules/antd/lib/alert/index.js");
+/* harmony import */ var antd_lib_alert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_alert__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/col */ "../node_modules/antd/lib/col/index.js");
+/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_col__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var antd_lib_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/modal */ "../node_modules/antd/lib/modal/index.js");
+/* harmony import */ var antd_lib_modal__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_modal__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/row */ "../node_modules/antd/lib/row/index.js");
+/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_row__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var antd_lib_spin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! antd/lib/spin */ "../node_modules/antd/lib/spin/index.js");
+/* harmony import */ var antd_lib_spin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(antd_lib_spin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! antd/lib/icon */ "../node_modules/antd/lib/icon/index.js");
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(antd_lib_icon__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_dnd__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-dnd */ "../node_modules/react-dnd/lib/index.js");
+/* harmony import */ var react_dnd__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_dnd__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var react_dnd_html5_backend__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-dnd-html5-backend */ "../node_modules/react-dnd-html5-backend/lib/index.js");
+/* harmony import */ var react_dnd_html5_backend__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_dnd_html5_backend__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../store */ "./src/swagger/store/index.ts");
+/* harmony import */ var _editTags__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./editTags */ "./src/swagger/create/editTags/index.tsx");
+/* harmony import */ var _readyTags__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./readyTags */ "./src/swagger/create/readyTags/index.tsx");
+/* harmony import */ var _sourceTags__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./sourceTags */ "./src/swagger/create/sourceTags/index.tsx");
+/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./style.less */ "./src/swagger/create/style.less");
+/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_style_less__WEBPACK_IMPORTED_MODULE_14__);
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var swaggerDoc = _store__WEBPACK_IMPORTED_MODULE_10__["default"].swaggerDoc, decompose = _store__WEBPACK_IMPORTED_MODULE_10__["default"].decompose;
+var default_1 = /** @class */ (function (_super) {
+    __extends(default_1, _super);
+    function default_1() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    default_1.prototype.render = function () {
+        return (react__WEBPACK_IMPORTED_MODULE_7__["createElement"](antd_lib_spin__WEBPACK_IMPORTED_MODULE_4___default.a, { spinning: swaggerDoc.swaggerLoading, indicator: react__WEBPACK_IMPORTED_MODULE_7__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "loading", style: { fontSize: 40 }, spin: true }) },
+            react__WEBPACK_IMPORTED_MODULE_7__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_3___default.a, { gutter: 16, type: "flex", justify: "center", className: "swagger-create" },
+                react__WEBPACK_IMPORTED_MODULE_7__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: 4, className: "swagger-create-SourceTags" },
+                    react__WEBPACK_IMPORTED_MODULE_7__["createElement"](_sourceTags__WEBPACK_IMPORTED_MODULE_13__["default"], null)),
+                react__WEBPACK_IMPORTED_MODULE_7__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: 15, className: "swagger-create-EditTags" },
+                    react__WEBPACK_IMPORTED_MODULE_7__["createElement"](_editTags__WEBPACK_IMPORTED_MODULE_11__["default"], null)),
+                react__WEBPACK_IMPORTED_MODULE_7__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_1___default.a, { span: 5, className: "swagger-create-ReadyTags" },
+                    react__WEBPACK_IMPORTED_MODULE_7__["createElement"](_readyTags__WEBPACK_IMPORTED_MODULE_12__["default"], null))),
+            react__WEBPACK_IMPORTED_MODULE_7__["createElement"](antd_lib_modal__WEBPACK_IMPORTED_MODULE_2___default.a, { title: "\u6A21\u578BJSON", width: "70%", centered: true, footer: null, visible: decompose.visible.ModelJSON, onCancel: function () {
+                    decompose.onVisible("ModelJSON", false);
+                } },
+                react__WEBPACK_IMPORTED_MODULE_7__["createElement"]("pre", null,
+                    react__WEBPACK_IMPORTED_MODULE_7__["createElement"]("code", null,
+                        " ",
+                        decompose.ModelJSON)))));
+    };
+    default_1 = __decorate([
+        Object(react_dnd__WEBPACK_IMPORTED_MODULE_8__["DragDropContext"])(react_dnd_html5_backend__WEBPACK_IMPORTED_MODULE_9___default.a),
+        mobx_react__WEBPACK_IMPORTED_MODULE_6__["observer"]
+    ], default_1);
+    return default_1;
+}(react__WEBPACK_IMPORTED_MODULE_7__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (default_1);
+
+
+/***/ }),
+
+/***/ "./src/swagger/create/readyTags/index.tsx":
+/*!************************************************!*\
+  !*** ./src/swagger/create/readyTags/index.tsx ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/list */ "../node_modules/antd/lib/list/index.js");
+/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_list__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
+/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/row */ "../node_modules/antd/lib/row/index.js");
+/* harmony import */ var antd_lib_row__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_row__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! antd/lib/col */ "../node_modules/antd/lib/col/index.js");
+/* harmony import */ var antd_lib_col__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(antd_lib_col__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! antd/lib/icon */ "../node_modules/antd/lib/icon/index.js");
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(antd_lib_icon__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var antd_lib_popconfirm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! antd/lib/popconfirm */ "../node_modules/antd/lib/popconfirm/index.js");
+/* harmony import */ var antd_lib_popconfirm__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(antd_lib_popconfirm__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! antd/lib/divider */ "../node_modules/antd/lib/divider/index.js");
+/* harmony import */ var antd_lib_divider__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(antd_lib_divider__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _components_drop_drag__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../components/drop/drag */ "./src/components/drop/drag.tsx");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../store */ "./src/swagger/store/index.ts");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
+/* harmony import */ var _showCode__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../showCode */ "./src/swagger/create/showCode.tsx");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+/**
+ * @author 冷 (https://github.com/LengYXin)
+ * @email lengyingxin8966@gmail.com
+ * @create date 2018-10-12 22:23:17
+ * @modify date 2018-10-12 22:23:17
+ * @desc [description]
+*/
+
+
+
+
+
+
+
+
+// import Box from './Box';
+
+
+
+
+var swaggerDoc = _store__WEBPACK_IMPORTED_MODULE_9__["default"].swaggerDoc, decompose = _store__WEBPACK_IMPORTED_MODULE_9__["default"].decompose;
+var IApp = /** @class */ (function (_super) {
+    __extends(IApp, _super);
+    function IApp() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    IApp.prototype.render = function () {
+        var length = decompose.readyModel.length;
+        return (react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_1___default.a, { size: "large", header: react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { style: { textAlign: "center" } },
+                react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null,
+                    react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("span", null,
+                        "\u5C31\u7EEA\u5217\u8868 \uFF08",
+                        length,
+                        "\uFF09"),
+                    " ",
+                    react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_divider__WEBPACK_IMPORTED_MODULE_7___default.a, { type: "vertical" }),
+                    react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_popconfirm__WEBPACK_IMPORTED_MODULE_6___default.a, { title: "\u786E\u5B9A\u6E05\u7A7A\u5DF2\u7ECF\u7F16\u8F91\u6570\u636E\uFF1F", onConfirm: function () { decompose.onEmpty(); }, okText: "\u786E\u5B9A", cancelText: "\u53D6\u6D88" },
+                        react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "delete", theme: "outlined", style: { cursor: "pointer" }, title: "\u6E05\u7A7A" }))),
+                react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_2___default.a, { disabled: length <= 0, block: true, onClick: function () {
+                        swaggerDoc.create(decompose.readyModel);
+                    }, icon: "save" }, "\u751F\u6210\u7EC4\u4EF6")), 
+            // footer={<div>
+            // </div>}
+            bordered: true, dataSource: decompose.readyModel.slice(), renderItem: function (item, index) { return (react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_components_drop_drag__WEBPACK_IMPORTED_MODULE_8__["default"], { model: item, type: "readyTags" },
+                react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_1___default.a.Item, { actions: [
+                        react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_5___default.a, { type: "close", theme: "outlined", style: { cursor: "pointer" }, title: "\u5220\u9664", onClick: function (e) { decompose.onDelete(index); } }),
+                        react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_showCode__WEBPACK_IMPORTED_MODULE_11__["default"], { data: item })
+                    ] },
+                    react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { style: { width: "100%" } },
+                        react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_3___default.a, null,
+                            react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_4___default.a, { span: 6 }, "\u6A21\u578B\uFF1A"),
+                            react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_4___default.a, { span: 18 }, item.name)),
+                        react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_3___default.a, null,
+                            react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_4___default.a, { span: 6 }, "\u6A21\u5757\uFF1A"),
+                            react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_4___default.a, { span: 18 }, item.componentName)),
+                        react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_row__WEBPACK_IMPORTED_MODULE_3___default.a, null,
+                            react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_4___default.a, { span: 6 }, "\u6A21\u677F\uFF1A"),
+                            react__WEBPACK_IMPORTED_MODULE_0__["createElement"](antd_lib_col__WEBPACK_IMPORTED_MODULE_4___default.a, { span: 18 }, item.template)))))); } }));
+    };
+    IApp = __decorate([
+        mobx_react__WEBPACK_IMPORTED_MODULE_10__["observer"]
+    ], IApp);
+    return IApp;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (IApp);
+
+
+/***/ }),
+
+/***/ "./src/swagger/create/showCode.tsx":
+/*!*****************************************!*\
+  !*** ./src/swagger/create/showCode.tsx ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/icon */ "../node_modules/antd/lib/icon/index.js");
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_icon__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./src/swagger/store/index.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var swaggerDoc = _store__WEBPACK_IMPORTED_MODULE_3__["default"].swaggerDoc, decompose = _store__WEBPACK_IMPORTED_MODULE_3__["default"].decompose;
+var default_1 = /** @class */ (function (_super) {
+    __extends(default_1, _super);
+    function default_1() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    default_1.prototype.onShow = function (e) {
+        e.preventDefault();
+        decompose.onShowModelJSON(this.props.data);
+    };
+    default_1.prototype.render = function () {
+        return (react__WEBPACK_IMPORTED_MODULE_2__["createElement"](antd_lib_icon__WEBPACK_IMPORTED_MODULE_0___default.a, { type: "code", theme: "outlined", style: { cursor: "pointer" }, title: "\u6570\u636E", onClick: this.onShow.bind(this) }));
+    };
+    default_1 = __decorate([
+        mobx_react__WEBPACK_IMPORTED_MODULE_1__["observer"]
+    ], default_1);
+    return default_1;
+}(react__WEBPACK_IMPORTED_MODULE_2__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (default_1);
+
+
+/***/ }),
+
+/***/ "./src/swagger/create/sourceTags/index.tsx":
+/*!*************************************************!*\
+  !*** ./src/swagger/create/sourceTags/index.tsx ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! antd/lib/icon */ "../node_modules/antd/lib/icon/index.js");
+/* harmony import */ var antd_lib_icon__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_icon__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd/lib/list */ "../node_modules/antd/lib/list/index.js");
+/* harmony import */ var antd_lib_list__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd_lib_list__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! antd/lib/tabs */ "../node_modules/antd/lib/tabs/index.js");
+/* harmony import */ var antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd/lib/button */ "../node_modules/antd/lib/button/index.js");
+/* harmony import */ var antd_lib_button__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd_lib_button__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! mobx-react */ "../node_modules/mobx-react/index.module.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _components_drop_drag__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../components/drop/drag */ "./src/components/drop/drag.tsx");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../store */ "./src/swagger/store/index.ts");
+/* harmony import */ var _showCode__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../showCode */ "./src/swagger/create/showCode.tsx");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+// import Box from './Box';
+
+
+
+var TabPane = antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2___default.a.TabPane;
+var swaggerDoc = _store__WEBPACK_IMPORTED_MODULE_7__["default"].swaggerDoc, decompose = _store__WEBPACK_IMPORTED_MODULE_7__["default"].decompose;
+var IApp = /** @class */ (function (_super) {
+    __extends(IApp, _super);
+    function IApp() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    IApp.prototype.render = function () {
+        return (react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_tabs__WEBPACK_IMPORTED_MODULE_2___default.a, { defaultActiveKey: "1" },
+            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](TabPane, { tab: "\u6A21\u578B(" + swaggerDoc.docData.tags.length + ")", key: "1" },
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"](DocDataTags, null)),
+            react__WEBPACK_IMPORTED_MODULE_5__["createElement"](TabPane, { tab: "\u9519\u8BEF(" + swaggerDoc.docData.error.length + ")", key: "2" },
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"](ErrorTags, null))));
+    };
+    IApp = __decorate([
+        mobx_react__WEBPACK_IMPORTED_MODULE_4__["observer"]
+    ], IApp);
+    return IApp;
+}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (IApp);
+var DocDataTags = /** @class */ (function (_super) {
+    __extends(DocDataTags, _super);
+    function DocDataTags() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    DocDataTags.prototype.render = function () {
+        return (react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_1___default.a, { size: "large", 
+            // header={<div style={{ textAlign: "center" }}>模型列表</div>}
+            footer: react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null,
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_button__WEBPACK_IMPORTED_MODULE_3___default.a, { icon: "code", block: true, onClick: function (e) {
+                        decompose.onShowModelJSON(swaggerDoc.SwaggerDocJson);
+                    } }, "SwaggerDoc")), bordered: true, dataSource: swaggerDoc.docData.tags, renderItem: function (item) { return (react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_components_drop_drag__WEBPACK_IMPORTED_MODULE_6__["default"], { model: item, type: "sourceTags" },
+                react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_1___default.a.Item, { actions: [react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_showCode__WEBPACK_IMPORTED_MODULE_8__["default"], { data: item })] }, item.name))); } }));
+    };
+    DocDataTags = __decorate([
+        mobx_react__WEBPACK_IMPORTED_MODULE_4__["observer"]
+    ], DocDataTags);
+    return DocDataTags;
+}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]));
+var ErrorTags = /** @class */ (function (_super) {
+    __extends(ErrorTags, _super);
+    function ErrorTags() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ErrorTags.prototype.render = function () {
+        return (react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_1___default.a, { size: "large", header: react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", { style: { textAlign: "center" } }, "\u65E0\u6CD5\u5339\u914D\u89C4\u5219\u63A5\u53E3"), bordered: true, dataSource: swaggerDoc.docData.error, renderItem: function (item) { return (react__WEBPACK_IMPORTED_MODULE_5__["createElement"](antd_lib_list__WEBPACK_IMPORTED_MODULE_1___default.a.Item, { actions: [react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_showCode__WEBPACK_IMPORTED_MODULE_8__["default"], { data: item })] }, item.key)); } }));
+    };
+    ErrorTags = __decorate([
+        mobx_react__WEBPACK_IMPORTED_MODULE_4__["observer"]
+    ], ErrorTags);
+    return ErrorTags;
+}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]));
+
+
+/***/ }),
+
+/***/ "./src/swagger/create/style.less":
+/*!***************************************!*\
+  !*** ./src/swagger/create/style.less ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -1783,7 +1792,7 @@ var Entrance = /** @class */ (function (_super) {
 /*!*******************************!*\
   !*** ./src/swagger/index.tsx ***!
   \*******************************/
-/*! exports provided: default, Entrance */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1792,19 +1801,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var antd_lib_tabs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_tabs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_create__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/create */ "./src/swagger/components/create.tsx");
-/* harmony import */ var _components_info__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/info */ "./src/swagger/components/info.tsx");
-/* harmony import */ var _components_list__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/list */ "./src/swagger/components/list.tsx");
-/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.less */ "./src/swagger/style.less");
-/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_less__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./src/swagger/store/index.ts");
-/* harmony import */ var react_dnd__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-dnd */ "../node_modules/react-dnd/lib/index.js");
-/* harmony import */ var react_dnd__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_dnd__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_dnd_html5_backend__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-dnd-html5-backend */ "../node_modules/react-dnd-html5-backend/lib/index.js");
-/* harmony import */ var react_dnd_html5_backend__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_dnd_html5_backend__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _entrance__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./entrance */ "./src/swagger/entrance.tsx");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Entrance", function() { return _entrance__WEBPACK_IMPORTED_MODULE_9__["Entrance"]; });
-
+/* harmony import */ var _components_info__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/info */ "./src/swagger/components/info.tsx");
+/* harmony import */ var _components_list__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/list */ "./src/swagger/components/list.tsx");
+/* harmony import */ var _create_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./create/index */ "./src/swagger/create/index.tsx");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store */ "./src/swagger/store/index.ts");
+/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./style.less */ "./src/swagger/style.less");
+/* harmony import */ var _style_less__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_style_less__WEBPACK_IMPORTED_MODULE_6__);
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -1818,50 +1820,40 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 
 
 
 
-
-
-
+// import Create from './components/create';
 
 
 
 var TabPane = antd_lib_tabs__WEBPACK_IMPORTED_MODULE_0___default.a.TabPane;
+// @DragDropContext(HTML5Backend)
 var IApp = /** @class */ (function (_super) {
     __extends(IApp, _super);
     function IApp() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     IApp.prototype.componentDidMount = function () {
-        _store__WEBPACK_IMPORTED_MODULE_6__["default"].swaggerDoc.init();
-        _store__WEBPACK_IMPORTED_MODULE_6__["default"].swaggerDoc.getModel();
+        _store__WEBPACK_IMPORTED_MODULE_5__["default"].swaggerDoc.init();
+        _store__WEBPACK_IMPORTED_MODULE_5__["default"].swaggerDoc.getModel();
     };
     IApp.prototype.onChange = function (key) {
         if (key == 3) {
-            _store__WEBPACK_IMPORTED_MODULE_6__["default"].swaggerDoc.getContainers();
+            _store__WEBPACK_IMPORTED_MODULE_5__["default"].swaggerDoc.getContainers();
         }
     };
     IApp.prototype.render = function () {
         return (react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", { className: "sam-container-manage" },
-            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](antd_lib_tabs__WEBPACK_IMPORTED_MODULE_0___default.a, { defaultActiveKey: "1", onChange: this.onChange.bind(this) },
+            react__WEBPACK_IMPORTED_MODULE_1__["createElement"](antd_lib_tabs__WEBPACK_IMPORTED_MODULE_0___default.a, { defaultActiveKey: "2", onChange: this.onChange.bind(this) },
                 react__WEBPACK_IMPORTED_MODULE_1__["createElement"](TabPane, { tab: "\u57FA\u7840\u4FE1\u606F", key: "1" },
-                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_components_info__WEBPACK_IMPORTED_MODULE_3__["default"], null)),
+                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_components_info__WEBPACK_IMPORTED_MODULE_2__["default"], null)),
                 react__WEBPACK_IMPORTED_MODULE_1__["createElement"](TabPane, { tab: "\u521B\u5EFA\u7EC4\u4EF6", key: "2" },
-                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_components_create__WEBPACK_IMPORTED_MODULE_2__["default"], null)),
+                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_create_index__WEBPACK_IMPORTED_MODULE_4__["default"], null)),
                 react__WEBPACK_IMPORTED_MODULE_1__["createElement"](TabPane, { tab: "\u7EC4\u4EF6\u5217\u8868", key: "3" },
-                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_components_list__WEBPACK_IMPORTED_MODULE_4__["default"], null)))));
+                    react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_components_list__WEBPACK_IMPORTED_MODULE_3__["default"], null)))));
     };
-    IApp = __decorate([
-        Object(react_dnd__WEBPACK_IMPORTED_MODULE_7__["DragDropContext"])(react_dnd_html5_backend__WEBPACK_IMPORTED_MODULE_8___default.a)
-    ], IApp);
     return IApp;
 }(react__WEBPACK_IMPORTED_MODULE_1__["Component"]));
 /* harmony default export */ __webpack_exports__["default"] = (IApp);
@@ -2352,67 +2344,133 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+var initData = {
+    key: null,
+    name: null,
+    componentName: null,
+    menuName: null,
+    icon: null,
+    description: null,
+    template: "default",
+    actions: {
+        install: true,
+        update: true,
+        delete: true,
+        import: true,
+        export: true
+    },
+    idKey: "id",
+    address: null,
+    columns: [],
+    search: [],
+    // edit: {},    //编辑字段
+    install: [],
+    update: [],
+};
 var ObservableStore = /** @class */ (function () {
     /**
      * 构造
      */
     function ObservableStore() {
+        // 已解析模型
         this.ModelMap = new Map();
-        this.visible = false;
-        this.Model = {
-            idKey: "id",
-            address: "",
-            columns: [],
-            search: [],
-            // edit: {},    //编辑字段
-            install: [],
-            update: [],
-            pageButtons: {
-                install: true,
-                update: true,
-                delete: true,
-                import: true,
-                export: true
-            } //功能按钮
+        this.ModelJSON = {};
+        this.visible = {
+            ModelJSON: false
         };
-        /** 选择的 tag */
+        /** 当前编辑模型 */
+        this.Model = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.cloneDeep(initData);
+        /** 就绪待生成模型 */
+        this.readyModel = [];
+        /** 选择的 tag  swagger 原始 格式数据*/
         this.selectTag = {
+            description: "",
             name: "",
-            paths: []
+            paths: [] //控制器下地址
         };
         /** swaggerDoc */
         this.definitions = null; // toJS(this.swaggerDoc.docData.definitions);
         this.common = "/common/combo";
     }
+    ObservableStore.prototype.GUID = function () {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    };
+    /** json */
+    ObservableStore.prototype.onShowModelJSON = function (value) {
+        console.info("ShowModelJSON", Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(value));
+        this.ModelJSON = JSON.stringify(value, null, 4);
+        this.onVisible("ModelJSON", true);
+    };
     /** 功能改变 */
     ObservableStore.prototype.changeButton = function (attr, flag) {
-        this.Model.pageButtons[attr] = flag;
-        console.log(this.Model);
+        this.Model.actions[attr] = flag;
     };
+    /** 重置数据 模型 */
     ObservableStore.prototype.onReset = function () {
-        this.Model = {
-            idKey: "id",
-            address: "",
-            columns: [],
-            search: [],
-            // edit: {},    //编辑字段
-            install: [],
-            update: [],
-            pageButtons: {
-                install: true,
-                update: true,
-                delete: true,
-                import: true,
-                export: true
-            } //功能按钮
-        };
+        this.Model = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.cloneDeep(initData);
         this.selectTag = {
+            description: "",
             name: "",
             paths: []
         };
     };
-    ObservableStore.prototype.onVisible = function () {
-        this.visible = !this.visible;
+    ObservableStore.prototype.onSetModel = function (Model) {
+        this.Model = Model;
+    };
+    /** 保存模型 */
+    ObservableStore.prototype.onSaveInfo = function (info) {
+        this.Model.componentName = info.componentName;
+        this.Model.template = info.template;
+        this.Model.menuName = info.menuName;
+        this.Model.icon = info.icon;
+    };
+    /** 清空 */
+    ObservableStore.prototype.onEmpty = function () {
+        this.readyModel = [];
+    };
+    /** 删除 */
+    ObservableStore.prototype.onDelete = function (index) {
+        this.readyModel.splice(index, 1);
+    };
+    /** 保存模型 */
+    ObservableStore.prototype.onSave = function () {
+        var _this = this;
+        var res = false;
+        if (lodash__WEBPACK_IMPORTED_MODULE_2___default.a.isNil(this.Model.key)) {
+            var index = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.findIndex(this.readyModel, function (x) { return x.componentName == _this.Model.componentName; });
+            if (index == -1) {
+                res = true;
+                this.Model.key = this.GUID();
+                this.readyModel.push(this.Model);
+            }
+            else {
+                antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a.error({
+                    key: "decompose",
+                    message: "\u7EC4\u4EF6 " + this.Model.componentName + " \u5DF2\u7ECF\u5B58\u5728",
+                    description: '',
+                });
+            }
+        }
+        else {
+            var index = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.findIndex(this.readyModel, function (x) { return x.key == _this.Model.key; });
+            this.readyModel.splice(index, 1, this.Model);
+            res = true;
+        }
+        if (res) {
+            antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a.success({
+                key: "decompose",
+                message: "\u7EC4\u4EF6 " + this.Model.componentName + " \u5DF2\u4FDD\u5B58",
+                description: '',
+            });
+            this.onReset();
+        }
+    };
+    ObservableStore.prototype.onVisible = function (key, value) {
+        if (value === void 0) { value = !this.visible[key]; }
+        this.visible[key] = value;
     };
     /**
      * 解析 tag
@@ -2436,6 +2494,29 @@ var ObservableStore = /** @class */ (function () {
         }
         // console.timeEnd();
         console.log("--------------------------", this);
+        return this.Model;
+    };
+    ObservableStore.prototype.onAnalysisTag = function (tag) {
+        console.log(Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(tag));
+        if (!this.definitions) {
+            this.definitions = Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(_swaggerDoc__WEBPACK_IMPORTED_MODULE_6__["default"].docData.definitions);
+        }
+        var selectTag = this.selectTag = Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(tag);
+        if (this.ModelMap.has(selectTag.name)) {
+            this.Model = this.ModelMap.get(selectTag.name);
+        }
+        else {
+            this.Model = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.cloneDeep(initData);
+            this.analysisAddress();
+            this.analysisColumns();
+            this.analysisSearch();
+            this.analysisEdit();
+            this.Model.name = this.selectTag.name;
+            this.Model.description = this.selectTag.description;
+            this.ModelMap.set(selectTag.name, Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(this.Model));
+        }
+        // console.timeEnd();
+        console.log("--------------------------", Object(mobx__WEBPACK_IMPORTED_MODULE_3__["toJS"])(this.Model));
         return this.Model;
     };
     /**
@@ -2506,6 +2587,7 @@ var ObservableStore = /** @class */ (function () {
             }
             catch (error) {
                 antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['error']({
+                    key: "decompose",
                     message: '无法获取列表数据结构  解析失败',
                     description: '',
                 });
@@ -2570,13 +2652,22 @@ var ObservableStore = /** @class */ (function () {
     };
     __decorate([
         mobx__WEBPACK_IMPORTED_MODULE_3__["observable"]
+    ], ObservableStore.prototype, "ModelJSON", void 0);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["observable"]
     ], ObservableStore.prototype, "visible", void 0);
     __decorate([
         mobx__WEBPACK_IMPORTED_MODULE_3__["observable"]
     ], ObservableStore.prototype, "Model", void 0);
     __decorate([
         mobx__WEBPACK_IMPORTED_MODULE_3__["observable"]
+    ], ObservableStore.prototype, "readyModel", void 0);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["observable"]
     ], ObservableStore.prototype, "selectTag", void 0);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
+    ], ObservableStore.prototype, "onShowModelJSON", null);
     __decorate([
         mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
     ], ObservableStore.prototype, "changeButton", null);
@@ -2585,7 +2676,25 @@ var ObservableStore = /** @class */ (function () {
     ], ObservableStore.prototype, "onReset", null);
     __decorate([
         mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
+    ], ObservableStore.prototype, "onSetModel", null);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
+    ], ObservableStore.prototype, "onSaveInfo", null);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
+    ], ObservableStore.prototype, "onEmpty", null);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
+    ], ObservableStore.prototype, "onDelete", null);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
+    ], ObservableStore.prototype, "onSave", null);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
     ], ObservableStore.prototype, "onVisible", null);
+    __decorate([
+        mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
+    ], ObservableStore.prototype, "onAnalysisTag", null);
     __decorate([
         mobx__WEBPACK_IMPORTED_MODULE_3__["action"].bound
     ], ObservableStore.prototype, "analysisAddress", null);
@@ -2741,6 +2850,8 @@ var ObservableStore = /** @class */ (function () {
      * 构造
      */
     function ObservableStore() {
+        /** swagger 返回 数据 */
+        this.SwaggerDocJson = {};
         /**当前进度 */
         this.StepsCurrent = 0;
         /**是否连接脚手架 */
@@ -2770,7 +2881,9 @@ var ObservableStore = /** @class */ (function () {
             // 公共接口
             common: [],
             // 模型列表
-            definitions: {}
+            definitions: {},
+            // 错误列表
+            error: []
         };
         /**
          * 公共接口
@@ -2782,19 +2895,13 @@ var ObservableStore = /** @class */ (function () {
                     return x.data;
                 }
                 antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['error']({
+                    key: "codeError",
                     message: x.code,
-                    description: x.message,
+                    description: x.message.toString(),
                 });
             }
             return false;
         };
-        // notification.config({
-        //     duration: 2,
-        //     top: 60
-        // })
-        if (true) {
-            // this.init();
-        }
     }
     /**
      * 初始化 项目信息
@@ -2852,7 +2959,7 @@ var ObservableStore = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, _HttpBasics__WEBPACK_IMPORTED_MODULE_4__["default"].post("/server/create", __assign({}, this.createParam, param)).map(this.map).toPromise()];
+                    case 0: return [4 /*yield*/, _HttpBasics__WEBPACK_IMPORTED_MODULE_4__["default"].post("/server/create", param).map(this.map).toPromise()];
                     case 1:
                         data = _a.sent();
                         if (data) {
@@ -2887,12 +2994,6 @@ var ObservableStore = /** @class */ (function () {
                             this.getContainers();
                             antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['success']({
                                 message: '删除成功',
-                                description: '',
-                            });
-                        }
-                        else {
-                            antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['error']({
-                                message: '删除失败',
                                 description: '',
                             });
                         }
@@ -2935,6 +3036,7 @@ var ObservableStore = /** @class */ (function () {
             });
             return this.docData;
         }
+        this.SwaggerDocJson = docs;
         var tags = docs.tags, definitions = docs.definitions, paths = docs.paths;
         var format = {
             // 模型控制器
@@ -2942,11 +3044,12 @@ var ObservableStore = /** @class */ (function () {
             // 公共控制器
             common: [],
             // 模型列表
-            definitions: __assign({}, definitions)
+            definitions: __assign({}, definitions),
+            error: []
         };
-        try {
-            // 分组所有 api 地址
-            lodash__WEBPACK_IMPORTED_MODULE_1___default.a.forEach(paths, function (value, key) {
+        // 分组所有 api 地址
+        lodash__WEBPACK_IMPORTED_MODULE_1___default.a.forEach(paths, function (value, key) {
+            try {
                 // 排除的控制器
                 if (wtmfront_json__WEBPACK_IMPORTED_MODULE_3__.excludeStandard.some(function (x) { return lodash__WEBPACK_IMPORTED_MODULE_1___default.a.includes(key, x); }))
                     return;
@@ -2966,11 +3069,20 @@ var ObservableStore = /** @class */ (function () {
                     });
                 }
                 else {
+                    // 匹配当前接口是否符合 配置要求
                     standard = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.find(wtmfront_json__WEBPACK_IMPORTED_MODULE_3__.standard, function (o) {
                         // console.log(key, o.name);
                         return lodash__WEBPACK_IMPORTED_MODULE_1___default.a.includes(key, o.name);
                     });
                     //  if(!standard)return;
+                }
+                // 解析出错 数据
+                if (typeof standard == "undefined") {
+                    format.error.push({
+                        key: key,
+                        value: value
+                    });
+                    return console.warn("匹配失败", key);
                 }
                 // 请求类型 统一小写
                 var typeKey = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.toLower(standard.type);
@@ -3007,17 +3119,17 @@ var ObservableStore = /** @class */ (function () {
                         format.tags.push(tag_1);
                     }
                 }
-            });
-            format.tags = format.tags.filter(function (x) { return !lodash__WEBPACK_IMPORTED_MODULE_1___default.a.isNil(x.paths); });
-        }
-        catch (error) {
-            console.log(error);
-            antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['error']({
-                message: '解析Swagger文档失败',
-                description: error.message,
-            });
-        }
-        // console.log(format)
+            }
+            catch (error) {
+                console.error(key, error);
+                antd_lib_notification__WEBPACK_IMPORTED_MODULE_0___default.a['error']({
+                    message: "\u89E3\u6790Swagger\u6587\u6863\u5931\u8D25 Molde:" + key,
+                    description: error.message,
+                });
+            }
+        });
+        format.tags = format.tags.filter(function (x) { return !lodash__WEBPACK_IMPORTED_MODULE_1___default.a.isNil(x.paths); });
+        console.log(format);
         return format;
     };
     /**

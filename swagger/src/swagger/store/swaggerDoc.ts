@@ -63,8 +63,9 @@ class ObservableStore {
                 return x.data;
             }
             notification['error']({
+                key: "codeError",
                 message: x.code,
-                description: x.message,
+                description: x.message.toString(),
             });
         }
         return false
@@ -124,13 +125,7 @@ class ObservableStore {
                 message: '删除成功',
                 description: '',
             });
-        } else {
-            notification['error']({
-                message: '删除失败',
-                description: '',
-            });
-        }
-
+        } 
     }
     /**
      * 获取model
